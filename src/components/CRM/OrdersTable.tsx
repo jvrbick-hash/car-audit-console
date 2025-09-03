@@ -1,21 +1,15 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronDown, ChevronRight, Edit, RefreshCw, Gift, FileText, DollarSign, FilterX, Search } from 'lucide-react';
+import { ChevronDown, ChevronRight, Edit, RefreshCw, Gift, FileText, DollarSign, FilterX } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { ColumnManager } from './ColumnManager';
 import { SearchAndFilters } from './SearchAndFilters';
+import { ExcelFilter } from './ExcelFilter';
 import { Order, Column, defaultColumns } from '@/types/orders';
 
 const dummyOrders: Order[] = [
@@ -101,7 +95,7 @@ export const OrdersTable: React.FC = () => {
   const [editingField, setEditingField] = useState<{ orderId: string; field: string } | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
-  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
+  const [columnFilters, setColumnFilters] = useState<Record<string, string[]>>({});
   const { toast } = useToast();
 
   const visibleColumns = columns.filter(col => col.visible);
@@ -137,19 +131,15 @@ export const OrdersTable: React.FC = () => {
       }
 
       // Column-specific filters
-      for (const [columnKey, filterValue] of Object.entries(columnFilters)) {
-        if (!filterValue.trim()) continue;
+      for (const [columnKey, filterValues] of Object.entries(columnFilters)) {
+        if (!filterValues || filterValues.length === 0) continue;
         
         const value = order[columnKey as keyof Order];
         if (value === null || value === undefined) continue;
         
-        const column = columns.find(c => c.key === columnKey);
-        if (column?.type === 'status') {
-          if (String(value) !== filterValue) return false;
-        } else {
-          if (!String(value).toLowerCase().includes(filterValue.toLowerCase())) {
-            return false;
-          }
+        // If filter values are set, the value must be in the selected values
+        if (!filterValues.includes(String(value))) {
+          return false;
         }
       }
 
@@ -187,56 +177,25 @@ export const OrdersTable: React.FC = () => {
     });
   };
 
-  const updateColumnFilter = (columnKey: string, value: string) => {
+  const updateColumnFilter = (columnKey: string, values: string[]) => {
     setColumnFilters(prev => ({
       ...prev,
-      [columnKey]: value === 'all' ? '' : value  // Convert 'all' to empty string for filtering
+      [columnKey]: values
     }));
   };
 
-  const hasActiveFilters = searchTerm.length > 0 || dateRange?.from || Object.values(columnFilters).some(v => v.trim());
-
-  const statusOptions = {
-    'Stav platby': ['Zaplaceno', 'Nezaplaceno', 'Částečně zaplaceno'],
-    'Stav objednávky': ['Dokončeno', 'Zpracovává se', 'Čeká na platbu', 'Zrušeno']
-  };
+  const hasActiveFilters = searchTerm.length > 0 || dateRange?.from || Object.values(columnFilters).some(v => v.length > 0);
 
   const renderColumnFilter = (column: Column) => {
-    const filterValue = columnFilters[column.key] || '';
-    const displayValue = filterValue === '' ? 'all' : filterValue;  // Convert empty string back to 'all' for display
-    const statusOpts = statusOptions[column.label as keyof typeof statusOptions];
-
-    if (statusOpts) {
-      return (
-        <Select
-          value={displayValue}
-          onValueChange={(value) => updateColumnFilter(column.key, value)}
-        >
-          <SelectTrigger className="h-7 text-xs border-muted">
-            <SelectValue placeholder="Vše" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Vše</SelectItem>
-            {statusOpts.map((status) => (
-              <SelectItem key={status} value={status}>
-                {status}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      );
-    }
+    const selectedValues = columnFilters[column.key] || [];
 
     return (
-      <div className="relative">
-        <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground h-3 w-3" />
-        <Input
-          placeholder="Filtrovat..."
-          value={filterValue}
-          onChange={(e) => updateColumnFilter(column.key, e.target.value)}
-          className="h-7 text-xs pl-7 border-muted"
-        />
-      </div>
+      <ExcelFilter
+        column={column}
+        orders={orders}
+        selectedValues={selectedValues}
+        onSelectionChange={(values) => updateColumnFilter(column.key, values)}
+      />
     );
   };
 
