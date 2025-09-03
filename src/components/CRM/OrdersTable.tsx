@@ -190,7 +190,7 @@ export const OrdersTable: React.FC = () => {
   const updateColumnFilter = (columnKey: string, value: string) => {
     setColumnFilters(prev => ({
       ...prev,
-      [columnKey]: value
+      [columnKey]: value === 'all' ? '' : value  // Convert 'all' to empty string for filtering
     }));
   };
 
@@ -203,19 +203,20 @@ export const OrdersTable: React.FC = () => {
 
   const renderColumnFilter = (column: Column) => {
     const filterValue = columnFilters[column.key] || '';
+    const displayValue = filterValue === '' ? 'all' : filterValue;  // Convert empty string back to 'all' for display
     const statusOpts = statusOptions[column.label as keyof typeof statusOptions];
 
     if (statusOpts) {
       return (
         <Select
-          value={filterValue}
+          value={displayValue}
           onValueChange={(value) => updateColumnFilter(column.key, value)}
         >
           <SelectTrigger className="h-7 text-xs border-muted">
             <SelectValue placeholder="Vše" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Vše</SelectItem>
+            <SelectItem value="all">Vše</SelectItem>
             {statusOpts.map((status) => (
               <SelectItem key={status} value={status}>
                 {status}
