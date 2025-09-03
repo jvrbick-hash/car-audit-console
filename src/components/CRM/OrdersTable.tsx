@@ -1,16 +1,21 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronDown, ChevronRight, Edit, RefreshCw, Gift, FileText, DollarSign, FilterX } from 'lucide-react';
+import { ChevronDown, ChevronRight, Edit, RefreshCw, Gift, FileText, DollarSign, FilterX, Search } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { ColumnManager } from './ColumnManager';
 import { SearchAndFilters } from './SearchAndFilters';
-import { ColumnFilters, ColumnFilter } from './ColumnFilters';
 import { Order, Column, defaultColumns } from '@/types/orders';
 
 const dummyOrders: Order[] = [
@@ -96,8 +101,7 @@ export const OrdersTable: React.FC = () => {
   const [editingField, setEditingField] = useState<{ orderId: string; field: string } | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
-  const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
-  const [showColumnFilters, setShowColumnFilters] = useState(false);
+  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
   const { toast } = useToast();
 
   const visibleColumns = columns.filter(col => col.visible);
@@ -133,14 +137,17 @@ export const OrdersTable: React.FC = () => {
       }
 
       // Column-specific filters
-      for (const filter of columnFilters) {
-        const value = order[filter.key as keyof Order];
+      for (const [columnKey, filterValue] of Object.entries(columnFilters)) {
+        if (!filterValue.trim()) continue;
+        
+        const value = order[columnKey as keyof Order];
         if (value === null || value === undefined) continue;
         
-        if (filter.type === 'status') {
-          if (String(value) !== filter.value) return false;
+        const column = columns.find(c => c.key === columnKey);
+        if (column?.type === 'status') {
+          if (String(value) !== filterValue) return false;
         } else {
-          if (!String(value).toLowerCase().includes(filter.value.toLowerCase())) {
+          if (!String(value).toLowerCase().includes(filterValue.toLowerCase())) {
             return false;
           }
         }
@@ -173,14 +180,64 @@ export const OrdersTable: React.FC = () => {
   const clearAllFilters = () => {
     setSearchTerm('');
     setDateRange(undefined);
-    setColumnFilters([]);
+    setColumnFilters({});
     toast({
       title: "Filtry vymazány",
       description: "Všechny filtry byly odstraněny.",
     });
   };
 
-  const hasActiveFilters = searchTerm.length > 0 || dateRange?.from || columnFilters.length > 0;
+  const updateColumnFilter = (columnKey: string, value: string) => {
+    setColumnFilters(prev => ({
+      ...prev,
+      [columnKey]: value
+    }));
+  };
+
+  const hasActiveFilters = searchTerm.length > 0 || dateRange?.from || Object.values(columnFilters).some(v => v.trim());
+
+  const statusOptions = {
+    'Stav platby': ['Zaplaceno', 'Nezaplaceno', 'Částečně zaplaceno'],
+    'Stav objednávky': ['Dokončeno', 'Zpracovává se', 'Čeká na platbu', 'Zrušeno']
+  };
+
+  const renderColumnFilter = (column: Column) => {
+    const filterValue = columnFilters[column.key] || '';
+    const statusOpts = statusOptions[column.label as keyof typeof statusOptions];
+
+    if (statusOpts) {
+      return (
+        <Select
+          value={filterValue}
+          onValueChange={(value) => updateColumnFilter(column.key, value)}
+        >
+          <SelectTrigger className="h-7 text-xs border-muted">
+            <SelectValue placeholder="Vše" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="">Vše</SelectItem>
+            {statusOpts.map((status) => (
+              <SelectItem key={status} value={status}>
+                {status}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      );
+    }
+
+    return (
+      <div className="relative">
+        <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground h-3 w-3" />
+        <Input
+          placeholder="Filtrovat..."
+          value={filterValue}
+          onChange={(e) => updateColumnFilter(column.key, e.target.value)}
+          className="h-7 text-xs pl-7 border-muted"
+        />
+      </div>
+    );
+  };
 
   const renderCellContent = (order: Order, column: Column) => {
     const value = order[column.key];
@@ -344,49 +401,39 @@ export const OrdersTable: React.FC = () => {
           totalCount={orders.length}
         />
 
-        {/* Column Filters */}
-        <Collapsible open={showColumnFilters} onOpenChange={setShowColumnFilters}>
-          <CollapsibleTrigger asChild>
-            <Button variant="outline" size="sm" className="w-full">
-              <ChevronRight className={`w-4 h-4 mr-2 transition-transform ${showColumnFilters ? 'rotate-90' : ''}`} />
-              Pokročilé filtry sloupců
-              {columnFilters.length > 0 && (
-                <Badge variant="secondary" className="ml-2">
-                  {columnFilters.length}
-                </Badge>
-              )}
-            </Button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <Card className="mt-2">
-              <CardContent className="p-4">
-                <ColumnFilters
-                  columns={columns}
-                  filters={columnFilters}
-                  onFiltersChange={setColumnFilters}
-                />
-              </CardContent>
-            </Card>
-          </CollapsibleContent>
-        </Collapsible>
-
         {/* Table */}
         <Card>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full" style={{ minWidth: `${visibleColumns.length * 180}px` }}>
-                <thead className="bg-secondary">
-                  <tr>
+                <thead>
+                  {/* Column Headers */}
+                  <tr className="bg-secondary">
                     {visibleColumns.map((column) => (
                       <th 
                         key={column.key}
-                        className="text-left p-4 font-semibold text-secondary-foreground"
+                        className="text-left p-4 font-semibold text-secondary-foreground border-r border-border last:border-r-0"
                         style={{ 
                           minWidth: column.width,
                           width: column.key === 'Email' || column.key === 'Adresa' ? 'auto' : column.width
                         }}
                       >
                         {column.label}
+                      </th>
+                    ))}
+                  </tr>
+                  {/* Column Filters */}
+                  <tr className="bg-muted/50">
+                    {visibleColumns.map((column) => (
+                      <th 
+                        key={`filter-${column.key}`}
+                        className="p-2 border-r border-border last:border-r-0"
+                        style={{ 
+                          minWidth: column.width,
+                          width: column.key === 'Email' || column.key === 'Adresa' ? 'auto' : column.width
+                        }}
+                      >
+                        {renderColumnFilter(column)}
                       </th>
                     ))}
                   </tr>
