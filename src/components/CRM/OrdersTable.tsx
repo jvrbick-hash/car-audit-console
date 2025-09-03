@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, Edit, RefreshCw, Gift, FileText, DollarSign } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { ChevronDown, ChevronRight, Edit, RefreshCw, Gift, FileText, DollarSign, FilterX } from 'lucide-react';
+import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useToast } from '@/hooks/use-toast';
 import { ColumnManager } from './ColumnManager';
+import { SearchAndFilters } from './SearchAndFilters';
+import { ColumnFilters, ColumnFilter } from './ColumnFilters';
 import { Order, Column, defaultColumns } from '@/types/orders';
 
 const dummyOrders: Order[] = [
@@ -90,9 +94,61 @@ export const OrdersTable: React.FC = () => {
   const [columns, setColumns] = useState<Column[]>(defaultColumns);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [editingField, setEditingField] = useState<{ orderId: string; field: string } | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
+  const [showColumnFilters, setShowColumnFilters] = useState(false);
   const { toast } = useToast();
 
   const visibleColumns = columns.filter(col => col.visible);
+
+  // Filtered orders based on all active filters
+  const filteredOrders = useMemo(() => {
+    return orders.filter(order => {
+      // Search term filter (searches across all visible columns)
+      if (searchTerm) {
+        const searchLower = searchTerm.toLowerCase();
+        const matchesSearch = visibleColumns.some(column => {
+          const value = order[column.key];
+          if (value === null || value === undefined) return false;
+          return String(value).toLowerCase().includes(searchLower);
+        });
+        if (!matchesSearch) return false;
+      }
+
+      // Date range filter
+      if (dateRange?.from) {
+        const orderDate = new Date(order['Datum objednávky']);
+        const fromDate = dateRange.from;
+        const toDate = dateRange.to || dateRange.from;
+        
+        // Set time to start/end of day for proper comparison
+        const orderDateOnly = new Date(orderDate.getFullYear(), orderDate.getMonth(), orderDate.getDate());
+        const fromDateOnly = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+        const toDateOnly = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
+        
+        if (orderDateOnly < fromDateOnly || orderDateOnly > toDateOnly) {
+          return false;
+        }
+      }
+
+      // Column-specific filters
+      for (const filter of columnFilters) {
+        const value = order[filter.key as keyof Order];
+        if (value === null || value === undefined) continue;
+        
+        if (filter.type === 'status') {
+          if (String(value) !== filter.value) return false;
+        } else {
+          if (!String(value).toLowerCase().includes(filter.value.toLowerCase())) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    });
+  }, [orders, searchTerm, dateRange, columnFilters, visibleColumns]);
 
   const handleEdit = (orderId: string, field: string, value: string) => {
     setOrders(prev => prev.map(order => 
@@ -113,6 +169,18 @@ export const OrdersTable: React.FC = () => {
       description: `${action} pro objednávku ${orderId}`,
     });
   };
+
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setDateRange(undefined);
+    setColumnFilters([]);
+    toast({
+      title: "Filtry vymazány",
+      description: "Všechny filtry byly odstraněny.",
+    });
+  };
+
+  const hasActiveFilters = searchTerm.length > 0 || dateRange?.from || columnFilters.length > 0;
 
   const renderCellContent = (order: Order, column: Column) => {
     const value = order[column.key];
@@ -248,11 +316,59 @@ export const OrdersTable: React.FC = () => {
           <div>
             <h2 className="text-2xl font-bold text-primary">Přehled objednávek</h2>
             <p className="text-sm text-muted-foreground mt-1">
-              Celkem: {orders.length} objednávek • Zobrazeno sloupců: {visibleColumns.length}
+              {hasActiveFilters ? (
+                <>Zobrazeno: {filteredOrders.length} z {orders.length} objednávek • Sloupců: {visibleColumns.length}</>
+              ) : (
+                <>Celkem: {orders.length} objednávek • Sloupců: {visibleColumns.length}</>
+              )}
             </p>
           </div>
-          <ColumnManager columns={columns} onColumnsChange={setColumns} />
+          <div className="flex items-center gap-2">
+            {hasActiveFilters && (
+              <Button variant="outline" size="sm" onClick={clearAllFilters}>
+                <FilterX className="w-4 h-4 mr-2" />
+                Vymazat filtry
+              </Button>
+            )}
+            <ColumnManager columns={columns} onColumnsChange={setColumns} />
+          </div>
         </div>
+
+        {/* Search and Date Range */}
+        <SearchAndFilters
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          dateRange={dateRange}
+          onDateRangeChange={setDateRange}
+          filteredCount={filteredOrders.length}
+          totalCount={orders.length}
+        />
+
+        {/* Column Filters */}
+        <Collapsible open={showColumnFilters} onOpenChange={setShowColumnFilters}>
+          <CollapsibleTrigger asChild>
+            <Button variant="outline" size="sm" className="w-full">
+              <ChevronRight className={`w-4 h-4 mr-2 transition-transform ${showColumnFilters ? 'rotate-90' : ''}`} />
+              Pokročilé filtry sloupců
+              {columnFilters.length > 0 && (
+                <Badge variant="secondary" className="ml-2">
+                  {columnFilters.length}
+                </Badge>
+              )}
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <Card className="mt-2">
+              <CardContent className="p-4">
+                <ColumnFilters
+                  columns={columns}
+                  filters={columnFilters}
+                  onFiltersChange={setColumnFilters}
+                />
+              </CardContent>
+            </Card>
+          </CollapsibleContent>
+        </Collapsible>
 
         {/* Table */}
         <Card>
@@ -276,7 +392,7 @@ export const OrdersTable: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((order) => (
+                  {filteredOrders.map((order) => (
                     <React.Fragment key={order.Order_ID}>
                       <tr className="border-b hover:bg-muted/50 transition-colors">
                         {visibleColumns.map((column) => (
@@ -411,6 +527,22 @@ export const OrdersTable: React.FC = () => {
                       )}
                     </React.Fragment>
                   ))}
+                  {filteredOrders.length === 0 && (
+                    <tr>
+                      <td colSpan={visibleColumns.length} className="p-8 text-center">
+                        <div className="text-muted-foreground">
+                          {hasActiveFilters ? (
+                            <>
+                              <p className="text-lg font-medium mb-2">Žádné výsledky</p>
+                              <p className="text-sm">Zkuste upravit filtry nebo vyhledávací termín</p>
+                            </>
+                          ) : (
+                            <p>Žádné objednávky k zobrazení</p>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
