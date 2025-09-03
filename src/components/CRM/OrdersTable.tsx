@@ -5,27 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-
-interface Order {
-  Order_ID: string;
-  Jméno: string;
-  Příjmení: string;
-  Email: string;
-  'Telefonní číslo': string;
-  Adresa: string;
-  'Hodnota objednávky': number;
-  'Datum objednávky': string;
-  'Stav platby': 'Zaplaceno' | 'Nezaplaceno' | 'Částečně zaplaceno';
-  'Stav objednávky': 'Dokončeno' | 'Zpracovává se' | 'Čeká na platbu' | 'Zrušeno';
-  // Detail fields
-  'Variabilní symbol': string;
-  Výrobce: string;
-  Model: string;
-  'Adresa inzerátu': string;
-  'Odkaz inzerátu': string;
-  'Typ produktu': string;
-  'Report link': string;
-}
+import { ColumnManager } from './ColumnManager';
+import { Order, Column, defaultColumns } from '@/types/orders';
 
 const dummyOrders: Order[] = [
   {
@@ -105,9 +86,12 @@ const getStatusBadgeVariant = (status: string) => {
 
 export const OrdersTable: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>(dummyOrders);
+  const [columns, setColumns] = useState<Column[]>(defaultColumns);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [editingField, setEditingField] = useState<{ orderId: string; field: string } | null>(null);
   const { toast } = useToast();
+
+  const visibleColumns = columns.filter(col => col.visible);
 
   const handleEdit = (orderId: string, field: string, value: string) => {
     setOrders(prev => prev.map(order => 
@@ -129,119 +113,124 @@ export const OrdersTable: React.FC = () => {
     });
   };
 
+  const renderCellContent = (order: Order, column: Column) => {
+    const value = order[column.key];
+    
+    switch (column.type) {
+      case 'currency':
+        return `${(value as number).toLocaleString()} Kč`;
+      case 'date':
+        return new Date(value as string).toLocaleDateString('cs-CZ');
+      case 'status':
+        return (
+          <Badge variant={getStatusBadgeVariant(value as string)}>
+            {value as string}
+          </Badge>
+        );
+      case 'link':
+        return value ? (
+          <a href={value as string} target="_blank" rel="noopener noreferrer" 
+             className="text-accent hover:underline truncate block">
+            {value as string}
+          </a>
+        ) : (
+          <span className="text-muted-foreground">-</span>
+        );
+      default:
+        if (column.key === 'Order_ID') {
+          return (
+            <button
+              onClick={() => setExpandedOrder(expandedOrder === order.Order_ID ? null : order.Order_ID)}
+              className="flex items-center gap-2 text-primary hover:text-accent font-medium"
+            >
+              {expandedOrder === order.Order_ID ? (
+                <ChevronDown className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
+              {value as string}
+            </button>
+          );
+        }
+        
+        if (column.editable) {
+          if (editingField?.orderId === order.Order_ID && editingField?.field === column.key) {
+            return (
+              <Input
+                defaultValue={value as string}
+                onBlur={(e) => handleEdit(order.Order_ID, column.key, e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleEdit(order.Order_ID, column.key, e.currentTarget.value);
+                  }
+                }}
+                className="h-8 text-sm"
+                autoFocus
+              />
+            );
+          } else {
+            return (
+              <div 
+                className="flex items-center gap-2 cursor-pointer hover:text-accent truncate"
+                onClick={() => setEditingField({ orderId: order.Order_ID, field: column.key })}
+              >
+                <span className="truncate">{value as string}</span>
+                <Edit className="w-3 h-3 opacity-50 flex-shrink-0" />
+              </div>
+            );
+          }
+        }
+        
+        return <span className="truncate">{value as string}</span>;
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-primary">Přehled objednávek</h2>
-        <div className="text-sm text-muted-foreground">
-          Celkem: {orders.length} objednávek
+        <div>
+          <h2 className="text-2xl font-bold text-primary">Přehled objednávek</h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Celkem: {orders.length} objednávek • Zobrazeno sloupců: {visibleColumns.length}
+          </p>
         </div>
+        <ColumnManager columns={columns} onColumnsChange={setColumns} />
       </div>
 
       {/* Table */}
       <Card>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full table-fixed" style={{ minWidth: `${visibleColumns.length * 140}px` }}>
               <thead className="bg-secondary">
                 <tr>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Order ID</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Jméno</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Příjmení</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Email</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Telefon</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Adresa</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Hodnota</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Datum</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Stav platby</th>
-                  <th className="text-left p-4 font-semibold text-secondary-foreground">Stav objednávky</th>
+                  {visibleColumns.map((column) => (
+                    <th 
+                      key={column.key}
+                      className="text-left p-4 font-semibold text-secondary-foreground"
+                      style={{ width: column.width }}
+                    >
+                      {column.label}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {orders.map((order) => (
                   <React.Fragment key={order.Order_ID}>
                     <tr className="border-b hover:bg-muted/50 transition-colors">
-                      <td className="p-4">
-                        <button
-                          onClick={() => setExpandedOrder(expandedOrder === order.Order_ID ? null : order.Order_ID)}
-                          className="flex items-center gap-2 text-primary hover:text-accent font-medium"
-                        >
-                          {expandedOrder === order.Order_ID ? (
-                            <ChevronDown className="w-4 h-4" />
-                          ) : (
-                            <ChevronRight className="w-4 h-4" />
-                          )}
-                          {order.Order_ID}
-                        </button>
-                      </td>
-                      <td className="p-4">{order.Jméno}</td>
-                      <td className="p-4">{order.Příjmení}</td>
-                      <td className="p-4 text-sm">{order.Email}</td>
-                      <td className="p-4">
-                        {editingField?.orderId === order.Order_ID && editingField?.field === 'Telefonní číslo' ? (
-                          <Input
-                            defaultValue={order['Telefonní číslo']}
-                            onBlur={(e) => handleEdit(order.Order_ID, 'Telefonní číslo', e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') {
-                                handleEdit(order.Order_ID, 'Telefonní číslo', e.currentTarget.value);
-                              }
-                            }}
-                            className="h-8 text-sm"
-                            autoFocus
-                          />
-                        ) : (
-                          <div 
-                            className="flex items-center gap-2 cursor-pointer hover:text-accent"
-                            onClick={() => setEditingField({ orderId: order.Order_ID, field: 'Telefonní číslo' })}
-                          >
-                            {order['Telefonní číslo']}
-                            <Edit className="w-3 h-3 opacity-50" />
-                          </div>
-                        )}
-                      </td>
-                      <td className="p-4 max-w-xs">
-                        {editingField?.orderId === order.Order_ID && editingField?.field === 'Adresa' ? (
-                          <Input
-                            defaultValue={order.Adresa}
-                            onBlur={(e) => handleEdit(order.Order_ID, 'Adresa', e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') {
-                                handleEdit(order.Order_ID, 'Adresa', e.currentTarget.value);
-                              }
-                            }}
-                            className="h-8 text-sm"
-                            autoFocus
-                          />
-                        ) : (
-                          <div 
-                            className="flex items-center gap-2 cursor-pointer hover:text-accent truncate"
-                            onClick={() => setEditingField({ orderId: order.Order_ID, field: 'Adresa' })}
-                          >
-                            <span className="truncate">{order.Adresa}</span>
-                            <Edit className="w-3 h-3 opacity-50 flex-shrink-0" />
-                          </div>
-                        )}
-                      </td>
-                      <td className="p-4 font-semibold">{order['Hodnota objednávky'].toLocaleString()} Kč</td>
-                      <td className="p-4">{new Date(order['Datum objednávky']).toLocaleDateString('cs-CZ')}</td>
-                      <td className="p-4">
-                        <Badge variant={getStatusBadgeVariant(order['Stav platby'])}>
-                          {order['Stav platby']}
-                        </Badge>
-                      </td>
-                      <td className="p-4">
-                        <Badge variant={getStatusBadgeVariant(order['Stav objednávky'])}>
-                          {order['Stav objednávky']}
-                        </Badge>
-                      </td>
+                      {visibleColumns.map((column) => (
+                        <td key={`${order.Order_ID}-${column.key}`} className="p-4" style={{ width: column.width }}>
+                          {renderCellContent(order, column)}
+                        </td>
+                      ))}
                     </tr>
                     
                     {/* Expanded Detail View */}
                     {expandedOrder === order.Order_ID && (
                       <tr>
-                        <td colSpan={10} className="p-0">
+                        <td colSpan={visibleColumns.length} className="p-0">
                           <div className="bg-muted/30 p-6 border-t">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                               {/* Left Column - Order Details */}
