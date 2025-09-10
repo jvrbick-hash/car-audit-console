@@ -1,5 +1,5 @@
 import React from 'react';
-import cebiaLogo from '@/assets/cebia-logo.png';
+import cebiaLogo from '@/assets/cebia-logo-new.png';
 
 export const Header: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-4">
             <img 
-              src={`${cebiaLogo}?v=${Date.now()}`}
+              src="/lovable-uploads/653476b0-1013-42d3-84fd-836b0e88ce50.png"
               alt="Cebia Logo" 
               className="h-24 w-auto object-contain"
               style={{ aspectRatio: '426/215' }}
