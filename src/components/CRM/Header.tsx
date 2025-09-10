@@ -5,13 +5,12 @@ export const Header: React.FC = () => {
   return (
     <header className="bg-card border-b border-border shadow-sm">
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between h-20">
+          <div className="flex items-center gap-6">
             <img 
               src="/lovable-uploads/653476b0-1013-42d3-84fd-836b0e88ce50.png"
               alt="Cebia Logo" 
-              className="h-24 w-auto object-contain"
-              style={{ aspectRatio: '426/215' }}
+              className="h-16 w-auto object-contain"
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-semibold text-primary">CarAudit CRM</h1>
