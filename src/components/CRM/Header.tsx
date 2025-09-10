@@ -8,7 +8,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-4">
             <img 
-              src={cebiaLogo} 
+              src={`${cebiaLogo}?v=${Date.now()}`}
               alt="Cebia Logo" 
               className="h-24 w-auto object-contain"
               style={{ aspectRatio: '426/215' }}
