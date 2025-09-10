@@ -10,7 +10,7 @@ export const Header: React.FC = () => {
             <img 
               src={cebiaLogo} 
               alt="Cebia Logo" 
-              className="h-8 w-auto"
+              className="h-10 w-auto object-contain"
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-semibold text-primary">CarAudit CRM</h1>
