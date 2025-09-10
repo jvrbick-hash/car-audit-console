@@ -10,7 +10,7 @@ export const Header: React.FC = () => {
             <img 
               src={cebiaLogo} 
               alt="Cebia Logo" 
-              className="h-12 w-auto object-contain"
+              className="h-16 w-auto object-contain"
               style={{ aspectRatio: '426/215' }}
             />
             <div className="hidden sm:block">
