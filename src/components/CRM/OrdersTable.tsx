@@ -40,7 +40,7 @@ const dummyOrders: Order[] = [
     VIN: 'TMBJF71V8C6123456',
     'Poloha inzerátu': 'Praha 5',
     'Poznámka zákazníka': 'Rychlé zpracování prosím',
-    'Číslo dokladu': 'DOK001',
+    'Číslo dokladu': 'DOC123',
     'Slevový kód': 'SLEVA10',
     'Poznámka interní': 'VIP zákazník'
   },
@@ -69,7 +69,7 @@ const dummyOrders: Order[] = [
     VIN: '1VWBP7A39CC123457',
     'Poloha inzerátu': 'Brno',
     'Poznámka zákazníka': '',
-    'Číslo dokladu': 'DOK002',
+    'Číslo dokladu': 'DOC124',
     'Slevový kód': '',
     'Poznámka interní': 'Čeká na platbu'
   },
@@ -98,7 +98,7 @@ const dummyOrders: Order[] = [
     VIN: 'WBA3B1G59DN123458',
     'Poloha inzerátu': 'Ostrava',
     'Poznámka zákazníka': 'Kontrola před koupí',
-    'Číslo dokladu': 'DOK003',
+    'Číslo dokladu': 'DOC123',
     'Slevový kód': 'BMW20',
     'Poznámka interní': 'Pravidelný zákazník'
   }
