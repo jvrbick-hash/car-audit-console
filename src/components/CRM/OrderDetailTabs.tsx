@@ -200,7 +200,7 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <EditableField
                 label="Datum objednávky"
-                value={new Date(order['Datum objednávky']).toLocaleDateString('cs-CZ')}
+                value={new Date(order['Datum objednávky']).toLocaleString('cs-CZ')}
                 isEditable={false}
                 icon={<Calendar className="h-4 w-4" />}
               />
