@@ -34,7 +34,7 @@ const dummyOrders: Order[] = [
     'Adresa inzerátu': 'Praha 5 - Smíchov',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123456',
     'Typ produktu': 'CarAudit Standard',
-    'Report link': 'https://reports.caraudit.cz/report/ORD001',
+    'Report link': 'https://carvago.caraudit.app/8194c912-e4d8-43d9-8751-f6c9da7e9919?lang=cs&theme=7dced998-4ba2-409b-8cca-01267732b1b6',
     DIČ: 'CZ8855123456',
     Měna: 'CZK',
     VIN: 'TMBJF71V8C6123456',
