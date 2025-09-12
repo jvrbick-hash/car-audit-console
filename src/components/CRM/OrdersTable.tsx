@@ -45,9 +45,10 @@ const dummyOrders: Order[] = [
     'Poznámka interní': 'VIP zákazník',
     statusHistory: [
       { status: 'Čeká na platbu', timestamp: '2024-01-15T10:30:00', note: 'Objednávka vytvořena' },
-      { status: 'Zaplaceno', timestamp: '2024-01-15T11:15:00', note: 'Platba přijata' },
-      { status: 'Zpracovává se', timestamp: '2024-01-15T14:20:00', note: 'Zahájeno zpracování' },
-      { status: 'Dokončeno', timestamp: '2024-01-15T16:45:00', note: 'Report odeslán zákazníkovi' }
+      { status: 'Technik přiřazen', timestamp: '2024-01-15T11:15:00', note: 'Technik Jan Novák přiřazen' },
+      { status: 'Technik je na cestě', timestamp: '2024-01-15T14:20:00', note: 'Technik vyjel k vozidlu' },
+      { status: 'Prohlídka v procesu', timestamp: '2024-01-15T15:30:00', note: 'Zahájení prohlídky vozidla' },
+      { status: 'Caraudit hotový', timestamp: '2024-01-15T16:45:00', note: 'Report dokončen a odeslán' }
     ]
   },
   {
@@ -79,7 +80,8 @@ const dummyOrders: Order[] = [
     'Slevový kód': '',
     'Poznámka interní': 'Čeká na platbu',
     statusHistory: [
-      { status: 'Čeká na platbu', timestamp: '2024-01-16T14:45:00', note: 'Objednávka vytvořena' }
+      { status: 'Čeká na platbu', timestamp: '2024-01-16T14:45:00', note: 'Objednávka vytvořena' },
+      { status: 'Auto není dostupné - nevratka', timestamp: '2024-01-16T16:20:00', note: 'Vozidlo není k dispozici pro prohlídku' }
     ]
   },
   {
@@ -112,8 +114,9 @@ const dummyOrders: Order[] = [
     'Poznámka interní': 'Pravidelný zákazník',
     statusHistory: [
       { status: 'Čeká na platbu', timestamp: '2024-01-17T09:15:00', note: 'Objednávka vytvořena' },
-      { status: 'Zaplaceno', timestamp: '2024-01-17T10:30:00', note: 'Platba přijata' },
-      { status: 'Zpracovává se', timestamp: '2024-01-17T11:00:00', note: 'Předáno do zpracování' }
+      { status: 'Technik přiřazen', timestamp: '2024-01-17T10:30:00', note: 'Technik Petr Svoboda přiřazen' },
+      { status: 'Auto není dostupné - vratka', timestamp: '2024-01-17T11:00:00', note: 'Vozidlo nedostupné, vráceny peníze' },
+      { status: 'Vrácené peníze', timestamp: '2024-01-17T11:30:00', note: 'Platba vrácena na účet zákazníka' }
     ]
   }
 ];

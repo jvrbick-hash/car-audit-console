@@ -10,7 +10,7 @@ export interface Order {
   'Hodnota objednávky': number;
   'Datum objednávky': string;
   'Stav platby': 'Zaplaceno' | 'Nezaplaceno' | 'Částečně zaplaceno';
-  'Stav objednávky': 'Dokončeno' | 'Zpracovává se' | 'Čeká na platbu' | 'Zrušeno';
+  'Stav objednávky': 'Dokončeno' | 'Zpracovává se' | 'Čeká na platbu' | 'Zrušeno' | 'Technik přiřazen' | 'Auto není dostupné - vratka' | 'Technik je na cestě' | 'Auto není dostupné - nevratka' | 'Vrácené peníze' | 'Prohlídka v procesu' | 'Caraudit hotový';
   // Detail fields
   'Variabilní symbol': string;
   Výrobce: string;
