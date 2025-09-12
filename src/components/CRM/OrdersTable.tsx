@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ColumnManager } from './ColumnManager';
 import { SearchAndFilters } from './SearchAndFilters';
 import { ExcelFilter } from './ExcelFilter';
+import { OrderDetailTabs } from './OrderDetailTabs';
 import { Order, Column, defaultColumns, validateColumnWidth } from '@/types/orders';
 
 const dummyOrders: Order[] = [
@@ -503,217 +504,15 @@ export const OrdersTable: React.FC = () => {
                         ))}
                       </tr>
                       
-                      {/* Expanded Detail View */}
+                      {/* Enhanced ERP-style Detail View */}
                       {expandedOrder === order.Order_ID && (
                         <tr>
                           <td colSpan={visibleColumns.length} className="p-0">
                             <div className="bg-muted/30 p-6 border-t">
-                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                {/* Left Column - Order Details */}
-                                <Card>
-                                  <CardHeader>
-                                    <CardTitle className="text-lg">Detail objednávky</CardTitle>
-                                  </CardHeader>
-                                  <CardContent className="space-y-4 max-h-96 overflow-y-auto">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Order ID</label>
-                                        <p className="text-sm font-mono">{order.Order_ID}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Jméno</label>
-                                        <p className="text-sm">{order.Jméno}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Příjmení</label>
-                                        <p className="text-sm">{order.Příjmení}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Email</label>
-                                        <p className="text-sm break-words">{order.Email}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Telefonní číslo</label>
-                                        <p className="text-sm">{order['Telefonní číslo']}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Adresa</label>
-                                        <p className="text-sm break-words">{order.Adresa}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">PSČ</label>
-                                        <p className="text-sm">{order.PSČ}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Město</label>
-                                        <p className="text-sm">{order.Město}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Hodnota objednávky</label>
-                                        <p className="text-sm font-medium">{order['Hodnota objednávky']} {order.Měna}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Datum objednávky</label>
-                                        <p className="text-sm">{new Date(order['Datum objednávky']).toLocaleString('cs-CZ')}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Stav platby</label>
-                                        <Badge variant={getStatusBadgeVariant(order['Stav platby'])} className="text-xs">
-                                          {order['Stav platby']}
-                                        </Badge>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Stav objednávky</label>
-                                        <Badge variant={getStatusBadgeVariant(order['Stav objednávky'])} className="text-xs">
-                                          {order['Stav objednávky']}
-                                        </Badge>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Variabilní symbol</label>
-                                        <p className="text-sm font-mono">{order['Variabilní symbol']}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Výrobce</label>
-                                        <p className="text-sm">{order.Výrobce}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Model</label>
-                                        <p className="text-sm">{order.Model}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Typ produktu</label>
-                                        <p className="text-sm">{order['Typ produktu']}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">DIČ</label>
-                                        <p className="text-sm">{order.DIČ}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Měna</label>
-                                        <p className="text-sm">{order.Měna}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">VIN</label>
-                                        <p className="text-sm font-mono break-all">{order.VIN}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Poloha inzerátu</label>
-                                        <p className="text-sm">{order['Poloha inzerátu']}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Číslo dokladu</label>
-                                        <p className="text-sm">{order['Číslo dokladu']}</p>
-                                      </div>
-                                      <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Slevový kód</label>
-                                        <p className="text-sm">{order['Slevový kód']}</p>
-                                      </div>
-                                    </div>
-                                    <div className="pt-4 border-t">
-                                      <div className="space-y-3">
-                                        <div>
-                                          <label className="text-sm font-medium text-muted-foreground">Adresa inzerátu</label>
-                                          <p className="text-sm break-words">{order['Adresa inzerátu']}</p>
-                                        </div>
-                                        <div>
-                                          <label className="text-sm font-medium text-muted-foreground">Odkaz inzerátu</label>
-                                          <a href={order['Odkaz inzerátu']} target="_blank" rel="noopener noreferrer" 
-                                             className="text-sm text-accent hover:underline block break-all">
-                                            {order['Odkaz inzerátu']}
-                                          </a>
-                                        </div>
-                                        <div>
-                                          <label className="text-sm font-medium text-muted-foreground">Report link</label>
-                                          {order['Report link'] ? (
-                                            <a href={order['Report link']} target="_blank" rel="noopener noreferrer" 
-                                               className="text-sm text-accent hover:underline block break-all">
-                                              {order['Report link']}
-                                            </a>
-                                          ) : (
-                                            <p className="text-sm text-muted-foreground">Nepřipraveno</p>
-                                          )}
-                                        </div>
-                                        <div>
-                                          <label className="text-sm font-medium text-muted-foreground">Poznámka zákazníka</label>
-                                          <p className="text-sm break-words">{order['Poznámka zákazníka'] || 'Žádná poznámka'}</p>
-                                        </div>
-                                        <div>
-                                          <label className="text-sm font-medium text-muted-foreground">Poznámka interní</label>
-                                          <p className="text-sm break-words">{order['Poznámka interní'] || 'Žádná poznámka'}</p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-
-                                {/* Right Column - Actions */}
-                                <Card>
-                                  <CardHeader>
-                                    <CardTitle className="text-lg">Akce</CardTitle>
-                                  </CardHeader>
-                                  <CardContent className="space-y-3">
-                                    <Button 
-                                      variant="destructive" 
-                                      size="sm" 
-                                      className="w-full justify-start"
-                                      onClick={() => handleAction('Plná refundace', order.Order_ID)}
-                                    >
-                                      <DollarSign className="w-4 h-4 mr-2" />
-                                      Plná refundace
-                                    </Button>
-                                    
-                                    <Button 
-                                      variant="secondary" 
-                                      size="sm" 
-                                      className="w-full justify-start"
-                                      onClick={() => handleAction('Částečná refundace', order.Order_ID)}
-                                    >
-                                      <DollarSign className="w-4 h-4 mr-2" />
-                                      Částečná refundace
-                                    </Button>
-
-                                    <Button 
-                                      variant="secondary" 
-                                      size="sm" 
-                                      className="w-full justify-start"
-                                      onClick={() => handleAction('Znovu odeslat fakturu', order.Order_ID)}
-                                    >
-                                      <RefreshCw className="w-4 h-4 mr-2" />
-                                      Znovu odeslat fakturu
-                                    </Button>
-
-                                    <Button 
-                                      variant="secondary" 
-                                      size="sm" 
-                                      className="w-full justify-start"
-                                      onClick={() => handleAction('Znovu odeslat report', order.Order_ID)}
-                                    >
-                                      <FileText className="w-4 h-4 mr-2" />
-                                      Znovu odeslat report
-                                    </Button>
-
-                                    <Button 
-                                      variant="secondary" 
-                                      size="sm" 
-                                      className="w-full justify-start"
-                                      onClick={() => handleAction('Odeslat všechny emaily', order.Order_ID)}
-                                    >
-                                      <RefreshCw className="w-4 h-4 mr-2" />
-                                      Odeslat všechny emaily
-                                    </Button>
-
-                                    <Button 
-                                      variant="default" 
-                                      size="sm" 
-                                      className="w-full justify-start"
-                                      onClick={() => handleAction('Vygenerovat slevový voucher', order.Order_ID)}
-                                    >
-                                      <Gift className="w-4 h-4 mr-2" />
-                                      Vygenerovat slevový voucher
-                                    </Button>
-                                  </CardContent>
-                                </Card>
-                              </div>
+                              <OrderDetailTabs 
+                                order={order} 
+                                onEdit={(field, value) => handleEdit(order.Order_ID, field, value)}
+                              />
                             </div>
                           </td>
                         </tr>
