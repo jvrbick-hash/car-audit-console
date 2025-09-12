@@ -35,7 +35,7 @@ export interface Column {
   visible: boolean;
   editable: boolean;
   width?: string;
-  type: 'text' | 'number' | 'date' | 'status' | 'currency' | 'link';
+  type: 'text' | 'number' | 'date' | 'datetime' | 'status' | 'currency' | 'link';
 }
 
 const MIN_COLUMN_WIDTH = 80;
@@ -53,7 +53,7 @@ const baseColumns: Column[] = [
   { key: 'Telefonní číslo', label: 'Telefon', visible: true, editable: true, width: '140px', type: 'text' },
   { key: 'Adresa', label: 'Adresa', visible: true, editable: true, width: '300px', type: 'text' },
   { key: 'Hodnota objednávky', label: 'Hodnota objednávky', visible: true, editable: false, width: '140px', type: 'currency' },
-  { key: 'Datum objednávky', label: 'Datum objednávky', visible: true, editable: false, width: '140px', type: 'date' },
+  { key: 'Datum objednávky', label: 'Datum objednávky', visible: true, editable: false, width: '140px', type: 'datetime' },
   { key: 'Stav platby', label: 'Stav platby', visible: true, editable: false, width: '140px', type: 'status' },
   { key: 'Stav objednávky', label: 'Stav objednávky', visible: true, editable: false, width: '140px', type: 'status' },
   // Additional columns that can be added
