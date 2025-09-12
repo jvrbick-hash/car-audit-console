@@ -42,7 +42,13 @@ const dummyOrders: Order[] = [
     'Poznámka zákazníka': 'Rychlé zpracování prosím',
     'Číslo dokladu': 'DOC123',
     'Slevový kód': 'SLEVA10',
-    'Poznámka interní': 'VIP zákazník'
+    'Poznámka interní': 'VIP zákazník',
+    statusHistory: [
+      { status: 'Čeká na platbu', timestamp: '2024-01-15T10:30:00', note: 'Objednávka vytvořena' },
+      { status: 'Zaplaceno', timestamp: '2024-01-15T11:15:00', note: 'Platba přijata' },
+      { status: 'Zpracovává se', timestamp: '2024-01-15T14:20:00', note: 'Zahájeno zpracování' },
+      { status: 'Dokončeno', timestamp: '2024-01-15T16:45:00', note: 'Report odeslán zákazníkovi' }
+    ]
   },
   {
     Order_ID: 'ORD002',
@@ -71,7 +77,10 @@ const dummyOrders: Order[] = [
     'Poznámka zákazníka': '',
     'Číslo dokladu': 'DOC124',
     'Slevový kód': '',
-    'Poznámka interní': 'Čeká na platbu'
+    'Poznámka interní': 'Čeká na platbu',
+    statusHistory: [
+      { status: 'Čeká na platbu', timestamp: '2024-01-16T14:45:00', note: 'Objednávka vytvořena' }
+    ]
   },
   {
     Order_ID: 'ORD003',
@@ -100,7 +109,12 @@ const dummyOrders: Order[] = [
     'Poznámka zákazníka': 'Kontrola před koupí',
     'Číslo dokladu': 'DOC123',
     'Slevový kód': 'BMW20',
-    'Poznámka interní': 'Pravidelný zákazník'
+    'Poznámka interní': 'Pravidelný zákazník',
+    statusHistory: [
+      { status: 'Čeká na platbu', timestamp: '2024-01-17T09:15:00', note: 'Objednávka vytvořena' },
+      { status: 'Zaplaceno', timestamp: '2024-01-17T10:30:00', note: 'Platba přijata' },
+      { status: 'Zpracovává se', timestamp: '2024-01-17T11:00:00', note: 'Předáno do zpracování' }
+    ]
   }
 ];
 

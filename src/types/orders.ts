@@ -27,6 +27,12 @@ export interface Order {
   'Číslo dokladu': string;
   'Slevový kód': string;
   'Poznámka interní': string;
+  // Status history
+  statusHistory?: Array<{
+    status: string;
+    timestamp: string;
+    note?: string;
+  }>;
 }
 
 export interface Column {

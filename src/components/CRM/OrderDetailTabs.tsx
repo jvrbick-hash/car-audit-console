@@ -22,6 +22,7 @@ import {
   Building,
   Hash,
   Clock,
+  Activity,
   CheckCircle2,
   AlertCircle,
   XCircle
@@ -344,9 +345,39 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                     <Package className="h-4 w-4" />
                     Stav objednávky
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-3">
                     {getOrderStatusBadge(order['Stav objednávky'])}
                   </div>
+                  
+                  {/* Status History Log */}
+                  {order.statusHistory && order.statusHistory.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                        <Activity className="h-3 w-3" />
+                        Historie změn
+                      </div>
+                      <div className="space-y-2 max-h-32 overflow-y-auto bg-muted/30 rounded-md p-2">
+                        {order.statusHistory.map((entry, index) => (
+                          <div key={index} className="flex items-start gap-2 text-xs">
+                            <div className="w-2 h-2 bg-primary/60 rounded-full mt-1.5 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <Badge variant="outline" className="text-xs px-1 py-0.5 h-auto">
+                                  {entry.status}
+                                </Badge>
+                                <span className="text-muted-foreground">
+                                  {new Date(entry.timestamp).toLocaleString('cs-CZ')}
+                                </span>
+                              </div>
+                              {entry.note && (
+                                <p className="text-muted-foreground mt-1">{entry.note}</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </CardContent>
