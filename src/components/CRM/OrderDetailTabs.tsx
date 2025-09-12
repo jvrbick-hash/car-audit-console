@@ -62,14 +62,19 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
 
   const getOrderStatusBadge = (status: string) => {
     switch (status) {
-      case 'Dokončeno':
-        return <Badge variant="default" className="bg-success text-success-foreground"><CheckCircle2 className="h-3 w-3 mr-1" />Dokončeno</Badge>;
-      case 'Zpracovává se':
-        return <Badge variant="secondary"><Clock className="h-3 w-3 mr-1" />Zpracovává se</Badge>;
-      case 'Čeká na platbu':
-        return <Badge variant="secondary" className="bg-warning text-warning-foreground"><AlertCircle className="h-3 w-3 mr-1" />Čeká na platbu</Badge>;
-      case 'Zrušeno':
-        return <Badge variant="destructive"><XCircle className="h-3 w-3 mr-1" />Zrušeno</Badge>;
+      case 'Caraudit hotový':
+        return <Badge variant="default" className="bg-success text-success-foreground"><CheckCircle2 className="h-3 w-3 mr-1" />Caraudit hotový</Badge>;
+      case 'Prohlídka v procesu':
+        return <Badge variant="secondary"><Clock className="h-3 w-3 mr-1" />Prohlídka v procesu</Badge>;
+      case 'Technik je na cestě':
+        return <Badge variant="secondary" className="bg-warning text-warning-foreground"><AlertCircle className="h-3 w-3 mr-1" />Technik je na cestě</Badge>;
+      case 'Technik přiřazen':
+        return <Badge variant="secondary" className="bg-blue-100 text-blue-800"><AlertCircle className="h-3 w-3 mr-1" />Technik přiřazen</Badge>;
+      case 'Auto není dostupné - vratka':
+      case 'Auto není dostupné - nevratka':
+        return <Badge variant="destructive"><XCircle className="h-3 w-3 mr-1" />{status}</Badge>;
+      case 'Vrácené peníze':
+        return <Badge variant="outline"><XCircle className="h-3 w-3 mr-1" />Vrácené peníze</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -77,10 +82,13 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
 
   const getOrderProgress = () => {
     switch (order['Stav objednávky']) {
-      case 'Dokončeno': return 100;
-      case 'Zpracovává se': return 60;
-      case 'Čeká na platbu': return 30;
-      case 'Zrušeno': return 0;
+      case 'Caraudit hotový': return 100;
+      case 'Prohlídka v procesu': return 80;
+      case 'Technik je na cestě': return 60;
+      case 'Technik přiřazen': return 40;
+      case 'Auto není dostupné - vratka':
+      case 'Auto není dostupné - nevratka': return 20;
+      case 'Vrácené peníze': return 0;
       default: return 0;
     }
   };

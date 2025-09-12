@@ -27,7 +27,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 3990,
     'Datum objednávky': '2024-01-15T10:30:00',
     'Stav platby': 'Zaplaceno',
-    'Stav objednávky': 'Dokončeno',
+    'Stav objednávky': 'Caraudit hotový',
     'Variabilní symbol': '2024010001',
     Výrobce: 'Škoda',
     Model: 'Octavia',
@@ -44,10 +44,9 @@ const dummyOrders: Order[] = [
     'Slevový kód': 'SLEVA10',
     'Poznámka interní': 'VIP zákazník',
     statusHistory: [
-      { status: 'Čeká na platbu', timestamp: '2024-01-15T10:30:00', note: 'Objednávka vytvořena' },
-      { status: 'Technik přiřazen', timestamp: '2024-01-15T11:15:00', note: 'Technik Jan Novák přiřazen' },
-      { status: 'Technik je na cestě', timestamp: '2024-01-15T14:20:00', note: 'Technik vyjel k vozidlu' },
-      { status: 'Prohlídka v procesu', timestamp: '2024-01-15T15:30:00', note: 'Zahájení prohlídky vozidla' },
+      { status: 'Technik přiřazen', timestamp: '2024-01-15T10:30:00', note: 'Technik Jan Novák přiřazen' },
+      { status: 'Technik je na cestě', timestamp: '2024-01-15T11:15:00', note: 'Technik vyjel k vozidlu' },
+      { status: 'Prohlídka v procesu', timestamp: '2024-01-15T14:20:00', note: 'Zahájení prohlídky vozidla' },
       { status: 'Caraudit hotový', timestamp: '2024-01-15T16:45:00', note: 'Report dokončen a odeslán' }
     ]
   },
@@ -63,7 +62,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 2990,
     'Datum objednávky': '2024-01-16T14:45:00',
     'Stav platby': 'Nezaplaceno',
-    'Stav objednávky': 'Čeká na platbu',
+    'Stav objednávky': 'Auto není dostupné - nevratka',
     'Variabilní symbol': '2024010002',
     Výrobce: 'Volkswagen',
     Model: 'Golf',
@@ -80,7 +79,7 @@ const dummyOrders: Order[] = [
     'Slevový kód': '',
     'Poznámka interní': 'Čeká na platbu',
     statusHistory: [
-      { status: 'Čeká na platbu', timestamp: '2024-01-16T14:45:00', note: 'Objednávka vytvořena' },
+      { status: 'Technik přiřazen', timestamp: '2024-01-16T14:45:00', note: 'Technik Petr Novotný přiřazen' },
       { status: 'Auto není dostupné - nevratka', timestamp: '2024-01-16T16:20:00', note: 'Vozidlo není k dispozici pro prohlídku' }
     ]
   },
@@ -96,7 +95,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 4990,
     'Datum objednávky': '2024-01-17T09:15:00',
     'Stav platby': 'Zaplaceno',
-    'Stav objednávky': 'Zpracovává se',
+    'Stav objednávky': 'Vrácené peníze',
     'Variabilní symbol': '2024010003',
     Výrobce: 'BMW',
     Model: '320d',
@@ -113,9 +112,8 @@ const dummyOrders: Order[] = [
     'Slevový kód': 'BMW20',
     'Poznámka interní': 'Pravidelný zákazník',
     statusHistory: [
-      { status: 'Čeká na platbu', timestamp: '2024-01-17T09:15:00', note: 'Objednávka vytvořena' },
-      { status: 'Technik přiřazen', timestamp: '2024-01-17T10:30:00', note: 'Technik Petr Svoboda přiřazen' },
-      { status: 'Auto není dostupné - vratka', timestamp: '2024-01-17T11:00:00', note: 'Vozidlo nedostupné, vráceny peníze' },
+      { status: 'Technik přiřazen', timestamp: '2024-01-17T09:15:00', note: 'Technik Petr Svoboda přiřazen' },
+      { status: 'Auto není dostupné - vratka', timestamp: '2024-01-17T10:30:00', note: 'Vozidlo nedostupné, bude vrácena platba' },
       { status: 'Vrácené peníze', timestamp: '2024-01-17T11:30:00', note: 'Platba vrácena na účet zákazníka' }
     ]
   }
