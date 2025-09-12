@@ -42,7 +42,7 @@ export const defaultColumns: Column[] = [
   { key: 'Order_ID', label: 'Order ID', visible: true, editable: false, width: '120px', type: 'text' },
   { key: 'Jméno', label: 'Jméno', visible: true, editable: false, width: '100px', type: 'text' },
   { key: 'Příjmení', label: 'Příjmení', visible: true, editable: false, width: '120px', type: 'text' },
-  { key: 'Email', label: 'Email', visible: true, editable: true, width: '250px', type: 'text' },
+  { key: 'Email', label: 'Email', visible: true, editable: true, width: '180px', type: 'text' },
   { key: 'Telefonní číslo', label: 'Telefon', visible: true, editable: true, width: '140px', type: 'text' },
   { key: 'Adresa', label: 'Adresa', visible: true, editable: true, width: '300px', type: 'text' },
   { key: 'Hodnota objednávky', label: 'Hodnota', visible: true, editable: false, width: '120px', type: 'currency' },
