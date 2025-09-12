@@ -138,29 +138,31 @@ export const OrdersTable: React.FC = () => {
     const column = columns.find(col => col.key === columnKey);
     if (!column) return;
     
+    const currentWidth = column.width ? parseInt(column.width.replace('px', '')) : 120;
+    
     setResizingColumn(columnKey);
     setResizeStartX(e.clientX);
-    setResizeStartWidth(parseInt(column.width || '120'));
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!resizingColumn) return;
-    
-    const deltaX = e.clientX - resizeStartX;
-    const newWidth = Math.max(80, resizeStartWidth + deltaX);
-    
-    setColumns(prev => prev.map(col => 
-      col.key === resizingColumn 
-        ? { ...col, width: `${newWidth}px` }
-        : col
-    ));
-  };
-
-  const handleMouseUp = () => {
-    setResizingColumn(null);
+    setResizeStartWidth(currentWidth);
   };
 
   React.useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!resizingColumn) return;
+      
+      const deltaX = e.clientX - resizeStartX;
+      const newWidth = Math.max(80, resizeStartWidth + deltaX);
+      
+      setColumns(prev => prev.map(col => 
+        col.key === resizingColumn 
+          ? { ...col, width: `${newWidth}px` }
+          : col
+      ));
+    };
+
+    const handleMouseUp = () => {
+      setResizingColumn(null);
+    };
+
     if (resizingColumn) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
