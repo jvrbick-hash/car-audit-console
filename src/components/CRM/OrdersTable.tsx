@@ -456,10 +456,10 @@ export const OrdersTable: React.FC = () => {
                        <th 
                          key={column.key}
                          className="text-left p-4 font-semibold text-secondary-foreground border-r border-border last:border-r-0 relative"
-                         style={{ 
-                           minWidth: column.width,
-                           width: column.key === 'Email' || column.key === 'Adresa' ? 'auto' : column.width
-                         }}
+                          style={{ 
+                            minWidth: column.width,
+                            width: column.width
+                          }}
                        >
                          {column.label}
                          <div 
@@ -475,10 +475,10 @@ export const OrdersTable: React.FC = () => {
                       <th 
                         key={`filter-${column.key}`}
                         className="p-2 border-r border-border last:border-r-0"
-                        style={{ 
-                          minWidth: column.width,
-                          width: column.key === 'Email' || column.key === 'Adresa' ? 'auto' : column.width
-                        }}
+                         style={{ 
+                           minWidth: column.width,
+                           width: column.width
+                         }}
                       >
                         {renderColumnFilter(column)}
                       </th>
@@ -493,11 +493,10 @@ export const OrdersTable: React.FC = () => {
                           <td 
                             key={`${order.Order_ID}-${column.key}`} 
                             className="p-4 align-top"
-                            style={{ 
-                              minWidth: column.width,
-                              width: column.key === 'Email' || column.key === 'Adresa' ? 'auto' : column.width,
-                              maxWidth: column.key === 'Email' ? '250px' : column.key === 'Adresa' ? '300px' : 'none'
-                            }}
+                             style={{ 
+                               minWidth: column.width,
+                               width: column.width
+                             }}
                           >
                             {renderCellContent(order, column)}
                           </td>
