@@ -300,6 +300,12 @@ export const OrdersTable: React.FC = () => {
             {new Date(value as string).toLocaleDateString('cs-CZ')}
           </span>
         );
+      case 'datetime':
+        return (
+          <span className="whitespace-nowrap">
+            {new Date(value as string).toLocaleString('cs-CZ')}
+          </span>
+        );
       case 'status':
         return (
           <Badge variant={getStatusBadgeVariant(value as string)} className="whitespace-nowrap">
