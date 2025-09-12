@@ -525,6 +525,16 @@ export const OrdersTable: React.FC = () => {
                                       <Gift className="w-4 h-4 mr-2" />
                                       Vygenerovat slevový voucher
                                     </Button>
+
+                                    <Button 
+                                      variant="outline" 
+                                      size="sm" 
+                                      className="w-full justify-start"
+                                      onClick={() => handleAction('Odeslat všechny emaily', order.Order_ID)}
+                                    >
+                                      <RefreshCw className="w-4 h-4 mr-2" />
+                                      Odeslat všechny emaily
+                                    </Button>
                                   </CardContent>
                                 </Card>
                               </div>
