@@ -64,7 +64,7 @@ const baseColumns: Column[] = [
   { key: 'Model', label: 'Model', visible: false, editable: false, width: '120px', type: 'text' },
   { key: 'Typ produktu', label: 'Typ produktu', visible: false, editable: false, width: '160px', type: 'text' },
   { key: 'DIČ', label: 'DIČ', visible: false, editable: false, width: '120px', type: 'text' },
-  { key: 'Měna', label: 'Měna', visible: false, editable: true, width: '80px', type: 'text' },
+  { key: 'Měna', label: 'Měna', visible: false, editable: false, width: '80px', type: 'text' },
   { key: 'VIN', label: 'VIN', visible: false, editable: false, width: '180px', type: 'text' },
   { key: 'Poloha inzerátu', label: 'Poloha inzerátu', visible: false, editable: false, width: '140px', type: 'text' },
   { key: 'Poznámka zákazníka', label: 'Poznámka zákazníka', visible: false, editable: false, width: '200px', type: 'text' },
