@@ -21,6 +21,8 @@ const dummyOrders: Order[] = [
     Email: 'jan.novak@email.cz',
     'Telefonní číslo': '+420 123 456 789',
     Adresa: 'Václavské náměstí 1, Praha 1',
+    PSČ: '11000',
+    Město: 'Praha',
     'Hodnota objednávky': 3990,
     'Datum objednávky': '2024-01-15',
     'Stav platby': 'Zaplaceno',
@@ -31,7 +33,15 @@ const dummyOrders: Order[] = [
     'Adresa inzerátu': 'Praha 5 - Smíchov',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123456',
     'Typ produktu': 'CarAudit Standard',
-    'Report link': 'https://reports.caraudit.cz/report/ORD001'
+    'Report link': 'https://reports.caraudit.cz/report/ORD001',
+    DIČ: 'CZ8855123456',
+    Měna: 'CZK',
+    VIN: 'TMBJF71V8C6123456',
+    'Poloha inzerátu': 'Praha 5',
+    'Poznámka zákazníka': 'Rychlé zpracování prosím',
+    'Číslo dokladu': 'DOK001',
+    'Slevový kód': 'SLEVA10',
+    'Poznámka interní': 'VIP zákazník'
   },
   {
     Order_ID: 'ORD002',
@@ -40,6 +50,8 @@ const dummyOrders: Order[] = [
     Email: 'petra.svobodova@email.cz',
     'Telefonní číslo': '+420 987 654 321',
     Adresa: 'Náměstí Míru 15, Brno',
+    PSČ: '60200',
+    Město: 'Brno',
     'Hodnota objednávky': 2990,
     'Datum objednávky': '2024-01-16',
     'Stav platby': 'Nezaplaceno',
@@ -50,7 +62,15 @@ const dummyOrders: Order[] = [
     'Adresa inzerátu': 'Brno - Královo Pole',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123457',
     'Typ produktu': 'CarAudit Premium',
-    'Report link': ''
+    'Report link': '',
+    DIČ: '',
+    Měna: 'CZK',
+    VIN: '1VWBP7A39CC123457',
+    'Poloha inzerátu': 'Brno',
+    'Poznámka zákazníka': '',
+    'Číslo dokladu': 'DOK002',
+    'Slevový kód': '',
+    'Poznámka interní': 'Čeká na platbu'
   },
   {
     Order_ID: 'ORD003',
@@ -59,6 +79,8 @@ const dummyOrders: Order[] = [
     Email: 'martin.prochazka@email.cz',
     'Telefonní číslo': '+420 555 123 456',
     Adresa: 'Hlavní třída 89, Ostrava',
+    PSČ: '70200',
+    Město: 'Ostrava',
     'Hodnota objednávky': 4990,
     'Datum objednávky': '2024-01-17',
     'Stav platby': 'Zaplaceno',
@@ -69,7 +91,15 @@ const dummyOrders: Order[] = [
     'Adresa inzerátu': 'Ostrava - Poruba',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123458',
     'Typ produktu': 'CarAudit Professional',
-    'Report link': ''
+    'Report link': '',
+    DIČ: 'CZ7712345678',
+    Měna: 'CZK',
+    VIN: 'WBA3B1G59DN123458',
+    'Poloha inzerátu': 'Ostrava',
+    'Poznámka zákazníka': 'Kontrola před koupí',
+    'Číslo dokladu': 'DOK003',
+    'Slevový kód': 'BMW20',
+    'Poznámka interní': 'Pravidelný zákazník'
   }
 ];
 
