@@ -223,15 +223,24 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                   Číslo dokladu
                 </div>
                 <div className="p-3 rounded-md border bg-card">
+                  {(() => {
+                    console.log('Order data:', order);
+                    console.log('Document number value:', order['Číslo dokladu']);
+                    console.log('Document number type:', typeof order['Číslo dokladu']);
+                    console.log('Document number truthy:', !!order['Číslo dokladu']);
+                    return null;
+                  })()}
                   {order['Číslo dokladu'] ? (
-                    <a
-                      href={`/invoices/${order['Číslo dokladu']}.pdf`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-primary hover:underline"
-                    >
-                      {order['Číslo dokladu']}
-                    </a>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={`/invoices/${order['Číslo dokladu']}.pdf`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium"
+                      >
+                        📄 {order['Číslo dokladu']} (PDF)
+                      </a>
+                    </div>
                   ) : (
                     <span className="text-sm text-muted-foreground">Nevyplněno</span>
                   )}
