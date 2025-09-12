@@ -1,5 +1,4 @@
 import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -120,15 +119,11 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
         </CardHeader>
       </Card>
 
-      {/* Tabs Content */}
-      <Tabs defaultValue="customer" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="customer">Zákazník</TabsTrigger>
-          <TabsTrigger value="order">Objednávka & Produkt</TabsTrigger>
-          <TabsTrigger value="management">Správa & Poznámky</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="customer" className="space-y-4">
+      {/* Single Consolidated View */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left Column */}
+        <div className="space-y-6">
+          {/* Customer Information */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -136,7 +131,7 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 Zákaznické údaje
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <EditableField
                 label="Jméno"
                 value={order.Jméno}
@@ -191,6 +186,108 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 onSave={handleFieldSave('Město')}
                 icon={<MapPin className="h-4 w-4" />}
               />
+            </CardContent>
+          </Card>
+
+          {/* Order Details */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Package className="h-5 w-5 text-primary" />
+                Detaily objednávky
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <EditableField
+                label="Datum objednávky"
+                value={new Date(order['Datum objednávky']).toLocaleDateString('cs-CZ')}
+                isEditable={false}
+                icon={<Calendar className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Hodnota objednávky"
+                value={`${order['Hodnota objednávky'].toLocaleString()} Kč`}
+                isEditable={false}
+                icon={<DollarSign className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Variabilní symbol"
+                value={order['Variabilní symbol']}
+                isEditable={isFieldEditable('Variabilní symbol')}
+                onSave={handleFieldSave('Variabilní symbol')}
+                icon={<Hash className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Číslo dokladu"
+                value={order['Číslo dokladu']}
+                isEditable={isFieldEditable('Číslo dokladu')}
+                onSave={handleFieldSave('Číslo dokladu')}
+                icon={<FileText className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Měna"
+                value={order.Měna}
+                isEditable={isFieldEditable('Měna')}
+                onSave={handleFieldSave('Měna')}
+                icon={<DollarSign className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Slevový kód"
+                value={order['Slevový kód']}
+                isEditable={isFieldEditable('Slevový kód')}
+                onSave={handleFieldSave('Slevový kód')}
+                icon={<FileText className="h-4 w-4" />}
+              />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right Column */}
+        <div className="space-y-6">
+          {/* Product Information */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Car className="h-5 w-5 text-primary" />
+                Informace o produktu
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <EditableField
+                label="Výrobce"
+                value={order.Výrobce}
+                isEditable={isFieldEditable('Výrobce')}
+                onSave={handleFieldSave('Výrobce')}
+                icon={<Building className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Model"
+                value={order.Model}
+                isEditable={isFieldEditable('Model')}
+                onSave={handleFieldSave('Model')}
+                icon={<Car className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Typ produktu"
+                value={order['Typ produktu']}
+                isEditable={isFieldEditable('Typ produktu')}
+                onSave={handleFieldSave('Typ produktu')}
+                icon={<Package className="h-4 w-4" />}
+              />
+              <EditableField
+                label="VIN"
+                value={order.VIN}
+                isEditable={isFieldEditable('VIN')}
+                onSave={handleFieldSave('VIN')}
+                icon={<Hash className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Poloha inzerátu"
+                value={order['Poloha inzerátu']}
+                isEditable={isFieldEditable('Poloha inzerátu')}
+                onSave={handleFieldSave('Poloha inzerátu')}
+                icon={<MapPin className="h-4 w-4" />}
+              />
               <EditableField
                 label="DIČ"
                 value={order.DIČ}
@@ -200,227 +297,131 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
               />
             </CardContent>
           </Card>
-        </TabsContent>
 
-        <TabsContent value="order" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Order Details */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-primary" />
-                  Detaily objednávky
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <EditableField
-                  label="Datum objednávky"
-                  value={new Date(order['Datum objednávky']).toLocaleDateString('cs-CZ')}
-                  isEditable={false}
-                  icon={<Calendar className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="Hodnota objednávky"
-                  value={`${order['Hodnota objednávky'].toLocaleString()} Kč`}
-                  isEditable={false}
-                  icon={<DollarSign className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="Variabilní symbol"
-                  value={order['Variabilní symbol']}
-                  isEditable={isFieldEditable('Variabilní symbol')}
-                  onSave={handleFieldSave('Variabilní symbol')}
-                  icon={<Hash className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="Číslo dokladu"
-                  value={order['Číslo dokladu']}
-                  isEditable={isFieldEditable('Číslo dokladu')}
-                  onSave={handleFieldSave('Číslo dokladu')}
-                  icon={<FileText className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="Měna"
-                  value={order.Měna}
-                  isEditable={isFieldEditable('Měna')}
-                  onSave={handleFieldSave('Měna')}
-                  icon={<DollarSign className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="Slevový kód"
-                  value={order['Slevový kód']}
-                  isEditable={isFieldEditable('Slevový kód')}
-                  onSave={handleFieldSave('Slevový kód')}
-                  icon={<FileText className="h-4 w-4" />}
-                />
-              </CardContent>
-            </Card>
-
-            {/* Product Information */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Car className="h-5 w-5 text-primary" />
-                  Informace o produktu
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <EditableField
-                  label="Výrobce"
-                  value={order.Výrobce}
-                  isEditable={isFieldEditable('Výrobce')}
-                  onSave={handleFieldSave('Výrobce')}
-                  icon={<Building className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="Model"
-                  value={order.Model}
-                  isEditable={isFieldEditable('Model')}
-                  onSave={handleFieldSave('Model')}
-                  icon={<Car className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="Typ produktu"
-                  value={order['Typ produktu']}
-                  isEditable={isFieldEditable('Typ produktu')}
-                  onSave={handleFieldSave('Typ produktu')}
-                  icon={<Package className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="VIN"
-                  value={order.VIN}
-                  isEditable={isFieldEditable('VIN')}
-                  onSave={handleFieldSave('VIN')}
-                  icon={<Hash className="h-4 w-4" />}
-                />
-                <div className="md:col-span-2">
-                  <EditableField
-                    label="Adresa inzerátu"
-                    value={order['Adresa inzerátu']}
-                    isEditable={isFieldEditable('Adresa inzerátu')}
-                    type="textarea"
-                    onSave={handleFieldSave('Adresa inzerátu')}
-                    icon={<MapPin className="h-4 w-4" />}
-                  />
-                </div>
-                <EditableField
-                  label="Poloha inzerátu"
-                  value={order['Poloha inzerátu']}
-                  isEditable={isFieldEditable('Poloha inzerátu')}
-                  onSave={handleFieldSave('Poloha inzerátu')}
-                  icon={<MapPin className="h-4 w-4" />}
-                />
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="management" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Payment Status */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CreditCard className="h-5 w-5 text-primary" />
-                  Stav platby a objednávky
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                      <CreditCard className="h-4 w-4" />
-                      Stav platby
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {getPaymentStatusBadge(order['Stav platby'])}
-                    </div>
+          {/* Payment Status */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-primary" />
+                Stav platby a objednávky
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                    <CreditCard className="h-4 w-4" />
+                    Stav platby
                   </div>
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                      <Package className="h-4 w-4" />
-                      Stav objednávky
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {getOrderStatusBadge(order['Stav objednávky'])}
-                    </div>
+                  <div className="flex items-center gap-2">
+                    {getPaymentStatusBadge(order['Stav platby'])}
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Notes and Links */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-primary" />
-                  Poznámky a odkazy
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <EditableField
-                  label="Poznámka zákazníka"
-                  value={order['Poznámka zákazníka']}
-                  isEditable={isFieldEditable('Poznámka zákazníka')}
-                  type="textarea"
-                  onSave={handleFieldSave('Poznámka zákazníka')}
-                  icon={<MessageSquare className="h-4 w-4" />}
-                />
-                <EditableField
-                  label="Poznámka interní"
-                  value={order['Poznámka interní']}
-                  isEditable={isFieldEditable('Poznámka interní')}
-                  type="textarea"
-                  onSave={handleFieldSave('Poznámka interní')}
-                  icon={<MessageSquare className="h-4 w-4" />}
-                />
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                      <LinkIcon className="h-4 w-4" />
-                      Odkaz inzerátu
-                    </div>
-                    <div className="p-3 rounded-md border bg-card">
-                      {order['Odkaz inzerátu'] ? (
-                        <a
-                          href={order['Odkaz inzerátu']}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-primary hover:underline break-all"
-                        >
-                          {order['Odkaz inzerátu']}
-                        </a>
-                      ) : (
-                        <span className="text-sm text-muted-foreground">Nevyplněno</span>
-                      )}
-                    </div>
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                    <Package className="h-4 w-4" />
+                    Stav objednávky
                   </div>
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                      <FileText className="h-4 w-4" />
-                      Report link
-                    </div>
-                    <div className="p-3 rounded-md border bg-card">
-                      {order['Report link'] ? (
-                        <a
-                          href={order['Report link']}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-primary hover:underline break-all"
-                        >
-                          {order['Report link']}
-                        </a>
-                      ) : (
-                        <span className="text-sm text-muted-foreground">Nevyplněno</span>
-                      )}
-                    </div>
+                  <div className="flex items-center gap-2">
+                    {getOrderStatusBadge(order['Stav objednávky'])}
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Full Width Bottom Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        {/* Notes */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-primary" />
+              Poznámky
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <EditableField
+              label="Poznámka zákazníka"
+              value={order['Poznámka zákazníka']}
+              isEditable={isFieldEditable('Poznámka zákazníka')}
+              type="textarea"
+              onSave={handleFieldSave('Poznámka zákazníka')}
+              icon={<MessageSquare className="h-4 w-4" />}
+            />
+            <EditableField
+              label="Poznámka interní"
+              value={order['Poznámka interní']}
+              isEditable={isFieldEditable('Poznámka interní')}
+              type="textarea"
+              onSave={handleFieldSave('Poznámka interní')}
+              icon={<MessageSquare className="h-4 w-4" />}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Links and Additional Info */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <LinkIcon className="h-5 w-5 text-primary" />
+              Odkazy a dodatečné informace
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <EditableField
+              label="Adresa inzerátu"
+              value={order['Adresa inzerátu']}
+              isEditable={isFieldEditable('Adresa inzerátu')}
+              type="textarea"
+              onSave={handleFieldSave('Adresa inzerátu')}
+              icon={<MapPin className="h-4 w-4" />}
+            />
+            <div className="space-y-2">
+              <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <LinkIcon className="h-4 w-4" />
+                Odkaz inzerátu
+              </div>
+              <div className="p-3 rounded-md border bg-card">
+                {order['Odkaz inzerátu'] ? (
+                  <a
+                    href={order['Odkaz inzerátu']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-primary hover:underline break-all"
+                  >
+                    {order['Odkaz inzerátu']}
+                  </a>
+                ) : (
+                  <span className="text-sm text-muted-foreground">Nevyplněno</span>
+                )}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Report link
+              </div>
+              <div className="p-3 rounded-md border bg-card">
+                {order['Report link'] ? (
+                  <a
+                    href={order['Report link']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-primary hover:underline break-all"
+                  >
+                    {order['Report link']}
+                  </a>
+                ) : (
+                  <span className="text-sm text-muted-foreground">Nevyplněno</span>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
