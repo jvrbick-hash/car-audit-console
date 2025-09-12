@@ -217,13 +217,26 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 onSave={handleFieldSave('Variabilní symbol')}
                 icon={<Hash className="h-4 w-4" />}
               />
-              <EditableField
-                label="Číslo dokladu"
-                value={order['Číslo dokladu']}
-                isEditable={isFieldEditable('Číslo dokladu')}
-                onSave={handleFieldSave('Číslo dokladu')}
-                icon={<FileText className="h-4 w-4" />}
-              />
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  Číslo dokladu
+                </div>
+                <div className="p-3 rounded-md border bg-card">
+                  {order['Číslo dokladu'] ? (
+                    <a
+                      href={`/invoices/${order['Číslo dokladu']}.pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline"
+                    >
+                      {order['Číslo dokladu']}
+                    </a>
+                  ) : (
+                    <span className="text-sm text-muted-foreground">Nevyplněno</span>
+                  )}
+                </div>
+              </div>
               <EditableField
                 label="Měna"
                 value={order.Měna}
