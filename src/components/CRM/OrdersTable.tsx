@@ -487,7 +487,7 @@ export const OrdersTable: React.FC = () => {
                                     </Button>
                                     
                                     <Button 
-                                      variant="outline" 
+                                      variant="secondary" 
                                       size="sm" 
                                       className="w-full justify-start"
                                       onClick={() => handleAction('Částečná refundace', order.Order_ID)}
@@ -517,23 +517,23 @@ export const OrdersTable: React.FC = () => {
                                     </Button>
 
                                     <Button 
-                                      variant="default" 
-                                      size="sm" 
-                                      className="w-full justify-start bg-accent hover:bg-accent/90"
-                                      onClick={() => handleAction('Vygenerovat slevový voucher', order.Order_ID)}
-                                    >
-                                      <Gift className="w-4 h-4 mr-2" />
-                                      Vygenerovat slevový voucher
-                                    </Button>
-
-                                    <Button 
-                                      variant="outline" 
+                                      variant="secondary" 
                                       size="sm" 
                                       className="w-full justify-start"
                                       onClick={() => handleAction('Odeslat všechny emaily', order.Order_ID)}
                                     >
                                       <RefreshCw className="w-4 h-4 mr-2" />
                                       Odeslat všechny emaily
+                                    </Button>
+
+                                    <Button 
+                                      variant="default" 
+                                      size="sm" 
+                                      className="w-full justify-start"
+                                      onClick={() => handleAction('Vygenerovat slevový voucher', order.Order_ID)}
+                                    >
+                                      <Gift className="w-4 h-4 mr-2" />
+                                      Vygenerovat slevový voucher
                                     </Button>
                                   </CardContent>
                                 </Card>
