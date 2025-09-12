@@ -38,7 +38,14 @@ export interface Column {
   type: 'text' | 'number' | 'date' | 'status' | 'currency' | 'link';
 }
 
-export const defaultColumns: Column[] = [
+const MIN_COLUMN_WIDTH = 80;
+
+export const validateColumnWidth = (width: string): string => {
+  const numericWidth = parseInt(width.replace('px', ''));
+  return `${Math.max(MIN_COLUMN_WIDTH, numericWidth)}px`;
+};
+
+const baseColumns: Column[] = [
   { key: 'Order_ID', label: 'Order ID', visible: true, editable: false, width: '120px', type: 'text' },
   { key: 'Jméno', label: 'Jméno', visible: true, editable: false, width: '100px', type: 'text' },
   { key: 'Příjmení', label: 'Příjmení', visible: true, editable: false, width: '120px', type: 'text' },
@@ -65,3 +72,8 @@ export const defaultColumns: Column[] = [
   { key: 'Slevový kód', label: 'Slevový kód', visible: false, editable: true, width: '120px', type: 'text' },
   { key: 'Poznámka interní', label: 'Poznámka interní', visible: false, editable: true, width: '200px', type: 'text' },
 ];
+
+export const defaultColumns: Column[] = baseColumns.map(col => ({ 
+  ...col, 
+  width: validateColumnWidth(col.width || '80px') 
+}));

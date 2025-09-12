@@ -11,7 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ColumnManager } from './ColumnManager';
 import { SearchAndFilters } from './SearchAndFilters';
 import { ExcelFilter } from './ExcelFilter';
-import { Order, Column, defaultColumns } from '@/types/orders';
+import { Order, Column, defaultColumns, validateColumnWidth } from '@/types/orders';
 
 const dummyOrders: Order[] = [
   {
@@ -154,7 +154,7 @@ export const OrdersTable: React.FC = () => {
       
       setColumns(prev => prev.map(col => 
         col.key === resizingColumn 
-          ? { ...col, width: `${newWidth}px` }
+          ? { ...col, width: validateColumnWidth(`${newWidth}px`) }
           : col
       ));
     };
