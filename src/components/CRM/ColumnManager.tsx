@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Dialog,
   DialogContent,
@@ -85,7 +86,8 @@ export const ColumnManager: React.FC<ColumnManagerProps> = ({ columns, onColumns
           <DialogTitle>Správa sloupců tabulky</DialogTitle>
         </DialogHeader>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto">
+        <ScrollArea className="max-h-[60vh] pr-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Visible Columns */}
           <Card>
             <CardHeader>
@@ -172,7 +174,8 @@ export const ColumnManager: React.FC<ColumnManagerProps> = ({ columns, onColumns
               )}
             </CardContent>
           </Card>
-        </div>
+          </div>
+        </ScrollArea>
 
         <div className="flex justify-between items-center pt-4 border-t">
           <p className="text-sm text-muted-foreground">
