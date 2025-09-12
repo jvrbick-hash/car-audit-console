@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
 import { ColumnManager } from './ColumnManager';
 import { SearchAndFilters } from './SearchAndFilters';
@@ -96,6 +97,7 @@ export const OrdersTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [columnFilters, setColumnFilters] = useState<Record<string, string[]>>({});
+  const [confirmAction, setConfirmAction] = useState<{ action: string; orderId: string } | null>(null);
   const { toast } = useToast();
 
   const visibleColumns = columns.filter(col => col.visible);
@@ -161,10 +163,17 @@ export const OrdersTable: React.FC = () => {
   };
 
   const handleAction = (action: string, orderId: string) => {
-    toast({
-      title: "Akce spuštěna",
-      description: `${action} pro objednávku ${orderId}`,
-    });
+    setConfirmAction({ action, orderId });
+  };
+
+  const confirmAndExecuteAction = () => {
+    if (confirmAction) {
+      toast({
+        title: "Akce spuštěna",
+        description: `${confirmAction.action} pro objednávku ${confirmAction.orderId}`,
+      });
+      setConfirmAction(null);
+    }
   };
 
   const clearAllFilters = () => {
@@ -565,6 +574,29 @@ export const OrdersTable: React.FC = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Confirmation Dialog */}
+        <AlertDialog open={!!confirmAction} onOpenChange={() => setConfirmAction(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Potvrzení akce</AlertDialogTitle>
+              <AlertDialogDescription>
+                Opravdu chcete provést tuto akci?
+                {confirmAction && (
+                  <div className="mt-2 font-medium">
+                    {confirmAction.action} pro objednávku {confirmAction.orderId}
+                  </div>
+                )}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Zrušit</AlertDialogCancel>
+              <AlertDialogAction onClick={confirmAndExecuteAction}>
+                Pokračovat
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </TooltipProvider>
   );
