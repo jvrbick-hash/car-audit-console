@@ -124,11 +124,53 @@ export const OrdersTable: React.FC = () => {
   const [columns, setColumns] = useState<Column[]>(defaultColumns);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [editingField, setEditingField] = useState<{ orderId: string; field: string } | null>(null);
+  const [resizingColumn, setResizingColumn] = useState<string | null>(null);
+  const [resizeStartX, setResizeStartX] = useState<number>(0);
+  const [resizeStartWidth, setResizeStartWidth] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [columnFilters, setColumnFilters] = useState<Record<string, string[]>>({});
   const [confirmAction, setConfirmAction] = useState<{ action: string; orderId: string } | null>(null);
   const { toast } = useToast();
+
+  const handleMouseDown = (e: React.MouseEvent, columnKey: string) => {
+    e.preventDefault();
+    const column = columns.find(col => col.key === columnKey);
+    if (!column) return;
+    
+    setResizingColumn(columnKey);
+    setResizeStartX(e.clientX);
+    setResizeStartWidth(parseInt(column.width || '120'));
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!resizingColumn) return;
+    
+    const deltaX = e.clientX - resizeStartX;
+    const newWidth = Math.max(80, resizeStartWidth + deltaX);
+    
+    setColumns(prev => prev.map(col => 
+      col.key === resizingColumn 
+        ? { ...col, width: `${newWidth}px` }
+        : col
+    ));
+  };
+
+  const handleMouseUp = () => {
+    setResizingColumn(null);
+  };
+
+  React.useEffect(() => {
+    if (resizingColumn) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [resizingColumn, resizeStartX, resizeStartWidth]);
 
   const visibleColumns = columns.filter(col => col.visible);
 
@@ -407,20 +449,24 @@ export const OrdersTable: React.FC = () => {
               <table className="w-full" style={{ minWidth: `${visibleColumns.length * 180}px` }}>
                 <thead>
                   {/* Column Headers */}
-                  <tr className="bg-secondary">
-                    {visibleColumns.map((column) => (
-                      <th 
-                        key={column.key}
-                        className="text-left p-4 font-semibold text-secondary-foreground border-r border-border last:border-r-0"
-                        style={{ 
-                          minWidth: column.width,
-                          width: column.key === 'Email' || column.key === 'Adresa' ? 'auto' : column.width
-                        }}
-                      >
-                        {column.label}
-                      </th>
-                    ))}
-                  </tr>
+                   <tr className="bg-secondary">
+                     {visibleColumns.map((column) => (
+                       <th 
+                         key={column.key}
+                         className="text-left p-4 font-semibold text-secondary-foreground border-r border-border last:border-r-0 relative"
+                         style={{ 
+                           minWidth: column.width,
+                           width: column.key === 'Email' || column.key === 'Adresa' ? 'auto' : column.width
+                         }}
+                       >
+                         {column.label}
+                         <div 
+                           className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary/20 active:bg-primary/40"
+                           onMouseDown={(e) => handleMouseDown(e, column.key)}
+                         />
+                       </th>
+                     ))}
+                   </tr>
                   {/* Column Filters */}
                   <tr className="bg-muted/50">
                     {visibleColumns.map((column) => (
