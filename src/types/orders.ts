@@ -50,8 +50,8 @@ export const defaultColumns: Column[] = [
   { key: 'Stav platby', label: 'Stav platby', visible: true, editable: false, width: '140px', type: 'status' },
   { key: 'Stav objednávky', label: 'Stav objednávky', visible: true, editable: false, width: '140px', type: 'status' },
   // Additional columns that can be added
-  { key: 'PSČ', label: 'PSČ', visible: false, editable: true, width: '100px', type: 'text' },
-  { key: 'Město', label: 'Město', visible: false, editable: true, width: '120px', type: 'text' },
+  { key: 'PSČ', label: 'PSČ', visible: false, editable: false, width: '100px', type: 'text' },
+  { key: 'Město', label: 'Město', visible: false, editable: false, width: '120px', type: 'text' },
   { key: 'Variabilní symbol', label: 'Variabilní symbol', visible: false, editable: false, width: '140px', type: 'text' },
   { key: 'Výrobce', label: 'Výrobce', visible: false, editable: false, width: '100px', type: 'text' },
   { key: 'Model', label: 'Model', visible: false, editable: false, width: '120px', type: 'text' },
