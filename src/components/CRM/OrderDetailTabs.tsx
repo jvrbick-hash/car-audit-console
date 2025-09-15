@@ -116,13 +116,34 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 {getPaymentStatusBadge(order['Stav platby'])}
                 {getOrderStatusBadge(order['Stav objednávky'])}
               </div>
-              <div className="flex gap-2 mt-3">
-                <Button variant="outline" size="sm" className="text-xs">
-                  <FileText className="h-3 w-3 mr-1" />
+              <div className="flex gap-3 mt-4 flex-wrap">
+                {(() => {
+                  console.log('🔵 Rendering action buttons');
+                  console.log('📦 Button container visible');
+                  return null;
+                })()}
+                <Button 
+                  variant="default" 
+                  size="default" 
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-[140px] shadow-md"
+                  onClick={() => {
+                    console.log('📊 Report button clicked');
+                    // TODO: Implement report sending logic
+                  }}
+                >
+                  <FileText className="h-4 w-4 mr-2" />
                   Odeslat report
                 </Button>
-                <Button variant="outline" size="sm" className="text-xs">
-                  <FileText className="h-3 w-3 mr-1" />
+                <Button 
+                  variant="secondary" 
+                  size="default" 
+                  className="bg-secondary text-secondary-foreground hover:bg-secondary/80 min-w-[140px] shadow-md"
+                  onClick={() => {
+                    console.log('🧾 Tax document button clicked');
+                    // TODO: Implement tax document sending logic
+                  }}
+                >
+                  <FileText className="h-4 w-4 mr-2" />
                   Odeslat daňový doklad
                 </Button>
               </div>
