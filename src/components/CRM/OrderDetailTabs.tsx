@@ -116,6 +116,16 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 {getPaymentStatusBadge(order['Stav platby'])}
                 {getOrderStatusBadge(order['Stav objednávky'])}
               </div>
+              <div className="flex gap-2 mt-3">
+                <Button variant="outline" size="sm" className="text-xs">
+                  <FileText className="h-3 w-3 mr-1" />
+                  Odeslat report
+                </Button>
+                <Button variant="outline" size="sm" className="text-xs">
+                  <FileText className="h-3 w-3 mr-1" />
+                  Odeslat daňový doklad
+                </Button>
+              </div>
             </div>
           </div>
         </CardHeader>
