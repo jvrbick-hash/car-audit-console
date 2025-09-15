@@ -118,13 +118,6 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
               </div>
             </div>
           </div>
-          <div className="mt-4">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-muted-foreground">Průběh objednávky</span>
-              <span className="text-sm font-medium">{getOrderProgress()}%</span>
-            </div>
-            <Progress value={getOrderProgress()} className="h-2" />
-          </div>
         </CardHeader>
       </Card>
 
