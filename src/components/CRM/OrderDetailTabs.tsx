@@ -219,6 +219,13 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 onSave={handleFieldSave('Město')}
                 icon={<MapPin className="h-4 w-4" />}
               />
+              <EditableField
+                label="DIČ"
+                value={order.DIČ}
+                isEditable={isFieldEditable('DIČ')}
+                onSave={handleFieldSave('DIČ')}
+                icon={<Building className="h-4 w-4" />}
+              />
             </CardContent>
           </Card>
 
@@ -342,13 +349,6 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 isEditable={isFieldEditable('Poloha inzerátu')}
                 onSave={handleFieldSave('Poloha inzerátu')}
                 icon={<MapPin className="h-4 w-4" />}
-              />
-              <EditableField
-                label="DIČ"
-                value={order.DIČ}
-                isEditable={isFieldEditable('DIČ')}
-                onSave={handleFieldSave('DIČ')}
-                icon={<Building className="h-4 w-4" />}
               />
             </CardContent>
           </Card>
