@@ -430,6 +430,13 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 onSave={handleFieldSave('Poloha inzerátu')}
                 icon={<MapPin className="h-4 w-4" />}
               />
+              <EditableField
+                label="Report link"
+                value={order['Report link'] || ''}
+                isEditable={isFieldEditable('Report link')}
+                onSave={handleFieldSave('Report link')}
+                icon={<LinkIcon className="h-4 w-4" />}
+              />
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <LinkIcon className="h-4 w-4" />
@@ -450,23 +457,17 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                   )}
                 </div>
               </div>
-              
-              {/* Order Items within Product Information */}
-              <div className="md:col-span-2 mt-4">
-                <div className="border-t pt-4">
-                  <OrderItems 
-                    items={order.items}
-                    onUpdateItemStatus={onUpdateItemStatus}
-                    onRefundItem={onRefundItem}
-                  />
-                </div>
-              </div>
             </CardContent>
           </Card>
 
+          {/* Order Items */}
+          <OrderItems 
+            items={order.items || []} 
+            onUpdateItemStatus={onUpdateItemStatus}
+            onRefundItem={onRefundItem}
+          />
         </div>
       </div>
-
 
       {/* Full Width Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
@@ -497,58 +498,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             />
           </CardContent>
         </Card>
-
-        {/* Links and Additional Info */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <LinkIcon className="h-5 w-5 text-primary" />
-              Odkazy a dodatečné informace
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <FileText className="h-4 w-4" />
-                Report link
-              </div>
-              <div className="p-3 rounded-md border bg-card">
-                {order['Report link'] ? (
-                  <a
-                    href={order['Report link']}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-primary hover:underline break-all"
-                  >
-                    {order['Report link']}
-                  </a>
-                ) : (
-                  <span className="text-sm text-muted-foreground">Nevyplněno</span>
-                  )}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <LinkIcon className="h-4 w-4" />
-                  Report link
-                </div>
-                <div className="p-3 rounded-md border bg-card">
-                  {order['Report link'] ? (
-                    <a
-                      href={order['Report link']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-primary hover:underline break-all"
-                    >
-                      {order['Report link']}
-                    </a>
-                  ) : (
-                    <span className="text-sm text-muted-foreground">Nevyplněno</span>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
       </div>
     </div>
   );
