@@ -51,17 +51,7 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
   return (
     <div>
       <div className="mb-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-primary">Položky objednávky</h3>
-          <div className="text-sm text-muted-foreground">
-            Celkem: {totalValue.toLocaleString('cs-CZ')} Kč
-            {totalRefunded > 0 && (
-              <span className="ml-2 text-destructive">
-                (Vráceno: {totalRefunded.toLocaleString('cs-CZ')} Kč)
-              </span>
-            )}
-          </div>
-        </div>
+        <h3 className="text-lg font-semibold text-primary">Položky objednávky</h3>
       </div>
       <div>
         <Table>
@@ -108,6 +98,19 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
             ))}
           </TableBody>
         </Table>
+        <div className="mt-2 flex">
+          <div className="flex-1"></div>
+          <div className="flex-1"></div>
+          <div className="flex-1 text-sm text-muted-foreground">
+            Celkem: {totalValue.toLocaleString('cs-CZ')} Kč
+            {totalRefunded > 0 && (
+              <span className="ml-2 text-destructive">
+                (Vráceno: {totalRefunded.toLocaleString('cs-CZ')} Kč)
+              </span>
+            )}
+          </div>
+          <div className="flex-1"></div>
+        </div>
       </div>
     </div>
   );
