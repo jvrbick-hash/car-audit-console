@@ -363,8 +363,35 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 label="Typ produktu"
                 value={order['Typ produktu']}
                 isEditable={isFieldEditable('Typ produktu')}
-                type="select"
                 onSave={handleFieldSave('Typ produktu')}
+                icon={<Package className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Standardní kontrola vozu"
+                value={order['Standardní kontrola vozu']}
+                isEditable={isFieldEditable('Standardní kontrola vozu')}
+                onSave={handleFieldSave('Standardní kontrola vozu')}
+                icon={<Car className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Kontrola baterie"
+                value={order['Kontrola baterie']}
+                isEditable={isFieldEditable('Kontrola baterie')}
+                onSave={handleFieldSave('Kontrola baterie')}
+                icon={<Package className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Rozšířená kontrola"
+                value={order['Rozšířená kontrola']}
+                isEditable={isFieldEditable('Rozšířená kontrola')}
+                onSave={handleFieldSave('Rozšířená kontrola')}
+                icon={<Package className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Sleva"
+                value={order['Sleva']}
+                isEditable={isFieldEditable('Sleva')}
+                onSave={handleFieldSave('Sleva')}
                 icon={<Package className="h-4 w-4" />}
               />
               <EditableField
