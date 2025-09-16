@@ -99,9 +99,7 @@ export const RowStatusIndicator: React.FC<RowStatusIndicatorProps> = ({ order, c
         <div className={`w-2 h-2 rounded-full ${statusInfo.color} animate-pulse`} />
         <Tooltip>
           <TooltipTrigger asChild>
-            <Badge 
-              variant={statusInfo.status === 'success' ? 'default' : statusInfo.status === 'error' ? 'destructive' : 'secondary'}
-              className="text-xs flex items-center gap-1 cursor-help"
+            <button
               onClick={() => {
                 console.log(`📊 Status clicked for Order ${order.Order_ID}:`, {
                   orderId: order.Order_ID,
@@ -120,10 +118,16 @@ export const RowStatusIndicator: React.FC<RowStatusIndicatorProps> = ({ order, c
                   }
                 });
               }}
+              className="focus:outline-none"
             >
-              {getStatusIcon(statusInfo.status)}
-              {statusInfo.message}
-            </Badge>
+              <Badge 
+                variant={statusInfo.status === 'success' ? 'default' : statusInfo.status === 'error' ? 'destructive' : 'secondary'}
+                className="text-xs flex items-center gap-1 cursor-pointer hover:opacity-80"
+              >
+                {getStatusIcon(statusInfo.status)}
+                {statusInfo.message}
+              </Badge>
+            </button>
           </TooltipTrigger>
           {statusInfo.issues.length > 0 && (
             <TooltipContent side="right" className="max-w-sm">
