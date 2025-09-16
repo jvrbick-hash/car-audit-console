@@ -285,28 +285,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 isEditable={false}
                 icon={<DollarSign className="h-4 w-4" />}
               />
-              <div className="space-y-2">
-                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <CreditCard className="h-4 w-4" />
-                  Stav platby
-                </div>
-                <div className="flex items-center gap-2">
-                  {getPaymentStatusBadge(order['Stav platby'])}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <Package className="h-4 w-4" />
-                  Stav objednávky
-                </div>
-                <div className="flex items-center gap-2 mb-3">
-                  {getOrderStatusBadge(order['Stav objednávky'])}
-                </div>
-                <div className="space-y-3">
-                  <div className="text-xs font-medium text-muted-foreground">Progress</div>
-                  <Progress value={getOrderProgress()} className="h-2" />
-                </div>
-              </div>
               <EditableField
                 label="Variabilní symbol"
                 value={order['Variabilní symbol']}
@@ -357,6 +335,30 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 onSave={handleFieldSave('Slevový kód')}
                 icon={<FileText className="h-4 w-4" />}
               />
+              
+              {/* Status fields moved to bottom */}
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  Stav platby
+                </div>
+                <div className="flex items-center gap-2">
+                  {getPaymentStatusBadge(order['Stav platby'])}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <Package className="h-4 w-4" />
+                  Stav objednávky
+                </div>
+                <div className="flex items-center gap-2 mb-3">
+                  {getOrderStatusBadge(order['Stav objednávky'])}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-medium text-muted-foreground">Progress</div>
+                  <Progress value={getOrderProgress()} className="h-2" />
+                </div>
+              </div>
               
               {/* Historie změn */}
               {order.statusHistory && order.statusHistory.length > 0 && (
