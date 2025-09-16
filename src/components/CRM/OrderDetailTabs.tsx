@@ -507,12 +507,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <FileText className="h-4 w-4" />
-                Report link
-              </div>
-              </div>
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <LinkIcon className="h-4 w-4" />
