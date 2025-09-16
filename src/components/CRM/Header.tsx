@@ -1,6 +1,5 @@
 import React from 'react';
 import cebiaLogo from '@/assets/cebia-logo-new.png';
-import { StatusIndicator } from './StatusIndicator';
 
 export const Header: React.FC = () => {
   return (
@@ -20,7 +19,6 @@ export const Header: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-4">
-            <StatusIndicator />
             <div className="text-right hidden sm:block">
               <p className="text-sm font-medium text-primary">Admin Panel</p>
               <p className="text-xs text-muted-foreground">
