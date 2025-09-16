@@ -164,68 +164,98 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 Zákaznické údaje
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <EditableField
-                label="Jméno"
-                value={order.Jméno}
-                isEditable={isFieldEditable('Jméno')}
-                onSave={handleFieldSave('Jméno')}
-                icon={<User className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Příjmení"
-                value={order.Příjmení}
-                isEditable={isFieldEditable('Příjmení')}
-                onSave={handleFieldSave('Příjmení')}
-                icon={<User className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Email"
-                value={order.Email}
-                isEditable={isFieldEditable('Email')}
-                type="email"
-                onSave={handleFieldSave('Email')}
-                icon={<Mail className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Telefonní číslo"
-                value={order['Telefonní číslo']}
-                isEditable={isFieldEditable('Telefonní číslo')}
-                type="tel"
-                onSave={handleFieldSave('Telefonní číslo')}
-                icon={<Phone className="h-4 w-4" />}
-              />
-              <div className="md:col-span-2">
+            <CardContent className="space-y-6">
+              {/* Personal Information */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <EditableField
-                  label="Adresa"
-                  value={order.Adresa}
-                  isEditable={isFieldEditable('Adresa')}
-                  type="textarea"
-                  onSave={handleFieldSave('Adresa')}
-                  icon={<MapPin className="h-4 w-4" />}
+                  label="Jméno"
+                  value={order.Jméno}
+                  isEditable={isFieldEditable('Jméno')}
+                  onSave={handleFieldSave('Jméno')}
+                  icon={<User className="h-4 w-4" />}
                 />
+                <EditableField
+                  label="Příjmení"
+                  value={order.Příjmení}
+                  isEditable={isFieldEditable('Příjmení')}
+                  onSave={handleFieldSave('Příjmení')}
+                  icon={<User className="h-4 w-4" />}
+                />
+                <EditableField
+                  label="Email"
+                  value={order.Email}
+                  isEditable={isFieldEditable('Email')}
+                  type="email"
+                  onSave={handleFieldSave('Email')}
+                  icon={<Mail className="h-4 w-4" />}
+                />
+                <EditableField
+                  label="Telefonní číslo"
+                  value={order['Telefonní číslo']}
+                  isEditable={isFieldEditable('Telefonní číslo')}
+                  type="tel"
+                  onSave={handleFieldSave('Telefonní číslo')}
+                  icon={<Phone className="h-4 w-4" />}
+                />
+                <div className="md:col-span-2">
+                  <EditableField
+                    label="Adresa"
+                    value={order.Adresa}
+                    isEditable={isFieldEditable('Adresa')}
+                    type="textarea"
+                    onSave={handleFieldSave('Adresa')}
+                    icon={<MapPin className="h-4 w-4" />}
+                  />
+                </div>
               </div>
-              <EditableField
-                label="PSČ"
-                value={order.PSČ}
-                isEditable={isFieldEditable('PSČ')}
-                onSave={handleFieldSave('PSČ')}
-                icon={<MapPin className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Město"
-                value={order.Město}
-                isEditable={isFieldEditable('Město')}
-                onSave={handleFieldSave('Město')}
-                icon={<MapPin className="h-4 w-4" />}
-              />
-              <EditableField
-                label="DIČ"
-                value={order.DIČ}
-                isEditable={isFieldEditable('DIČ')}
-                onSave={handleFieldSave('DIČ')}
-                icon={<Building className="h-4 w-4" />}
-              />
+
+              {/* Company Information */}
+              <div>
+                <Separator />
+                <div className="py-4">
+                  <h4 className="text-sm font-medium text-muted-foreground mb-4 flex items-center gap-2">
+                    <Building className="h-4 w-4" />
+                    Firemní údaje
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <EditableField
+                      label="IČ"
+                      value={order.IČ || ''}
+                      isEditable={isFieldEditable('IČ')}
+                      onSave={handleFieldSave('IČ')}
+                      icon={<Building className="h-4 w-4" />}
+                    />
+                    <EditableField
+                      label="DIČ"
+                      value={order.DIČ}
+                      isEditable={isFieldEditable('DIČ')}
+                      onSave={handleFieldSave('DIČ')}
+                      icon={<Building className="h-4 w-4" />}
+                    />
+                    <EditableField
+                      label="Ulice a číslo"
+                      value={order['Ulice a číslo'] || ''}
+                      isEditable={isFieldEditable('Ulice a číslo')}
+                      onSave={handleFieldSave('Ulice a číslo')}
+                      icon={<MapPin className="h-4 w-4" />}
+                    />
+                    <EditableField
+                      label="Město"
+                      value={order.Město}
+                      isEditable={isFieldEditable('Město')}
+                      onSave={handleFieldSave('Město')}
+                      icon={<MapPin className="h-4 w-4" />}
+                    />
+                    <EditableField
+                      label="PSČ"
+                      value={order.PSČ}
+                      isEditable={isFieldEditable('PSČ')}
+                      onSave={handleFieldSave('PSČ')}
+                      icon={<MapPin className="h-4 w-4" />}
+                    />
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
 

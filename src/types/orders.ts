@@ -20,6 +20,8 @@ export interface Order {
   'Typ produktu': string;
   'Report link': string;
   DIČ: string;
+  IČ: string;
+  'Ulice a číslo': string;
   Měna: string;
   VIN: string;
   'Poloha inzerátu': string;
@@ -70,6 +72,8 @@ const baseColumns: Column[] = [
   { key: 'Model', label: 'Model', visible: false, editable: false, width: '120px', type: 'text' },
   { key: 'Typ produktu', label: 'Typ produktu', visible: false, editable: false, width: '160px', type: 'text' },
   { key: 'DIČ', label: 'DIČ', visible: false, editable: false, width: '120px', type: 'text' },
+  { key: 'IČ', label: 'IČ', visible: false, editable: false, width: '120px', type: 'text' },
+  { key: 'Ulice a číslo', label: 'Ulice a číslo', visible: false, editable: false, width: '200px', type: 'text' },
   { key: 'Měna', label: 'Měna', visible: false, editable: false, width: '80px', type: 'text' },
   { key: 'VIN', label: 'VIN', visible: false, editable: false, width: '180px', type: 'text' },
   { key: 'Poloha inzerátu', label: 'Poloha inzerátu', visible: false, editable: false, width: '140px', type: 'text' },
