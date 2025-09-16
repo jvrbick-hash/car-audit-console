@@ -51,10 +51,10 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
   const totalRefunded = items.reduce((sum, item) => sum + (item.refundAmount || 0), 0);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Položky objednávky</span>
+    <div>
+      <div className="mb-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-primary">Položky objednávky</h3>
           <div className="text-sm text-muted-foreground">
             Celkem: {totalValue.toLocaleString('cs-CZ')} Kč
             {totalRefunded > 0 && (
@@ -63,9 +63,9 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
               </span>
             )}
           </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+        </div>
+      </div>
+      <div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -138,7 +138,7 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
             ))}
           </TableBody>
         </Table>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
