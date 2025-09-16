@@ -12,6 +12,7 @@ import { ColumnManager } from './ColumnManager';
 import { SearchAndFilters } from './SearchAndFilters';
 import { ExcelFilter } from './ExcelFilter';
 import { OrderDetailTabs } from './OrderDetailTabs';
+import { RowStatusIndicator } from './RowStatusIndicator';
 import { Order, Column, defaultColumns, validateColumnWidth, ItemStatus } from '@/types/orders';
 
 const dummyOrders: Order[] = [
@@ -478,17 +479,20 @@ export const OrdersTable: React.FC = () => {
       default:
         if (column.key === 'Order_ID') {
           return (
-            <button
-              onClick={() => setExpandedOrder(expandedOrder === order.Order_ID ? null : order.Order_ID)}
-              className="flex items-center gap-2 text-primary hover:text-accent font-medium whitespace-nowrap"
-            >
-              {expandedOrder === order.Order_ID ? (
-                <ChevronDown className="w-4 h-4" />
-              ) : (
-                <ChevronRight className="w-4 h-4" />
-              )}
-              {value as string}
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setExpandedOrder(expandedOrder === order.Order_ID ? null : order.Order_ID)}
+                className="flex items-center gap-2 text-primary hover:text-accent font-medium whitespace-nowrap"
+              >
+                {expandedOrder === order.Order_ID ? (
+                  <ChevronDown className="w-4 h-4" />
+                ) : (
+                  <ChevronRight className="w-4 h-4" />
+                )}
+                {value as string}
+              </button>
+              <RowStatusIndicator order={order} />
+            </div>
           );
         }
         
