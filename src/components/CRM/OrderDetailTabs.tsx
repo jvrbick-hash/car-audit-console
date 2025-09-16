@@ -285,6 +285,15 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 isEditable={false}
                 icon={<DollarSign className="h-4 w-4" />}
               />
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  Stav platby
+                </div>
+                <div className="flex items-center gap-2">
+                  {getPaymentStatusBadge(order['Stav platby'])}
+                </div>
+              </div>
               <EditableField
                 label="Variabilní symbol"
                 value={order['Variabilní symbol']}
@@ -392,33 +401,24 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             </CardContent>
           </Card>
 
-          {/* Payment Status */}
+          {/* Order Status */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-primary" />
-                Stav platby a objednávky
+                <Package className="h-5 w-5 text-primary" />
+                Stav objednávky
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                    <CreditCard className="h-4 w-4" />
-                    Stav platby
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {getPaymentStatusBadge(order['Stav platby'])}
-                  </div>
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <Package className="h-4 w-4" />
+                  Stav objednávky
                 </div>
-                <div className="space-y-2">
-                  <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                    <Package className="h-4 w-4" />
-                    Stav objednávky
-                  </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    {getOrderStatusBadge(order['Stav objednávky'])}
-                  </div>
+                <div className="flex items-center gap-2 mb-3">
+                  {getOrderStatusBadge(order['Stav objednávky'])}
+                </div>
+                </div>
                   
                   {/* Status History Log */}
                   {order.statusHistory && order.statusHistory.length > 0 && (
@@ -449,8 +449,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                       </div>
                     </div>
                   )}
-                </div>
-              </div>
             </CardContent>
           </Card>
         </div>
