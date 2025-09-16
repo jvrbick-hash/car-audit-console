@@ -362,16 +362,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 onSave={handleFieldSave('Model')}
                 icon={<Car className="h-4 w-4" />}
               />
-              {/* Order Items within Product Information */}
-              <div className="md:col-span-2 mt-4">
-                <div className="border-t pt-4">
-                  <OrderItems 
-                    items={order.items}
-                    onUpdateItemStatus={onUpdateItemStatus}
-                    onRefundItem={onRefundItem}
-                  />
-                </div>
-              </div>
               <EditableField
                 label="VIN"
                 value={order.VIN}
@@ -386,6 +376,17 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 onSave={handleFieldSave('Poloha inzerátu')}
                 icon={<MapPin className="h-4 w-4" />}
               />
+              
+              {/* Order Items within Product Information */}
+              <div className="md:col-span-2 mt-4">
+                <div className="border-t pt-4">
+                  <OrderItems 
+                    items={order.items}
+                    onUpdateItemStatus={onUpdateItemStatus}
+                    onRefundItem={onRefundItem}
+                  />
+                </div>
+              </div>
             </CardContent>
           </Card>
 
