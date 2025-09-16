@@ -450,24 +450,15 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                   )}
                 </div>
               </div>
-              <div className="space-y-2">
-                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  Report link
-                </div>
-                <div className="p-3 rounded-md border bg-card">
-                  {order['Report link'] ? (
-                    <a
-                      href={order['Report link']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-primary hover:underline break-all"
-                    >
-                      {order['Report link']}
-                    </a>
-                  ) : (
-                    <span className="text-sm text-muted-foreground">Nevyplněno</span>
-                  )}
+              
+              {/* Order Items within Product Information */}
+              <div className="md:col-span-2 mt-4">
+                <div className="border-t pt-4">
+                  <OrderItems 
+                    items={order.items}
+                    onUpdateItemStatus={onUpdateItemStatus}
+                    onRefundItem={onRefundItem}
+                  />
                 </div>
               </div>
             </CardContent>
@@ -507,6 +498,37 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
           </CardContent>
         </Card>
 
+        {/* Links and Additional Info */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <LinkIcon className="h-5 w-5 text-primary" />
+              Odkazy a dodatečné informace
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Report link
+              </div>
+              <div className="p-3 rounded-md border bg-card">
+                {order['Report link'] ? (
+                  <a
+                    href={order['Report link']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-primary hover:underline break-all"
+                  >
+                    {order['Report link']}
+                  </a>
+                ) : (
+                  <span className="text-sm text-muted-foreground">Nevyplněno</span>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
