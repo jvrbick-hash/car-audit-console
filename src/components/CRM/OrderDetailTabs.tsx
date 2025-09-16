@@ -430,14 +430,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 onSave={handleFieldSave('Poloha inzerátu')}
                 icon={<MapPin className="h-4 w-4" />}
               />
-              <EditableField
-                label="Adresa inzerátu"
-                value={order['Adresa inzerátu']}
-                isEditable={isFieldEditable('Adresa inzerátu')}
-                type="textarea"
-                onSave={handleFieldSave('Adresa inzerátu')}
-                icon={<MapPin className="h-4 w-4" />}
-              />
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <LinkIcon className="h-4 w-4" />
