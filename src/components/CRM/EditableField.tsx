@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Pencil, Check, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { productTypeOptions } from '@/types/orders';
+import { productCodeMapping } from '@/types/orders';
 
 interface EditableFieldProps {
   label: string;
@@ -96,9 +96,9 @@ export function EditableField({
                 <SelectValue placeholder="Vyberte typ produktu" />
               </SelectTrigger>
               <SelectContent>
-                {productTypeOptions.map((option) => (
-                  <SelectItem key={option} value={option}>
-                    {option}
+                {Object.entries(productCodeMapping).map(([code, name]) => (
+                  <SelectItem key={code} value={code}>
+                    {name}
                   </SelectItem>
                 ))}
               </SelectContent>

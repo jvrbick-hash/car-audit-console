@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
 import { EditableField } from './EditableField';
-import { Order, defaultColumns } from '@/types/orders';
+import { OrderItems } from './OrderItems';
+import { Order, defaultColumns, ItemStatus } from '@/types/orders';
 import {
   User,
   MapPin,
@@ -31,9 +32,11 @@ import {
 interface OrderDetailTabsProps {
   order: Order;
   onEdit: (field: string, value: string) => void;
+  onUpdateItemStatus?: (itemId: string, status: ItemStatus) => void;
+  onRefundItem?: (itemId: string, amount: number) => void;
 }
 
-export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
+export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, onRefundItem = () => {} }: OrderDetailTabsProps) {
   // Get editable fields from column configuration
   const editableFields = defaultColumns
     .filter(col => col.editable)
@@ -359,41 +362,7 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 onSave={handleFieldSave('Model')}
                 icon={<Car className="h-4 w-4" />}
               />
-              <EditableField
-                label="Typ produktu"
-                value={order['Typ produktu']}
-                isEditable={isFieldEditable('Typ produktu')}
-                onSave={handleFieldSave('Typ produktu')}
-                icon={<Package className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Standardní kontrola vozu"
-                value={order['Standardní kontrola vozu']}
-                isEditable={isFieldEditable('Standardní kontrola vozu')}
-                onSave={handleFieldSave('Standardní kontrola vozu')}
-                icon={<Car className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Kontrola baterie"
-                value={order['Kontrola baterie']}
-                isEditable={isFieldEditable('Kontrola baterie')}
-                onSave={handleFieldSave('Kontrola baterie')}
-                icon={<Package className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Rozšířená kontrola"
-                value={order['Rozšířená kontrola']}
-                isEditable={isFieldEditable('Rozšířená kontrola')}
-                onSave={handleFieldSave('Rozšířená kontrola')}
-                icon={<Package className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Sleva"
-                value={order['Sleva']}
-                isEditable={isFieldEditable('Sleva')}
-                onSave={handleFieldSave('Sleva')}
-                icon={<Package className="h-4 w-4" />}
-              />
+              {/* Product Items will be handled by OrderItems component below */}
               <EditableField
                 label="VIN"
                 value={order.VIN}
@@ -473,6 +442,15 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      {/* Order Items */}
+      <div className="mb-6">
+        <OrderItems 
+          items={order.items}
+          onUpdateItemStatus={onUpdateItemStatus}
+          onRefundItem={onRefundItem}
+        />
       </div>
 
       {/* Full Width Bottom Section */}

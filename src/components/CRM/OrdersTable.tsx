@@ -12,7 +12,7 @@ import { ColumnManager } from './ColumnManager';
 import { SearchAndFilters } from './SearchAndFilters';
 import { ExcelFilter } from './ExcelFilter';
 import { OrderDetailTabs } from './OrderDetailTabs';
-import { Order, Column, defaultColumns, validateColumnWidth } from '@/types/orders';
+import { Order, Column, defaultColumns, validateColumnWidth, ItemStatus } from '@/types/orders';
 
 const dummyOrders: Order[] = [
   {
@@ -33,11 +33,6 @@ const dummyOrders: Order[] = [
     Model: 'Octavia',
     'Adresa inzerátu': 'Praha 5 - Smíchov',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123456',
-    'Typ produktu': 'Kontrola',
-    'Standardní kontrola vozu': 'Ano',
-    'Kontrola baterie': '',
-    'Rozšířená kontrola': '',
-    'Sleva': '',
     'Report link': 'https://carvago.caraudit.app/8194c912-e4d8-43d9-8751-f6c9da7e9919?lang=cs&theme=7dced998-4ba2-409b-8cca-01267732b1b6',
     DIČ: 'CZ8855123456',
     IČ: '12345678',
@@ -49,6 +44,28 @@ const dummyOrders: Order[] = [
     'Číslo dokladu': 'DOC123',
     'Slevový kód': 'SLEVA10',
     'Poznámka interní': 'VIP zákazník',
+    items: [
+      {
+        id: 'item-1',
+        productCode: 'CA_CEBIA_VEHICLE',
+        productName: 'Základní kontrola vozu',
+        quantity: 1,
+        unitPrice: 1500,
+        totalPrice: 1500,
+        status: 'Completed',
+        refundStatus: 'None'
+      },
+      {
+        id: 'item-2',
+        productCode: 'CA_CEBIA_EXTENDED_CHECK',
+        productName: 'Rozšířená kontrola vozu bez zákazníka',
+        quantity: 1,
+        unitPrice: 1000,
+        totalPrice: 1000,
+        status: 'Completed',
+        refundStatus: 'None'
+      }
+    ],
     statusHistory: [
       { status: 'Technik přiřazen', timestamp: '2024-01-15T10:30:00', note: 'Technik Jan Novák přiřazen' },
       { status: 'Technik je na cestě', timestamp: '2024-01-15T11:15:00', note: 'Technik vyjel k vozidlu' },
@@ -74,11 +91,6 @@ const dummyOrders: Order[] = [
     Model: 'Golf',
     'Adresa inzerátu': 'Brno - Královo Pole',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123457',
-    'Typ produktu': 'Kontrola',
-    'Standardní kontrola vozu': '',
-    'Kontrola baterie': 'Ano',
-    'Rozšířená kontrola': '',
-    'Sleva': '',
     'Report link': '',
     DIČ: '',
     IČ: '',
@@ -90,6 +102,28 @@ const dummyOrders: Order[] = [
     'Číslo dokladu': 'DOC124',
     'Slevový kód': '',
     'Poznámka interní': 'Čeká na platbu',
+    items: [
+      {
+        id: 'item-3',
+        productCode: 'CA_CEBIA_EXTENDED_BATTERY_CHECK',
+        productName: 'Rozšířená kontrola',
+        quantity: 1,
+        unitPrice: 800,
+        totalPrice: 800,
+        status: 'In Progress',
+        refundStatus: 'None'
+      },
+      {
+        id: 'item-4',
+        productCode: 'CA_CEBIA_EXTENDED_CHECK',
+        productName: 'Rozšířená kontrola vozu bez zákazníka',
+        quantity: 1,
+        unitPrice: 1000,
+        totalPrice: 1000,
+        status: 'Pending',
+        refundStatus: 'None'
+      }
+    ],
     statusHistory: [
       { status: 'Technik přiřazen', timestamp: '2024-01-16T14:45:00', note: 'Technik Petr Novotný přiřazen' },
       { status: 'Auto není dostupné - nevratka', timestamp: '2024-01-16T16:20:00', note: 'Vozidlo není k dispozici pro prohlídku' }
@@ -113,11 +147,6 @@ const dummyOrders: Order[] = [
     Model: '320d',
     'Adresa inzerátu': 'Ostrava - Poruba',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123458',
-    'Typ produktu': 'Kontrola',
-    'Standardní kontrola vozu': '',
-    'Kontrola baterie': '',
-    'Rozšířená kontrola': 'Ano',
-    'Sleva': '10%',
     'Report link': '',
     DIČ: 'CZ7712345678',
     IČ: '87654321',
@@ -129,6 +158,49 @@ const dummyOrders: Order[] = [
     'Číslo dokladu': 'DOC123',
     'Slevový kód': 'BMW20',
     'Poznámka interní': 'Pravidelný zákazník',
+    items: [
+      {
+        id: 'item-5',
+        productCode: 'CA_CEBIA_VEHICLE',
+        productName: 'Základní kontrola vozu',
+        quantity: 1,
+        unitPrice: 1500,
+        totalPrice: 1500,
+        status: 'Completed',
+        refundStatus: 'None'
+      },
+      {
+        id: 'item-6',
+        productCode: 'CA_CEBIA_EXTENDED_BATTERY_CHECK',
+        productName: 'Rozšířená kontrola',
+        quantity: 1,
+        unitPrice: 700,
+        totalPrice: 700,
+        status: 'In Progress',
+        refundStatus: 'None'
+      },
+      {
+        id: 'item-7',
+        productCode: 'CA_CEBIA_EXTENDED_CHECK_WITH_CUSTOMER',
+        productName: 'Rozšířená kontrola s přítomností zákazníka',
+        quantity: 1,
+        unitPrice: 1000,
+        totalPrice: 1000,
+        status: 'Pending',
+        refundStatus: 'None'
+      },
+      {
+        id: 'item-8',
+        productCode: 'CA_CEBIA_DISCOUNT',
+        productName: 'Sleva',
+        quantity: 1,
+        unitPrice: -200,
+        totalPrice: -200,
+        status: 'Completed',
+        refundStatus: 'None',
+        note: '10% sleva BMW20'
+      }
+    ],
     statusHistory: [
       { status: 'Technik přiřazen', timestamp: '2024-01-17T09:15:00', note: 'Technik Petr Svoboda přiřazen' },
       { status: 'Auto není dostupné - vratka', timestamp: '2024-01-17T10:30:00', note: 'Vozidlo nedostupné, bude vrácena platba' },
@@ -291,6 +363,41 @@ export const OrdersTable: React.FC = () => {
     toast({
       title: "Filtry vymazány",
       description: "Všechny filtry byly odstraněny.",
+    });
+  };
+
+  const handleUpdateItemStatus = (itemId: string, status: ItemStatus) => {
+    setOrders(prev => prev.map(order => ({
+      ...order,
+      items: order.items.map(item => 
+        item.id === itemId ? { ...item, status } : item
+      )
+    })));
+
+    toast({
+      title: "Stav položky aktualizován",
+      description: `Stav položky byl změněn na ${status}.`,
+    });
+  };
+
+  const handleRefundItem = (itemId: string, amount: number) => {
+    setOrders(prev => prev.map(order => ({
+      ...order,
+      items: order.items.map(item => 
+        item.id === itemId 
+          ? { 
+              ...item, 
+              refundStatus: amount === item.totalPrice ? 'Full' : 'Partial',
+              refundAmount: amount,
+              status: 'Refunded'
+            } 
+          : item
+      )
+    })));
+
+    toast({
+      title: "Refund zpracován",
+      description: `Částka ${amount.toLocaleString('cs-CZ')} Kč byla vrácena.`,
     });
   };
 
@@ -551,6 +658,8 @@ export const OrdersTable: React.FC = () => {
                               <OrderDetailTabs 
                                 order={order} 
                                 onEdit={(field, value) => handleEdit(order.Order_ID, field, value)}
+                                onUpdateItemStatus={handleUpdateItemStatus}
+                                onRefundItem={handleRefundItem}
                               />
                             </div>
                           </td>
