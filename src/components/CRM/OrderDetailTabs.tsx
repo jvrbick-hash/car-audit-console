@@ -351,12 +351,8 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                   <Package className="h-4 w-4" />
                   Stav objednávky
                 </div>
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2">
                   {getOrderStatusBadge(order['Stav objednávky'])}
-                </div>
-                <div className="space-y-3">
-                  <div className="text-xs font-medium text-muted-foreground">Progress</div>
-                  <Progress value={getOrderProgress()} className="h-2" />
                 </div>
               </div>
               
