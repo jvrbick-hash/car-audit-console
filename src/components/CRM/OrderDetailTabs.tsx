@@ -362,7 +362,16 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 onSave={handleFieldSave('Model')}
                 icon={<Car className="h-4 w-4" />}
               />
-              {/* Product Items will be handled by OrderItems component below */}
+              {/* Order Items within Product Information */}
+              <div className="md:col-span-2 mt-4">
+                <div className="border-t pt-4">
+                  <OrderItems 
+                    items={order.items}
+                    onUpdateItemStatus={onUpdateItemStatus}
+                    onRefundItem={onRefundItem}
+                  />
+                </div>
+              </div>
               <EditableField
                 label="VIN"
                 value={order.VIN}
@@ -442,15 +451,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             </CardContent>
           </Card>
         </div>
-      </div>
-
-      {/* Order Items - placed under Product Information */}
-      <div className="mb-6">
-        <OrderItems 
-          items={order.items}
-          onUpdateItemStatus={onUpdateItemStatus}
-          onRefundItem={onRefundItem}
-        />
       </div>
 
 
