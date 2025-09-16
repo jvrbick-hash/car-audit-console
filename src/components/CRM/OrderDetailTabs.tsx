@@ -441,17 +441,16 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               </div>
             </CardContent>
           </Card>
+
+          {/* Order Items */}
+          <OrderItems 
+            items={order.items}
+            onUpdateItemStatus={onUpdateItemStatus}
+            onRefundItem={onRefundItem}
+          />
         </div>
       </div>
 
-      {/* Order Items */}
-      <div className="mb-6">
-        <OrderItems 
-          items={order.items}
-          onUpdateItemStatus={onUpdateItemStatus}
-          onRefundItem={onRefundItem}
-        />
-      </div>
 
       {/* Full Width Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
