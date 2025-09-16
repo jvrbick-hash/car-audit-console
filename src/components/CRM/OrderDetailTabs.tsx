@@ -401,110 +401,72 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 Informace o produktu
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="bg-white border rounded-lg overflow-hidden">
-                <table className="w-full">
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="p-4 border-r bg-gray-50 font-medium text-muted-foreground w-1/4">
-                        <div className="flex items-center gap-2">
-                          <Building className="h-4 w-4" />
-                          Výrobce
-                        </div>
-                      </td>
-                      <td className="p-4 w-1/4">
-                        <div className="text-sm">{order.Výrobce || 'Nevyplněno'}</div>
-                      </td>
-                      <td className="p-4 border-r bg-gray-50 font-medium text-muted-foreground w-1/4">
-                        <div className="flex items-center gap-2">
-                          <Car className="h-4 w-4" />
-                          Model
-                        </div>
-                      </td>
-                      <td className="p-4 w-1/4">
-                        <div className="text-sm">{order.Model || 'Nevyplněno'}</div>
-                      </td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-4 border-r bg-gray-50 font-medium text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                          <Hash className="h-4 w-4" />
-                          VIN
-                        </div>
-                      </td>
-                      <td className="p-4">
-                        <div className="text-sm">{order.VIN || 'Nevyplněno'}</div>
-                      </td>
-                      <td className="p-4 border-r bg-gray-50 font-medium text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4" />
-                          Poloha inzerátu
-                        </div>
-                      </td>
-                      <td className="p-4">
-                        <div className="text-sm">{order['Poloha inzerátu'] || 'Nevyplněno'}</div>
-                      </td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-4 border-r bg-gray-50 font-medium text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                          <LinkIcon className="h-4 w-4" />
-                          Report link
-                        </div>
-                      </td>
-                      <td className="p-4">
-                        <div className="text-sm">
-                          {order['Report link'] ? (
-                            <a
-                              href={order['Report link']}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:underline break-all"
-                            >
-                              {order['Report link']}
-                            </a>
-                          ) : (
-                            'Nevyplněno'
-                          )}
-                        </div>
-                      </td>
-                      <td className="p-4 border-r bg-gray-50 font-medium text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                          <LinkIcon className="h-4 w-4" />
-                          Odkaz inzerátu
-                        </div>
-                      </td>
-                      <td className="p-4">
-                        <div className="text-sm">
-                          {order['Odkaz inzerátu'] ? (
-                            <a
-                              href={order['Odkaz inzerátu']}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:underline break-all"
-                            >
-                              {order['Odkaz inzerátu']}
-                            </a>
-                          ) : (
-                            'Nevyplněno'
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <EditableField
+                label="Výrobce"
+                value={order.Výrobce}
+                isEditable={isFieldEditable('Výrobce')}
+                onSave={handleFieldSave('Výrobce')}
+                icon={<Building className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Model"
+                value={order.Model}
+                isEditable={isFieldEditable('Model')}
+                onSave={handleFieldSave('Model')}
+                icon={<Car className="h-4 w-4" />}
+              />
+              <EditableField
+                label="VIN"
+                value={order.VIN}
+                isEditable={isFieldEditable('VIN')}
+                onSave={handleFieldSave('VIN')}
+                icon={<Hash className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Poloha inzerátu"
+                value={order['Poloha inzerátu']}
+                isEditable={isFieldEditable('Poloha inzerátu')}
+                onSave={handleFieldSave('Poloha inzerátu')}
+                icon={<MapPin className="h-4 w-4" />}
+              />
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <LinkIcon className="h-4 w-4" />
+                  Odkaz inzerátu
+                </div>
+                <div className="p-3 rounded-md border bg-card">
+                  {order['Odkaz inzerátu'] ? (
+                    <a
+                      href={order['Odkaz inzerátu']}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline break-all"
+                    >
+                      {order['Odkaz inzerátu']}
+                    </a>
+                  ) : (
+                    <span className="text-sm text-muted-foreground">Nevyplněno</span>
+                  )}
+                </div>
+              </div>
+              
+              {/* Order Items within Product Information */}
+              <div className="md:col-span-2 mt-4">
+                <div className="border-t pt-4">
+                  <OrderItems 
+                    items={order.items}
+                    onUpdateItemStatus={onUpdateItemStatus}
+                    onRefundItem={onRefundItem}
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Order Items */}
-          <OrderItems 
-            items={order.items || []} 
-            onUpdateItemStatus={onUpdateItemStatus}
-            onRefundItem={onRefundItem}
-          />
         </div>
       </div>
+
 
       {/* Full Width Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
@@ -535,6 +497,58 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             />
           </CardContent>
         </Card>
+
+        {/* Links and Additional Info */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <LinkIcon className="h-5 w-5 text-primary" />
+              Odkazy a dodatečné informace
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Report link
+              </div>
+              <div className="p-3 rounded-md border bg-card">
+                {order['Report link'] ? (
+                  <a
+                    href={order['Report link']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-primary hover:underline break-all"
+                  >
+                    {order['Report link']}
+                  </a>
+                ) : (
+                  <span className="text-sm text-muted-foreground">Nevyplněno</span>
+                  )}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <LinkIcon className="h-4 w-4" />
+                  Report link
+                </div>
+                <div className="p-3 rounded-md border bg-card">
+                  {order['Report link'] ? (
+                    <a
+                      href={order['Report link']}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline break-all"
+                    >
+                      {order['Report link']}
+                    </a>
+                  ) : (
+                    <span className="text-sm text-muted-foreground">Nevyplněno</span>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
       </div>
     </div>
   );
