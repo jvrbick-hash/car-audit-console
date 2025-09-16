@@ -102,6 +102,24 @@ export const RowStatusIndicator: React.FC<RowStatusIndicatorProps> = ({ order, c
             <Badge 
               variant={statusInfo.status === 'success' ? 'default' : statusInfo.status === 'error' ? 'destructive' : 'secondary'}
               className="text-xs flex items-center gap-1 cursor-help"
+              onClick={() => {
+                console.log(`📊 Status clicked for Order ${order.Order_ID}:`, {
+                  orderId: order.Order_ID,
+                  status: statusInfo.status,
+                  message: statusInfo.message,
+                  issuesCount: statusInfo.issues.length,
+                  issues: statusInfo.issues,
+                  timestamp: new Date().toISOString(),
+                  orderSummary: {
+                    customerName: `${order.Jméno} ${order.Příjmení}`,
+                    email: order.Email,
+                    phone: order['Telefonní číslo'],
+                    orderValue: order['Hodnota objednávky'],
+                    paymentStatus: order['Stav platby'],
+                    orderStatus: order['Stav objednávky']
+                  }
+                });
+              }}
             >
               {getStatusIcon(statusInfo.status)}
               {statusInfo.message}
