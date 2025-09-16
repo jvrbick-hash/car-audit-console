@@ -139,9 +139,6 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({ className }) =
           {/* Traffic light indicator */}
           <div className={`w-3 h-3 rounded-full ${getStatusColor()} animate-pulse`} />
           {getStatusIcon()}
-          <span className="text-xs font-medium">
-            {status === 'error' ? 'Chyby' : status === 'warning' ? 'Varování' : 'OK'}
-          </span>
           {(errorCount > 0 || warningCount > 0) && (
             <Badge variant="destructive" className="text-xs min-w-[1.5rem] h-5">
               {errorCount + warningCount}
