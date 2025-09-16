@@ -357,6 +357,38 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 onSave={handleFieldSave('Slevový kód')}
                 icon={<FileText className="h-4 w-4" />}
               />
+              
+              {/* Historie změn */}
+              {order.statusHistory && order.statusHistory.length > 0 && (
+                <div className="md:col-span-2 mt-4">
+                  <div className="border-t pt-4">
+                    <div className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-3">
+                      <Activity className="h-4 w-4" />
+                      Historie změn
+                    </div>
+                    <div className="space-y-2 max-h-32 overflow-y-auto bg-muted/30 rounded-md p-2">
+                      {order.statusHistory.map((entry, index) => (
+                        <div key={index} className="flex items-start gap-2 text-xs">
+                          <div className="w-2 h-2 bg-primary/60 rounded-full mt-1.5 flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <Badge variant="outline" className="text-xs px-1 py-0.5 h-auto">
+                                {entry.status}
+                              </Badge>
+                              <span className="text-muted-foreground">
+                                {new Date(entry.timestamp).toLocaleString('cs-CZ')}
+                              </span>
+                            </div>
+                            {entry.note && (
+                              <p className="text-muted-foreground mt-1">{entry.note}</p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -414,39 +446,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             </CardContent>
           </Card>
 
-          {/* Status History Log */}
-          {order.statusHistory && order.statusHistory.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Activity className="h-5 w-5 text-primary" />
-                  Historie změn
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2 max-h-32 overflow-y-auto bg-muted/30 rounded-md p-2">
-                  {order.statusHistory.map((entry, index) => (
-                    <div key={index} className="flex items-start gap-2 text-xs">
-                      <div className="w-2 h-2 bg-primary/60 rounded-full mt-1.5 flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <Badge variant="outline" className="text-xs px-1 py-0.5 h-auto">
-                            {entry.status}
-                          </Badge>
-                          <span className="text-muted-foreground">
-                            {new Date(entry.timestamp).toLocaleString('cs-CZ')}
-                          </span>
-                        </div>
-                        {entry.note && (
-                          <p className="text-muted-foreground mt-1">{entry.note}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
         </div>
       </div>
 
