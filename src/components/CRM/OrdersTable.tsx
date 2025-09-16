@@ -425,7 +425,12 @@ export const OrdersTable: React.FC = () => {
   };
 
   const renderCellContent = (order: Order, column: Column) => {
-    const value = order[column.key];
+    // Handle special StatusIndicator column
+    if (column.key === 'StatusIndicator') {
+      return <RowStatusIndicator order={order} />;
+    }
+
+    const value = order[column.key as keyof Order];
     const stringValue = value as string;
     
     switch (column.type) {
@@ -479,20 +484,17 @@ export const OrdersTable: React.FC = () => {
       default:
         if (column.key === 'Order_ID') {
           return (
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setExpandedOrder(expandedOrder === order.Order_ID ? null : order.Order_ID)}
-                className="flex items-center gap-2 text-primary hover:text-accent font-medium whitespace-nowrap"
-              >
-                {expandedOrder === order.Order_ID ? (
-                  <ChevronDown className="w-4 h-4" />
-                ) : (
-                  <ChevronRight className="w-4 h-4" />
-                )}
-                {value as string}
-              </button>
-              <RowStatusIndicator order={order} />
-            </div>
+            <button
+              onClick={() => setExpandedOrder(expandedOrder === order.Order_ID ? null : order.Order_ID)}
+              className="flex items-center gap-2 text-primary hover:text-accent font-medium whitespace-nowrap"
+            >
+              {expandedOrder === order.Order_ID ? (
+                <ChevronDown className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
+              {value as string}
+            </button>
           );
         }
         

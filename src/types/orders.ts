@@ -74,12 +74,12 @@ export interface Order {
 }
 
 export interface Column {
-  key: keyof Order;
+  key: keyof Order | 'StatusIndicator';
   label: string;
   visible: boolean;
   editable: boolean;
   width?: string;
-  type: 'text' | 'number' | 'date' | 'datetime' | 'status' | 'currency' | 'link' | 'select';
+  type: 'text' | 'number' | 'date' | 'datetime' | 'status' | 'currency' | 'link' | 'select' | 'status-indicator';
 }
 
 const MIN_COLUMN_WIDTH = 80;
@@ -91,6 +91,7 @@ export const validateColumnWidth = (width: string): string => {
 
 const baseColumns: Column[] = [
   { key: 'Order_ID', label: 'Order ID', visible: true, editable: false, width: '120px', type: 'text' },
+  { key: 'StatusIndicator', label: 'Stav', visible: true, editable: false, width: '120px', type: 'status-indicator' },
   { key: 'Jméno', label: 'Jméno', visible: true, editable: false, width: '100px', type: 'text' },
   { key: 'Příjmení', label: 'Příjmení', visible: true, editable: false, width: '120px', type: 'text' },
   { key: 'Email', label: 'Email', visible: true, editable: true, width: '180px', type: 'text' },
