@@ -512,20 +512,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 <FileText className="h-4 w-4" />
                 Report link
               </div>
-              <div className="p-3 rounded-md border bg-card">
-                {order['Report link'] ? (
-                  <a
-                    href={order['Report link']}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-primary hover:underline break-all"
-                  >
-                    {order['Report link']}
-                  </a>
-                ) : (
-                  <span className="text-sm text-muted-foreground">Nevyplněno</span>
-                  )}
-                </div>
               </div>
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
