@@ -17,7 +17,7 @@ export interface Order {
   Model: string;
   'Adresa inzerátu': string;
   'Odkaz inzerátu': string;
-  'Typ produktu': 'Standardní kontrola vozu' | 'Kontrola baterie' | 'Kontrola s přítomností zákazníka' | 'Sleva';
+  'Typ produktu': 'Standardní kontrola vozu' | 'Kontrola baterie' | 'Rozšířená kontrola' | 'Sleva';
   'Report link': string;
   DIČ: string;
   IČ: string;
@@ -91,6 +91,6 @@ export const defaultColumns: Column[] = baseColumns.map(col => ({
 export const productTypeOptions = [
   'Standardní kontrola vozu',
   'Kontrola baterie', 
-  'Kontrola s přítomností zákazníka',
+  'Rozšířená kontrola',
   'Sleva'
 ] as const;

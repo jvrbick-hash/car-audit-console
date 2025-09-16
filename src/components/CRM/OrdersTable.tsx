@@ -105,7 +105,7 @@ const dummyOrders: Order[] = [
     Model: '320d',
     'Adresa inzerátu': 'Ostrava - Poruba',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123458',
-    'Typ produktu': 'Kontrola s přítomností zákazníka',
+    'Typ produktu': 'Rozšířená kontrola',
     'Report link': '',
     DIČ: 'CZ7712345678',
     IČ: '87654321',
