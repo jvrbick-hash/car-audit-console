@@ -17,7 +17,7 @@ export interface Order {
   Model: string;
   'Adresa inzerátu': string;
   'Odkaz inzerátu': string;
-  'Typ produktu': string;
+  'Typ produktu': 'Standardní kontrola vozu' | 'Kontrola baterie' | 'Kontrola s přítomností zákazníka' | 'Sleva';
   'Report link': string;
   DIČ: string;
   IČ: string;
@@ -43,7 +43,7 @@ export interface Column {
   visible: boolean;
   editable: boolean;
   width?: string;
-  type: 'text' | 'number' | 'date' | 'datetime' | 'status' | 'currency' | 'link';
+  type: 'text' | 'number' | 'date' | 'datetime' | 'status' | 'currency' | 'link' | 'select';
 }
 
 const MIN_COLUMN_WIDTH = 80;
@@ -70,7 +70,7 @@ const baseColumns: Column[] = [
   { key: 'Variabilní symbol', label: 'Variabilní symbol', visible: false, editable: false, width: '140px', type: 'text' },
   { key: 'Výrobce', label: 'Výrobce', visible: false, editable: false, width: '100px', type: 'text' },
   { key: 'Model', label: 'Model', visible: false, editable: false, width: '120px', type: 'text' },
-  { key: 'Typ produktu', label: 'Typ produktu', visible: false, editable: false, width: '160px', type: 'text' },
+  { key: 'Typ produktu', label: 'Typ produktu', visible: false, editable: true, width: '160px', type: 'select' },
   { key: 'DIČ', label: 'DIČ', visible: false, editable: false, width: '120px', type: 'text' },
   { key: 'IČ', label: 'IČ', visible: false, editable: false, width: '120px', type: 'text' },
   { key: 'Ulice a číslo', label: 'Ulice a číslo', visible: false, editable: false, width: '200px', type: 'text' },
@@ -87,3 +87,10 @@ export const defaultColumns: Column[] = baseColumns.map(col => ({
   ...col, 
   width: validateColumnWidth(col.width || '80px') 
 }));
+
+export const productTypeOptions = [
+  'Standardní kontrola vozu',
+  'Kontrola baterie', 
+  'Kontrola s přítomností zákazníka',
+  'Sleva'
+] as const;

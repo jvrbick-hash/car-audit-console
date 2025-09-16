@@ -3,14 +3,16 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Pencil, Check, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { productTypeOptions } from '@/types/orders';
 
 interface EditableFieldProps {
   label: string;
   value: string | number;
   isEditable: boolean;
-  type?: 'text' | 'textarea' | 'email' | 'tel' | 'number';
+  type?: 'text' | 'textarea' | 'email' | 'tel' | 'number' | 'select';
   onSave?: (value: string) => void;
   className?: string;
   icon?: React.ReactNode;
@@ -88,6 +90,19 @@ export function EditableField({
               className="min-h-[80px]"
               rows={3}
             />
+          ) : type === 'select' ? (
+            <Select value={editValue} onValueChange={setEditValue}>
+              <SelectTrigger className="flex-1">
+                <SelectValue placeholder="Vyberte typ produktu" />
+              </SelectTrigger>
+              <SelectContent>
+                {productTypeOptions.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           ) : (
             <Input
               ref={inputRef as React.RefObject<HTMLInputElement>}

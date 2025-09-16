@@ -363,6 +363,7 @@ export function OrderDetailTabs({ order, onEdit }: OrderDetailTabsProps) {
                 label="Typ produktu"
                 value={order['Typ produktu']}
                 isEditable={isFieldEditable('Typ produktu')}
+                type="select"
                 onSave={handleFieldSave('Typ produktu')}
                 icon={<Package className="h-4 w-4" />}
               />
