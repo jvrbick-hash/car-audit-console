@@ -47,6 +47,26 @@ export const RowStatusIndicator: React.FC<RowStatusIndicatorProps> = ({ order, c
       issues.push('Incomplete address');
     }
 
+    // Log issues to console for debugging
+    if (issues.length > 0) {
+      console.error(`🔴 Sync Issues detected for Order ${order.Order_ID}:`, {
+        orderId: order.Order_ID,
+        issues: issues,
+        severity: issues.length <= 2 ? 'warning' : 'error',
+        timestamp: new Date().toISOString(),
+        orderData: {
+          email: order.Email,
+          phone: order['Telefonní číslo'],
+          vin: order.VIN,
+          reportLink: order['Report link'],
+          documentNumber: order['Číslo dokladu'],
+          address: order.Adresa,
+          postalCode: order.PSČ,
+          city: order.Město
+        }
+      });
+    }
+
     // Determine status based on issues found
     if (issues.length === 0) {
       return { status: 'success', message: 'Synchronized', color: 'bg-green-500', issues: [] };

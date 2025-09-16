@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { EditableField } from './EditableField';
 import { OrderItems } from './OrderItems';
 import { StatusIndicator } from './StatusIndicator';
+import { RowStatusIndicator } from './RowStatusIndicator';
 import { Order, defaultColumns, ItemStatus } from '@/types/orders';
 import {
   User,
@@ -107,6 +108,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               <CardTitle className="text-xl font-bold flex items-center gap-2">
                 <Hash className="h-5 w-5 text-primary" />
                 Objednávka {order.Order_ID}
+                <RowStatusIndicator order={order} className="ml-2" />
                 <StatusIndicator className="ml-2" />
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">

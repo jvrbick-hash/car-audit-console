@@ -25,7 +25,7 @@ const dummyOrders: Order[] = [
     Adresa: 'Václavské náměstí 1, Praha 1',
     PSČ: '11000',
     Město: 'Praha',
-    'Hodnota objednávky': 3990,
+    'Hodnota objednávky': 2500,
     'Datum objednávky': '2024-01-15T10:30:00',
     'Stav platby': 'Zaplaceno',
     'Stav objednávky': 'Caraudit hotový',
@@ -85,14 +85,14 @@ const dummyOrders: Order[] = [
     Město: 'Brno',
     'Hodnota objednávky': 2990,
     'Datum objednávky': '2024-01-16T14:45:00',
-    'Stav platby': 'Nezaplaceno',
-    'Stav objednávky': 'Auto není dostupné - nevratka',
+    'Stav platby': 'Zaplaceno',
+    'Stav objednávky': 'Caraudit hotový',
     'Variabilní symbol': '2024010002',
     Výrobce: 'Volkswagen',
     Model: 'Golf',
     'Adresa inzerátu': 'Brno - Královo Pole',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123457',
-    'Report link': '',
+    'Report link': '', // Missing report link - sync issue
     DIČ: '',
     IČ: '',
     'Ulice a číslo': 'Náměstí Míru 15',
@@ -100,7 +100,7 @@ const dummyOrders: Order[] = [
     VIN: '1VWBP7A39CC123457',
     'Poloha inzerátu': 'Brno',
     'Poznámka zákazníka': '',
-    'Číslo dokladu': 'DOC124',
+    'Číslo dokladu': '', // Missing document number - sync issue
     'Slevový kód': '',
     'Poznámka interní': 'Čeká na platbu',
     items: [
@@ -127,36 +127,36 @@ const dummyOrders: Order[] = [
     ],
     statusHistory: [
       { status: 'Technik přiřazen', timestamp: '2024-01-16T14:45:00', note: 'Technik Petr Novotný přiřazen' },
-      { status: 'Auto není dostupné - nevratka', timestamp: '2024-01-16T16:20:00', note: 'Vozidlo není k dispozici pro prohlídku' }
+      { status: 'Caraudit hotový', timestamp: '2024-01-16T16:20:00', note: 'Report dokončen ale chybí link' }
     ]
   },
   {
     Order_ID: 'ORD003',
     Jméno: 'Martin',
     Příjmení: 'Procházka',
-    Email: 'martin.prochazka@email.cz',
-    'Telefonní číslo': '+420 555 123 456',
-    Adresa: 'Hlavní třída 89, Ostrava',
-    PSČ: '70200',
-    Město: 'Ostrava',
+    Email: 'martin.invalid-email', // Invalid email - sync issue
+    'Telefonní číslo': '+420 555', // Invalid phone - sync issue
+    Adresa: '', // Missing address - sync issue
+    PSČ: '',
+    Město: '',
     'Hodnota objednávky': 4990,
     'Datum objednávky': '2024-01-17T09:15:00',
     'Stav platby': 'Zaplaceno',
-    'Stav objednávky': 'Vrácené peníze',
+    'Stav objednávky': 'Caraudit hotový',
     'Variabilní symbol': '2024010003',
     Výrobce: 'BMW',
     Model: '320d',
     'Adresa inzerátu': 'Ostrava - Poruba',
     'Odkaz inzerátu': 'https://autobazar.eu/inzerat/123458',
-    'Report link': '',
+    'Report link': '', // Missing report link - sync issue
     DIČ: 'CZ7712345678',
     IČ: '87654321',
     'Ulice a číslo': 'Hlavní třída 89',
     Měna: 'CZK',
-    VIN: 'WBA3B1G59DN123458',
+    VIN: 'INVALID', // Invalid VIN - sync issue
     'Poloha inzerátu': 'Ostrava',
     'Poznámka zákazníka': 'Kontrola před koupí',
-    'Číslo dokladu': 'DOC123',
+    'Číslo dokladu': '', // Missing document number - sync issue
     'Slevový kód': 'BMW20',
     'Poznámka interní': 'Pravidelný zákazník',
     items: [
@@ -204,8 +204,7 @@ const dummyOrders: Order[] = [
     ],
     statusHistory: [
       { status: 'Technik přiřazen', timestamp: '2024-01-17T09:15:00', note: 'Technik Petr Svoboda přiřazen' },
-      { status: 'Auto není dostupné - vratka', timestamp: '2024-01-17T10:30:00', note: 'Vozidlo nedostupné, bude vrácena platba' },
-      { status: 'Vrácené peníze', timestamp: '2024-01-17T11:30:00', note: 'Platba vrácena na účet zákazníka' }
+      { status: 'Caraudit hotový', timestamp: '2024-01-17T10:30:00', note: 'Report dokončen ale data nekompletní' }
     ]
   }
 ];
