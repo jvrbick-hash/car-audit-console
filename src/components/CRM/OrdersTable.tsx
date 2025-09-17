@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-import { ColumnManager } from './ColumnManager';
+
 import { SearchAndFilters } from './SearchAndFilters';
 import { ExcelFilter } from './ExcelFilter';
 import { OrderDetailTabs } from './OrderDetailTabs';
@@ -778,7 +778,7 @@ export const OrdersTable: React.FC = () => {
                 Vymazat filtry
               </Button>
             )}
-            <ColumnManager columns={columns} onColumnsChange={setColumns} />
+            
           </div>
         </div>
 
