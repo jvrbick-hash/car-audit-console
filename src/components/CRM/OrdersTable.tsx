@@ -600,6 +600,13 @@ export const OrdersTable: React.FC = () => {
   const hasActiveFilters = searchTerm.length > 0 || dateRange?.from || Object.values(columnFilters).some(v => v.length > 0);
 
   const renderColumnFilter = (column: Column) => {
+    // Only allow filters on specific columns
+    const allowedFilterColumns = ['poznámka', 'Stav platby', 'Stav objednávky', 'Měna'];
+    
+    if (!allowedFilterColumns.includes(column.key)) {
+      return null;
+    }
+
     const selectedValues = columnFilters[column.key] || [];
 
     return (
