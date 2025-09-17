@@ -48,46 +48,18 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
     return format(dateRange.from, "dd.MM.yyyy");
   };
 
-  const hasActiveFilters = searchTerm.length > 0 || dateRange?.from;
+  const hasActiveFilters = dateRange?.from;
 
   return (
     <Card className="p-4 bg-secondary/30">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        {/* Left side - Search */}
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center flex-1">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Hledat ve všech sloupcích..."
-              value={searchTerm}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="pl-10 pr-10"
-            />
-            {searchTerm && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
-                onClick={() => onSearchChange('')}
-              >
-                <X className="h-3 w-3" />
-              </Button>
-            )}
-          </div>
-
-          {/* Filter status display */}
-          <div className="flex items-center gap-2">
-            {hasActiveFilters && (
-              <Badge variant="outline" className="text-xs">
-                {filteredCount} z {totalCount} záznamů
-              </Badge>
-            )}
-            {searchTerm && (
-              <Badge variant="secondary" className="text-xs">
-                Hledání: "{searchTerm}"
-              </Badge>
-            )}
-          </div>
+        {/* Filter status display */}
+        <div className="flex items-center gap-2">
+          {hasActiveFilters && (
+            <Badge variant="outline" className="text-xs">
+              {filteredCount} z {totalCount} záznamů
+            </Badge>
+          )}
         </div>
 
         {/* Right side - Date Range */}
