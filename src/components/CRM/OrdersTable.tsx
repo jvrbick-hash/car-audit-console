@@ -44,7 +44,24 @@ const dummyOrders: Order[] = [
     'Poznámka zákazníka': 'Rychlé zpracování prosím',
     'Číslo dokladu': 'DOC123',
     'Slevový kód': 'SLEVA10',
-    'Poznámka interní': 'VIP zákazník',
+    'Poznámka interní': 'VIP zákazník - rychlé zpracování požadováno',
+    internalNoteHistory: [
+      {
+        note: 'VIP zákazník',
+        timestamp: '2024-01-15T09:15:00',
+        user: 'Admin'
+      },
+      {
+        note: 'Zákazník volal ohledně rychlého zpracování. Priorita vysoká.',
+        timestamp: '2024-01-15T10:20:00',
+        user: 'Jana Svobodová'
+      },
+      {
+        note: 'Rychlé zpracování požadováno - dokončit do 16:00',
+        timestamp: '2024-01-15T11:45:00',
+        user: 'Petr Novák'
+      }
+    ],
     items: [
       {
         id: 'item-1',
@@ -102,7 +119,24 @@ const dummyOrders: Order[] = [
     'Poznámka zákazníka': '',
     'Číslo dokladu': '', // Missing document number - sync issue
     'Slevový kód': '',
-    'Poznámka interní': 'Čeká na platbu',
+    'Poznámka interní': 'Report link chybí - kontaktovat technika',
+    internalNoteHistory: [
+      {
+        note: 'Čeká na platbu',
+        timestamp: '2024-01-16T14:50:00',
+        user: 'Markéta Nová'
+      },
+      {
+        note: 'Platba potvrzena, může pokračovat zpracování',
+        timestamp: '2024-01-16T15:30:00',
+        user: 'Tomáš Veselý'
+      },
+      {
+        note: 'Report link chybí - kontaktovat technika',
+        timestamp: '2024-01-16T16:25:00',
+        user: 'Jana Svobodová'
+      }
+    ],
     items: [
       {
         id: 'item-3',
