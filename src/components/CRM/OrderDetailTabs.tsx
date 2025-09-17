@@ -123,6 +123,9 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 {getOrderStatusBadge(order['Stav objednávky'])}
               </div>
               <div className="flex gap-3 mt-4 flex-wrap">
+                <Button variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                  Odeslat všechny emaily
+                </Button>
                 {(() => {
                   console.log('🔵 Rendering action buttons');
                   console.log('📦 Button container visible');
