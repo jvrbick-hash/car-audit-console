@@ -902,7 +902,7 @@ export const OrdersTable: React.FC = () => {
                       {expandedOrder === order.Order_ID && (
                         <tr>
                           <td colSpan={visibleColumns.length} className="p-0">
-                            <div className="bg-muted/30 p-6 border-t">
+                            <div className="bg-muted/30 border-t">
                               <OrderDetailTabs 
                                 order={order} 
                                 onEdit={(field, value) => handleEdit(order.Order_ID, field, value)}

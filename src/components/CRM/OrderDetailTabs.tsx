@@ -99,7 +99,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
   };
 
   return (
-    <div className="space-y-6">
+    <div className="p-6 space-y-6">
       {/* Order Summary Header */}
       <Card>
         <CardHeader className="pb-4">
