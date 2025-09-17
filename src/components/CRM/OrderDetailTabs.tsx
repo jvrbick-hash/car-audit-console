@@ -464,7 +464,10 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
 
       {/* Full Width Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        {/* Notes */}
+        {/* Empty space on left */}
+        <div></div>
+        
+        {/* Notes on right */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
