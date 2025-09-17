@@ -17,8 +17,8 @@ import { cn } from '@/lib/utils';
 interface SearchAndFiltersProps {
   searchTerm: string;
   onSearchChange: (term: string) => void;
-  dateRange: DateRange | undefined;
-  onDateRangeChange: (range: DateRange | undefined) => void;
+  dateRange?: DateRange | undefined;
+  onDateRangeChange?: (range: DateRange | undefined) => void;
   filteredCount: number;
   totalCount: number;
 }
@@ -62,44 +62,8 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
           )}
         </div>
 
-        {/* Right side - Date Range */}
+        {/* Right side - Empty now that date selector moved */}
         <div className="flex items-center gap-2">
-          <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className={cn(
-                  "w-[280px] justify-start text-left font-normal",
-                  !dateRange?.from && "text-muted-foreground"
-                )}
-              >
-                <Calendar className="mr-2 h-4 w-4" />
-                {formatDateRange()}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="end">
-              <CalendarComponent
-                initialFocus
-                mode="range"
-                defaultMonth={dateRange?.from}
-                selected={dateRange}
-                onSelect={onDateRangeChange}
-                numberOfMonths={2}
-                className={cn("p-3 pointer-events-auto")}
-              />
-            </PopoverContent>
-          </Popover>
-          
-          {dateRange?.from && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearDateRange}
-              className="h-9 w-9 p-0"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          )}
         </div>
       </div>
     </Card>

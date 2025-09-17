@@ -1,13 +1,21 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronDown, ChevronRight, Edit, RefreshCw, Gift, FileText, DollarSign, FilterX } from 'lucide-react';
+import { ChevronDown, ChevronRight, Edit, RefreshCw, Gift, FileText, DollarSign, FilterX, Calendar, X } from 'lucide-react';
+import { format } from 'date-fns';
 import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 import { SearchAndFilters } from './SearchAndFilters';
 import { ExcelFilter } from './ExcelFilter';
@@ -424,9 +432,21 @@ export const OrdersTable: React.FC = () => {
   const [resizeStartWidth, setResizeStartWidth] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [columnFilters, setColumnFilters] = useState<Record<string, string[]>>({});
   const [confirmAction, setConfirmAction] = useState<{ action: string; orderId: string } | null>(null);
   const { toast } = useToast();
+
+  const formatDateRange = () => {
+    if (!dateRange?.from) return "Vyberte období...";
+    if (!dateRange.to) return format(dateRange.from, "dd.MM.yyyy");
+    return `${format(dateRange.from, "dd.MM.yyyy")} - ${format(dateRange.to, "dd.MM.yyyy")}`;
+  };
+
+  const clearDateRange = () => {
+    setDateRange(undefined);
+    setIsCalendarOpen(false);
+  };
 
   const handleMouseDown = (e: React.MouseEvent, columnKey: string) => {
     e.preventDefault();
@@ -778,7 +798,43 @@ export const OrdersTable: React.FC = () => {
                 Vymazat filtry
               </Button>
             )}
+            {/* Date Range Selector */}
+            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-[280px] justify-start text-left font-normal",
+                    !dateRange?.from && "text-muted-foreground"
+                  )}
+                >
+                  <Calendar className="mr-2 h-4 w-4" />
+                  {formatDateRange()}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="end">
+                <CalendarComponent
+                  initialFocus
+                  mode="range"
+                  defaultMonth={dateRange?.from}
+                  selected={dateRange}
+                  onSelect={setDateRange}
+                  numberOfMonths={2}
+                  className={cn("p-3 pointer-events-auto")}
+                />
+              </PopoverContent>
+            </Popover>
             
+            {dateRange?.from && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearDateRange}
+                className="h-9 w-9 p-0"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            )}
           </div>
         </div>
 
@@ -786,8 +842,6 @@ export const OrdersTable: React.FC = () => {
         <SearchAndFilters
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
-          dateRange={dateRange}
-          onDateRangeChange={setDateRange}
           filteredCount={filteredOrders.length}
           totalCount={orders.length}
         />
