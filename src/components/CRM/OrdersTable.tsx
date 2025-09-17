@@ -838,13 +838,6 @@ export const OrdersTable: React.FC = () => {
           </div>
         </div>
 
-        {/* Search and Date Range */}
-        <SearchAndFilters
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          filteredCount={filteredOrders.length}
-          totalCount={orders.length}
-        />
 
         {/* Table */}
         <Card>

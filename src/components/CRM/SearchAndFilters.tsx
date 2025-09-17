@@ -50,22 +50,5 @@ export const SearchAndFilters: React.FC<SearchAndFiltersProps> = ({
 
   const hasActiveFilters = dateRange?.from;
 
-  return (
-    <Card className="p-4 bg-secondary/30">
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        {/* Filter status display */}
-        <div className="flex items-center gap-2">
-          {hasActiveFilters && (
-            <Badge variant="outline" className="text-xs">
-              {filteredCount} z {totalCount} záznamů
-            </Badge>
-          )}
-        </div>
-
-        {/* Right side - Empty now that date selector moved */}
-        <div className="flex items-center gap-2">
-        </div>
-      </div>
-    </Card>
-  );
+  return null;
 };
