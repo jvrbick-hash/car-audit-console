@@ -492,17 +492,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
           </CardContent>
         </Card>
 
-        {/* Links and Additional Info */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <LinkIcon className="h-5 w-5 text-primary" />
-              Odkazy a dodatečné informace
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            </CardContent>
-          </Card>
       </div>
     </div>
   );
