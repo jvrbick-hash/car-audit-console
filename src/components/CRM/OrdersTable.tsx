@@ -45,6 +45,7 @@ const dummyOrders: Order[] = [
     'Číslo dokladu': 'DOC123',
     'Slevový kód': 'SLEVA10',
     'Poznámka interní': 'VIP zákazník - rychlé zpracování požadováno',
+    poznámka: 'Ano',
     internalNoteHistory: [
       {
         note: 'VIP zákazník',
@@ -120,6 +121,7 @@ const dummyOrders: Order[] = [
     'Číslo dokladu': '', // Missing document number - sync issue
     'Slevový kód': '',
     'Poznámka interní': 'Report link chybí - kontaktovat technika',
+    poznámka: 'Ne',
     internalNoteHistory: [
       {
         note: 'Čeká na platbu',
@@ -193,6 +195,7 @@ const dummyOrders: Order[] = [
     'Číslo dokladu': '', // Missing document number - sync issue
     'Slevový kód': 'BMW20',
     'Poznámka interní': 'Pravidelný zákazník',
+    poznámka: 'Ano',
     items: [
       {
         id: 'item-5',
