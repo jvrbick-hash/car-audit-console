@@ -462,40 +462,33 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
       </div>
 
 
-      {/* Full Width Bottom Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        {/* Empty space on left */}
-        <div></div>
-        
-        {/* Notes on right */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-primary" />
-              Poznámky
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <EditableField
-              label="Poznámka zákazníka"
-              value={order['Poznámka zákazníka']}
-              isEditable={isFieldEditable('Poznámka zákazníka')}
-              type="textarea"
-              onSave={handleFieldSave('Poznámka zákazníka')}
-              icon={<MessageSquare className="h-4 w-4" />}
-            />
-            <EditableField
-              label="Poznámka interní"
-              value={order['Poznámka interní']}
-              isEditable={isFieldEditable('Poznámka interní')}
-              type="textarea"
-              onSave={handleFieldSave('Poznámka interní')}
-              icon={<MessageSquare className="h-4 w-4" />}
-            />
-          </CardContent>
-        </Card>
-
-      </div>
+      {/* Notes Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <MessageSquare className="h-5 w-5 text-primary" />
+            Poznámky
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <EditableField
+            label="Poznámka zákazníka"
+            value={order['Poznámka zákazníka']}
+            isEditable={isFieldEditable('Poznámka zákazníka')}
+            type="textarea"
+            onSave={handleFieldSave('Poznámka zákazníka')}
+            icon={<MessageSquare className="h-4 w-4" />}
+          />
+          <EditableField
+            label="Poznámka interní"
+            value={order['Poznámka interní']}
+            isEditable={isFieldEditable('Poznámka interní')}
+            type="textarea"
+            onSave={handleFieldSave('Poznámka interní')}
+            icon={<MessageSquare className="h-4 w-4" />}
+          />
+        </CardContent>
+      </Card>
     </div>
   );
 }
