@@ -63,6 +63,12 @@ export interface Order {
   'Číslo dokladu': string;
   'Slevový kód': string;
   'Poznámka interní': string;
+  // Internal note history
+  internalNoteHistory?: Array<{
+    note: string;
+    timestamp: string;
+    user: string;
+  }>;
   // Order items
   items: OrderItem[];
   // Status history

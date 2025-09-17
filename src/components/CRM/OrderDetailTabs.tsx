@@ -27,7 +27,8 @@ import {
   Activity,
   CheckCircle2,
   AlertCircle,
-  XCircle
+  XCircle,
+  Users
 } from 'lucide-react';
 
 interface OrderDetailTabsProps {
@@ -475,14 +476,48 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 onSave={handleFieldSave('Poznámka zákazníka')}
                 icon={<MessageSquare className="h-4 w-4" />}
               />
-              <EditableField
-                label="Poznámka interní"
-                value={order['Poznámka interní']}
-                isEditable={isFieldEditable('Poznámka interní')}
-                type="textarea"
-                onSave={handleFieldSave('Poznámka interní')}
-                icon={<MessageSquare className="h-4 w-4" />}
-              />
+              
+              {/* Internal Note with History */}
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Poznámka interní
+                </div>
+                <EditableField
+                  label=""
+                  value={order['Poznámka interní']}
+                  isEditable={isFieldEditable('Poznámka interní')}
+                  type="textarea"
+                  onSave={handleFieldSave('Poznámka interní')}
+                  icon={<MessageSquare className="h-4 w-4" />}
+                />
+                
+                {/* Internal Note History */}
+                {order.internalNoteHistory && order.internalNoteHistory.length > 0 && (
+                  <div className="mt-3">
+                    <div className="text-xs font-medium text-muted-foreground flex items-center gap-2 mb-2">
+                      <Activity className="h-3 w-3" />
+                      Historie interních poznámek
+                    </div>
+                    <div className="space-y-2 max-h-32 overflow-y-auto bg-muted/30 rounded-md p-2">
+                      {order.internalNoteHistory.map((entry, index) => (
+                        <div key={index} className="flex items-start gap-2 text-xs border-l-2 border-muted pl-2">
+                          <div className="w-1.5 h-1.5 bg-primary/60 rounded-full mt-1.5 flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap mb-1">
+                              <span className="font-medium text-primary">{entry.user}</span>
+                              <span className="text-muted-foreground">
+                                {new Date(entry.timestamp).toLocaleString('cs-CZ')}
+                              </span>
+                            </div>
+                            <p className="text-foreground/80 text-xs leading-relaxed">{entry.note}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
 
