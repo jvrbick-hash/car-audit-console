@@ -124,7 +124,7 @@ const baseColumns: Column[] = [
   { key: 'Číslo dokladu', label: 'Číslo dokladu', visible: false, editable: false, width: '120px', type: 'text' },
   { key: 'Slevový kód', label: 'Slevový kód', visible: false, editable: false, width: '120px', type: 'text' },
   { key: 'Poznámka interní', label: 'Poznámka interní', visible: false, editable: true, width: '200px', type: 'text' },
-  { key: 'poznámka', label: 'Poznámka', visible: true, editable: true, width: '100px', type: 'select' },
+  { key: 'poznámka', label: 'Poznámka', visible: true, editable: false, width: '100px', type: 'select' },
 ];
 
 export const defaultColumns: Column[] = baseColumns.map(col => ({ 
