@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { OrderItem, ItemStatus, productCodeMapping } from '@/types/orders';
 
@@ -86,15 +86,15 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
                     <Badge variant={getItemStatusBadgeVariant(item.status)}>
                       {item.status}
                     </Badge>
-                    {item.status !== 'Vráceno' && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onUpdateItemStatus(item.id, 'Vráceno')}
-                      >
-                        Vráceno
-                      </Button>
-                    )}
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">Vráceno</span>
+                      <Switch
+                        checked={item.status === 'Vráceno'}
+                        onCheckedChange={(checked) => 
+                          onUpdateItemStatus(item.id, checked ? 'Vráceno' : 'Completed')
+                        }
+                      />
+                    </div>
                   </div>
                 </TableCell>
               </TableRow>
