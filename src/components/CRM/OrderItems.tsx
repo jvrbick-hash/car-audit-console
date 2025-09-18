@@ -83,18 +83,13 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Badge variant={getItemStatusBadgeVariant(item.status)}>
-                      {item.status}
-                    </Badge>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-muted-foreground">Vráceno</span>
-                      <Switch
-                        checked={item.status === 'Vráceno'}
-                        onCheckedChange={(checked) => 
-                          onUpdateItemStatus(item.id, checked ? 'Vráceno' : 'Completed')
-                        }
-                      />
-                    </div>
+                    <span className="text-sm text-muted-foreground">Vráceno</span>
+                    <Switch
+                      checked={item.status === 'Vráceno'}
+                      onCheckedChange={(checked) => 
+                        onUpdateItemStatus(item.id, checked ? 'Vráceno' : 'Completed')
+                      }
+                    />
                   </div>
                 </TableCell>
               </TableRow>
