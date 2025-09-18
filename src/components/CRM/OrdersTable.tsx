@@ -667,7 +667,7 @@ export const OrdersTable: React.FC = () => {
       case 'status':
         return (
           <Badge variant={getStatusBadgeVariant(value as string)} className="whitespace-nowrap">
-            {value as string}
+            {value === 'New' ? 'Nová' : value as string}
           </Badge>
         );
       case 'link':
