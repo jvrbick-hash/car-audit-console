@@ -83,7 +83,7 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <span className={`text-sm ${item.status === 'Vráceno' ? 'text-destructive' : 'text-muted-foreground'}`}>Vráceno</span>
+                    <span className={`text-sm ${item.status === 'Vráceno' ? 'text-destructive' : 'text-muted-foreground/60'}`}>Vráceno</span>
                     <Switch
                       checked={item.status === 'Vráceno'}
                       onCheckedChange={(checked) => 
