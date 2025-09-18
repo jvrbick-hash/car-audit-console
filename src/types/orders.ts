@@ -65,11 +65,16 @@ export interface Order {
   'Slevový kód': string;
   'Poznámka interní': string;
   poznámka: 'Ano' | 'Ne';
-  // Internal note history
+  // Customer support notepad fields
+  queryType?: 'billing' | 'technical' | 'complaint' | 'general';
+  currentInternalNote?: string;
+  // Internal note history with enhanced structure
   internalNoteHistory?: Array<{
-    note: string;
-    timestamp: string;
-    user: string;
+    id: string;
+    userName: string;
+    timestamp: Date | string;
+    text: string;
+    queryType: string;
   }>;
   // Order items
   items: OrderItem[];

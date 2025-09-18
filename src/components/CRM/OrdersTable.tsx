@@ -56,19 +56,25 @@ const dummyOrders: Order[] = [
     poznámka: 'Ano',
     internalNoteHistory: [
       {
-        note: 'VIP zákazník',
+        id: '1',
+        userName: 'Admin',
         timestamp: '2024-01-15T09:15:00',
-        user: 'Admin'
+        text: 'VIP zákazník',
+        queryType: 'general'
       },
       {
-        note: 'Zákazník volal ohledně rychlého zpracování. Priorita vysoká.',
+        id: '2',
+        userName: 'Jana Svobodová',
         timestamp: '2024-01-15T10:20:00',
-        user: 'Jana Svobodová'
+        text: 'Zákazník volal ohledně rychlého zpracování. Priorita vysoká.',
+        queryType: 'general'
       },
       {
-        note: 'Rychlé zpracování požadováno - dokončit do 16:00',
+        id: '3',
+        userName: 'Petr Novák',
         timestamp: '2024-01-15T11:45:00',
-        user: 'Petr Novák'
+        text: 'Rychlé zpracování požadováno - dokončit do 16:00',
+        queryType: 'general'
       }
     ],
     items: [
@@ -132,19 +138,25 @@ const dummyOrders: Order[] = [
     poznámka: 'Ne',
     internalNoteHistory: [
       {
-        note: 'Čeká na platbu',
+        id: '4',
+        userName: 'Markéta Nová',
         timestamp: '2024-01-16T14:50:00',
-        user: 'Markéta Nová'
+        text: 'Čeká na platbu',
+        queryType: 'billing'
       },
       {
-        note: 'Platba potvrzena, může pokračovat zpracování',
+        id: '5',
+        userName: 'Tomáš Veselý',
         timestamp: '2024-01-16T15:30:00',
-        user: 'Tomáš Veselý'
+        text: 'Platba potvrzena, může pokračovat zpracování',
+        queryType: 'billing'
       },
       {
-        note: 'Report link chybí - kontaktovat technika',
+        id: '6',
+        userName: 'Jana Svobodová',
         timestamp: '2024-01-16T16:25:00',
-        user: 'Jana Svobodová'
+        text: 'Report link chybí - kontaktovat technika',
+        queryType: 'technical'
       }
     ],
     items: [

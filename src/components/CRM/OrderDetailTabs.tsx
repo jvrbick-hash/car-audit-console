@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { EditableField } from './EditableField';
 import { OrderItems } from './OrderItems';
 import { RowStatusIndicator } from './RowStatusIndicator';
@@ -483,59 +485,112 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                   <MessageSquare className="h-4 w-4" />
                   Query Type
                 </div>
-                <Select defaultValue="general">
+                <Select 
+                  value={order.queryType || "general"} 
+                  onValueChange={(value) => handleFieldSave('queryType')(value)}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select query type" />
                   </SelectTrigger>
                   <SelectContent className="bg-background">
                     <SelectItem value="billing">Billing</SelectItem>
-                    <SelectItem value="technical">Technical Support</SelectItem>
-                    <SelectItem value="feature">Feature Request</SelectItem>
-                    <SelectItem value="bug">Bug Report</SelectItem>
-                    <SelectItem value="general">General Inquiry</SelectItem>
+                    <SelectItem value="technical">Technical issue</SelectItem>
+                    <SelectItem value="complaint">Complaint</SelectItem>
+                    <SelectItem value="general">General inquiry</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Internal Note with History */}
-              <div className="space-y-2">
+              <Separator />
+
+              {/* Internal Note with Add Note functionality */}
+              <div className="space-y-3">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <Users className="h-4 w-4" />
-                  Poznámka interní
+                  Internal Note
                 </div>
-                <EditableField
-                  label=""
-                  value={order['Poznámka interní']}
-                  isEditable={isFieldEditable('Poznámka interní')}
-                  type="textarea"
-                  onSave={handleFieldSave('Poznámka interní')}
-                  icon={<MessageSquare className="h-4 w-4" />}
+                <Textarea
+                  placeholder="Write your internal note here..."
+                  value={order.currentInternalNote || ''}
+                  onChange={(e) => handleFieldSave('currentInternalNote')(e.target.value)}
+                  className="min-h-[120px] resize-none"
                 />
-                
-                {/* Internal Note History */}
-                {order.internalNoteHistory && order.internalNoteHistory.length > 0 && (
-                  <div className="mt-3">
-                    <div className="text-xs font-medium text-muted-foreground flex items-center gap-2 mb-2">
-                      <Activity className="h-3 w-3" />
-                      Historie interních poznámek
-                    </div>
-                    <div className="space-y-2 max-h-32 overflow-y-auto bg-muted/30 rounded-md p-2">
-                      {order.internalNoteHistory.map((entry, index) => (
-                        <div key={index} className="flex items-start gap-2 text-xs border-l-2 border-muted pl-2">
-                          <div className="w-1.5 h-1.5 bg-primary/60 rounded-full mt-1.5 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 flex-wrap mb-1">
-                              <span className="font-medium text-primary">{entry.user}</span>
-                              <span className="text-muted-foreground">
-                                {new Date(entry.timestamp).toLocaleString('cs-CZ')}
+                <Button 
+                  onClick={() => {
+                    if (!order.currentInternalNote?.trim() || !order.queryType) return;
+                    
+                    const newNote = {
+                      id: Date.now().toString(),
+                      userName: 'Support Agent',
+                      timestamp: new Date().toISOString(),
+                      text: order.currentInternalNote.trim(),
+                      queryType: order.queryType
+                    };
+                    
+                    // Update the order object directly (in a real app, this would update the database)
+                    order.internalNoteHistory = [newNote, ...(order.internalNoteHistory || [])];
+                    order.currentInternalNote = '';
+                    
+                    // Force a re-render by updating a field
+                    handleFieldSave('Poznámka interní')(order['Poznámka interní'] || '');
+                  }}
+                  disabled={!order.currentInternalNote?.trim() || !order.queryType}
+                  className="w-full sm:w-auto"
+                >
+                  Add Note
+                </Button>
+              </div>
+
+              <Separator />
+
+              {/* Notes History */}
+              <div className="space-y-3">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <Activity className="h-4 w-4" />
+                  Notes History
+                </div>
+                {!order.internalNoteHistory || order.internalNoteHistory.length === 0 ? (
+                  <div className="text-center text-muted-foreground py-8">
+                    <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p>No notes added yet</p>
+                  </div>
+                ) : (
+                  <ScrollArea className="h-[300px] pr-4">
+                    <div className="space-y-4">
+                      {order.internalNoteHistory.map((note, index) => (
+                        <div 
+                          key={note.id}
+                          className="border border-border rounded-lg p-4 bg-card/50"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <Users className="h-3 w-3" />
+                              <span className="font-medium">{note.userName}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <Clock className="h-3 w-3" />
+                              <span>
+                                {new Date(note.timestamp).toLocaleString('en-US', {
+                                  month: 'short',
+                                  day: '2-digit',
+                                  year: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit',
+                                  hour12: true
+                                })}
                               </span>
                             </div>
-                            <p className="text-foreground/80 text-xs leading-relaxed">{entry.note}</p>
                           </div>
+                          <div className="mb-2">
+                            <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-primary/10 text-primary">
+                              {note.queryType}
+                            </span>
+                          </div>
+                          <p className="text-sm leading-relaxed">{note.text}</p>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </ScrollArea>
                 )}
               </div>
             </CardContent>
