@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { EditableField } from './EditableField';
 import { OrderItems } from './OrderItems';
 import { RowStatusIndicator } from './RowStatusIndicator';
@@ -476,6 +477,26 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 icon={<MessageSquare className="h-4 w-4" />}
               />
               
+              {/* Query Type Selection */}
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4" />
+                  Query Type
+                </div>
+                <Select defaultValue="general">
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select query type" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background">
+                    <SelectItem value="billing">Billing</SelectItem>
+                    <SelectItem value="technical">Technical Support</SelectItem>
+                    <SelectItem value="feature">Feature Request</SelectItem>
+                    <SelectItem value="bug">Bug Report</SelectItem>
+                    <SelectItem value="general">General Inquiry</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Internal Note with History */}
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
