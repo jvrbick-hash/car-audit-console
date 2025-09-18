@@ -31,7 +31,8 @@ import {
   CheckCircle2,
   AlertCircle,
   XCircle,
-  Users
+  Users,
+  Trash2
 } from 'lucide-react';
 
 interface OrderDetailTabsProps {
@@ -567,18 +568,33 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                               <Users className="h-3 w-3" />
                               <span className="font-medium">{note.userName}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <Clock className="h-3 w-3" />
-                              <span>
-                                {new Date(note.timestamp).toLocaleString('en-US', {
-                                  month: 'short',
-                                  day: '2-digit',
-                                  year: 'numeric',
-                                  hour: '2-digit',
-                                  minute: '2-digit',
-                                  hour12: true
-                                })}
-                              </span>
+                            <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <Clock className="h-3 w-3" />
+                                <span>
+                                  {new Date(note.timestamp).toLocaleString('en-US', {
+                                    month: 'short',
+                                    day: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: true
+                                  })}
+                                </span>
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => {
+                                  // Remove the note from history
+                                  order.internalNoteHistory = order.internalNoteHistory?.filter(n => n.id !== note.id) || [];
+                                  // Force a re-render
+                                  handleFieldSave('Poznámka interní')(order['Poznámka interní'] || '');
+                                }}
+                                className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
                             </div>
                           </div>
                           <div className="mb-2">
