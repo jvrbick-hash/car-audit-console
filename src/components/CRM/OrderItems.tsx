@@ -95,6 +95,11 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="Pending">Pending</SelectItem>
+                        <SelectItem value="In Progress">In Progress</SelectItem>
+                        <SelectItem value="Completed">Completed</SelectItem>
+                        <SelectItem value="Cancelled">Cancelled</SelectItem>
+                        <SelectItem value="Refunded">Refunded</SelectItem>
                         <SelectItem value="Vráceno">Vráceno</SelectItem>
                       </SelectContent>
                     </Select>
