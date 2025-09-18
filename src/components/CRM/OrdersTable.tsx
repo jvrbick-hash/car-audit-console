@@ -35,7 +35,7 @@ const dummyOrders: Order[] = [
     Město: 'Praha',
     'Hodnota objednávky': 2500,
     'Datum objednávky': '2024-01-15T10:30:00',
-    'Stav platby': 'Zaplaceno',
+    'Stav platby': 'New',
     'Stav objednávky': 'Caraudit hotový',
     'Variabilní symbol': '2024010001',
     Výrobce: 'Škoda',
@@ -111,7 +111,7 @@ const dummyOrders: Order[] = [
     Město: 'Brno',
     'Hodnota objednávky': 2990,
     'Datum objednávky': '2024-01-16T14:45:00',
-    'Stav platby': 'Částečně vráceno',
+    'Stav platby': 'V procesu',
     'Stav objednávky': 'Prohlídka v procesu',
     'Variabilní symbol': '2024010002',
     Výrobce: 'Volkswagen',
@@ -185,7 +185,7 @@ const dummyOrders: Order[] = [
     Město: '',
     'Hodnota objednávky': 4990,
     'Datum objednávky': '2024-01-17T09:15:00',
-    'Stav platby': 'Nezaplaceno',
+    'Stav platby': 'Hotová',
     'Stav objednávky': 'Auto není dostupné - vratka',
     'Variabilní symbol': '2024010003',
     Výrobce: 'BMW',
@@ -263,7 +263,7 @@ const dummyOrders: Order[] = [
     Město: 'Praha',
     'Hodnota objednávky': 1500,
     'Datum objednávky': '2024-01-18T08:30:00',
-    'Stav platby': 'Nezaplaceno',
+    'Stav platby': 'New',
     'Stav objednávky': 'Technik je na cestě',
     'Variabilní symbol': '2024010004',
     Výrobce: 'Audi',
@@ -310,7 +310,7 @@ const dummyOrders: Order[] = [
     Město: 'Praha',
     'Hodnota objednávky': 3500,
     'Datum objednávky': '2024-01-19T16:20:00',
-    'Stav platby': 'Zaplaceno',
+    'Stav platby': 'Hotová',
     'Stav objednávky': 'Vrácené peníze',
     'Variabilní symbol': '2024010005',
     Výrobce: 'Mercedes',
@@ -358,7 +358,7 @@ const dummyOrders: Order[] = [
     Město: 'Praha',
     'Hodnota objednávky': 2200,
     'Datum objednávky': '2024-01-20T11:10:00',
-    'Stav platby': 'Částečně vráceno',
+    'Stav platby': 'V procesu',
     'Stav objednávky': 'Auto není dostupné - nevratka',
     'Variabilní symbol': '2024010006',
     Výrobce: 'Ford',
@@ -408,13 +408,13 @@ const dummyOrders: Order[] = [
 
 const getStatusBadgeVariant = (status: string) => {
   switch (status) {
-    case 'Zaplaceno':
+    case 'Hotová':
     case 'Dokončeno':
       return 'default';
-    case 'Nezaplaceno':
+    case 'New':
     case 'Zrušeno':
       return 'destructive';
-    case 'Částečně zaplaceno':
+    case 'V procesu':
     case 'Zpracovává se':
       return 'secondary';
     default:
