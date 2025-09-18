@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { OrderItem, ItemStatus, productCodeMapping } from '@/types/orders';
 
 interface OrderItemsProps {
@@ -21,6 +21,8 @@ const getItemStatusBadgeVariant = (status: ItemStatus) => {
     case 'Refunded':
       return 'destructive';
     case 'Cancelled':
+      return 'destructive';
+    case 'Vráceno':
       return 'destructive';
     default:
       return 'outline';
@@ -80,19 +82,20 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
                   {item.totalPrice.toLocaleString('cs-CZ')} Kč
                 </TableCell>
                 <TableCell>
-                  <Select
-                    value={item.status}
-                    onValueChange={(value) => onUpdateItemStatus(item.id, value as ItemStatus)}
-                  >
-                    <SelectTrigger className="w-[130px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Completed">Completed</SelectItem>
-                      <SelectItem value="Cancelled">Cancelled</SelectItem>
-                      <SelectItem value="Refunded">Refunded</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex items-center gap-2">
+                    <Badge variant={getItemStatusBadgeVariant(item.status)}>
+                      {item.status}
+                    </Badge>
+                    {item.status !== 'Vráceno' && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onUpdateItemStatus(item.id, 'Vráceno')}
+                      >
+                        Vráceno
+                      </Button>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

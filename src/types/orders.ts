@@ -10,7 +10,8 @@ export type ItemStatus =
   | 'In Progress' 
   | 'Completed'
   | 'Refunded'
-  | 'Cancelled';
+  | 'Cancelled'
+  | 'Vráceno';
 
 export interface OrderItem {
   id: string;
