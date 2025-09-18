@@ -44,7 +44,7 @@ export interface Order {
   Město: string;
   'Hodnota objednávky': number;
   'Datum objednávky': string;
-  'Stav platby': 'New' | 'V procesu' | 'Hotová';
+  'Stav platby': 'Zaplaceno' | 'Nezaplaceno' | 'Vráceno' | 'Částečně vráceno';
   'Stav objednávky': 'New' | 'V procesu' | 'Hotová';
   // Detail fields
   'Variabilní symbol': string;

@@ -21,7 +21,7 @@ export const RowStatusIndicator: React.FC<RowStatusIndicatorProps> = ({ order, c
       issues.push('Missing report link');
     }
 
-    if (order['Stav platby'] === 'Hotová' && !order['Číslo dokladu']) {
+    if (order['Stav platby'] === 'Zaplaceno' && !order['Číslo dokladu']) {
       issues.push('Missing document number');
     }
 
