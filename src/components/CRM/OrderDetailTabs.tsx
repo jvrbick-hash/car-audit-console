@@ -222,39 +222,39 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                     <Building className="h-4 w-4" />
                     Firemní údaje
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <EditableField
                       label="IČ"
                       value={order.IČ || ''}
-                      isEditable={isFieldEditable('IČ')}
+                      isEditable={true}
                       onSave={handleFieldSave('IČ')}
                       icon={<Building className="h-4 w-4" />}
                     />
                     <EditableField
                       label="DIČ"
                       value={order.DIČ}
-                      isEditable={isFieldEditable('DIČ')}
+                      isEditable={true}
                       onSave={handleFieldSave('DIČ')}
                       icon={<Building className="h-4 w-4" />}
                     />
                     <EditableField
                       label="Ulice a číslo"
                       value={order['Ulice a číslo'] || ''}
-                      isEditable={isFieldEditable('Ulice a číslo')}
+                      isEditable={true}
                       onSave={handleFieldSave('Ulice a číslo')}
                       icon={<MapPin className="h-4 w-4" />}
                     />
                     <EditableField
                       label="Město"
                       value={order.Město}
-                      isEditable={isFieldEditable('Město')}
+                      isEditable={true}
                       onSave={handleFieldSave('Město')}
                       icon={<MapPin className="h-4 w-4" />}
                     />
                     <EditableField
                       label="PSČ"
                       value={order.PSČ}
-                      isEditable={isFieldEditable('PSČ')}
+                      isEditable={true}
                       onSave={handleFieldSave('PSČ')}
                       icon={<MapPin className="h-4 w-4" />}
                     />
