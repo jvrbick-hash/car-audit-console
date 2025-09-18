@@ -2,7 +2,6 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { OrderItem, ItemStatus, productCodeMapping } from '@/types/orders';
 
 interface OrderItemsProps {
@@ -87,22 +86,15 @@ export const OrderItems: React.FC<OrderItemsProps> = ({
                     <Badge variant={getItemStatusBadgeVariant(item.status)}>
                       {item.status}
                     </Badge>
-                    <Select
-                      value={item.status}
-                      onValueChange={(value) => onUpdateItemStatus(item.id, value as ItemStatus)}
-                    >
-                      <SelectTrigger className="w-[130px]">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Pending">Pending</SelectItem>
-                        <SelectItem value="In Progress">In Progress</SelectItem>
-                        <SelectItem value="Completed">Completed</SelectItem>
-                        <SelectItem value="Cancelled">Cancelled</SelectItem>
-                        <SelectItem value="Refunded">Refunded</SelectItem>
-                        <SelectItem value="Vráceno">Vráceno</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {item.status !== 'Vráceno' && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onUpdateItemStatus(item.id, 'Vráceno')}
+                      >
+                        Vráceno
+                      </Button>
+                    )}
                   </div>
                 </TableCell>
               </TableRow>
