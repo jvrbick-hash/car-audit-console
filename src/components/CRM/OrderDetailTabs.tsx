@@ -87,13 +87,9 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
 
   const getOrderProgress = () => {
     switch (order['Stav objednávky']) {
-      case 'Caraudit hotový': return 100;
-      case 'Prohlídka v procesu': return 80;
-      case 'Technik je na cestě': return 60;
-      case 'Technik přiřazen': return 40;
-      case 'Auto není dostupné - vratka':
-      case 'Auto není dostupné - nevratka': return 20;
-      case 'Vrácené peníze': return 0;
+      case 'Hotová': return 100;
+      case 'V procesu': return 60;
+      case 'New': return 20;
       default: return 0;
     }
   };

@@ -17,7 +17,7 @@ export const RowStatusIndicator: React.FC<RowStatusIndicatorProps> = ({ order, c
     const issues = [];
 
     // Check for missing critical data that should be synced
-    if (order['Stav objednávky'] === 'Caraudit hotový' && !order['Report link']) {
+    if (order['Stav objednávky'] === 'Hotová' && !order['Report link']) {
       issues.push('Missing report link');
     }
 

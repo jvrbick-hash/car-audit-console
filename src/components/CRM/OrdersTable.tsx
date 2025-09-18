@@ -36,7 +36,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 2500,
     'Datum objednávky': '2024-01-15T10:30:00',
     'Stav platby': 'New',
-    'Stav objednávky': 'Caraudit hotový',
+    'Stav objednávky': 'New',
     'Variabilní symbol': '2024010001',
     Výrobce: 'Škoda',
     Model: 'Octavia',
@@ -112,7 +112,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 2990,
     'Datum objednávky': '2024-01-16T14:45:00',
     'Stav platby': 'V procesu',
-    'Stav objednávky': 'Prohlídka v procesu',
+    'Stav objednávky': 'V procesu',
     'Variabilní symbol': '2024010002',
     Výrobce: 'Volkswagen',
     Model: 'Golf',
@@ -186,7 +186,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 4990,
     'Datum objednávky': '2024-01-17T09:15:00',
     'Stav platby': 'Hotová',
-    'Stav objednávky': 'Auto není dostupné - vratka',
+    'Stav objednávky': 'Hotová',
     'Variabilní symbol': '2024010003',
     Výrobce: 'BMW',
     Model: '320d',
@@ -264,7 +264,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 1500,
     'Datum objednávky': '2024-01-18T08:30:00',
     'Stav platby': 'New',
-    'Stav objednávky': 'Technik je na cestě',
+    'Stav objednávky': 'New',
     'Variabilní symbol': '2024010004',
     Výrobce: 'Audi',
     Model: 'A4',
@@ -311,7 +311,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 3500,
     'Datum objednávky': '2024-01-19T16:20:00',
     'Stav platby': 'Hotová',
-    'Stav objednávky': 'Vrácené peníze',
+    'Stav objednávky': 'Hotová',
     'Variabilní symbol': '2024010005',
     Výrobce: 'Mercedes',
     Model: 'C-Class',
@@ -359,7 +359,7 @@ const dummyOrders: Order[] = [
     'Hodnota objednávky': 2200,
     'Datum objednávky': '2024-01-20T11:10:00',
     'Stav platby': 'V procesu',
-    'Stav objednávky': 'Auto není dostupné - nevratka',
+    'Stav objednávky': 'V procesu',
     'Variabilní symbol': '2024010006',
     Výrobce: 'Ford',
     Model: 'Focus',
@@ -409,13 +409,10 @@ const dummyOrders: Order[] = [
 const getStatusBadgeVariant = (status: string) => {
   switch (status) {
     case 'Hotová':
-    case 'Dokončeno':
       return 'default';
     case 'New':
-    case 'Zrušeno':
       return 'destructive';
     case 'V procesu':
-    case 'Zpracovává se':
       return 'secondary';
     default:
       return 'outline';

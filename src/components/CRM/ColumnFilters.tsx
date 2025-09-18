@@ -61,7 +61,7 @@ export const ColumnFilters: React.FC<ColumnFiltersProps> = ({
 
   const statusOptions = {
     'Stav platby': ['New', 'V procesu', 'Hotová'],
-    'Stav objednávky': ['Dokončeno', 'Zpracovává se', 'Čeká na platbu', 'Zrušeno']
+    'Stav objednávky': ['New', 'V procesu', 'Hotová']
   };
 
   return (
