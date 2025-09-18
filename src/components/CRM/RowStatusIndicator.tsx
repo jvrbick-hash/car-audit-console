@@ -73,10 +73,8 @@ export const RowStatusIndicator: React.FC<RowStatusIndicatorProps> = ({ order, c
     // Determine status based on issues found
     if (issues.length === 0) {
       return { status: 'success', message: 'Synchronized', color: 'bg-green-500', issues: [] };
-    } else if (issues.length <= 2) {
-      return { status: 'warning', message: `${issues.length} issue${issues.length > 1 ? 's' : ''}`, color: 'bg-yellow-500', issues };
     } else {
-      return { status: 'error', message: `${issues.length} issues`, color: 'bg-red-500', issues };
+      return { status: 'error', message: `${issues.length} issue${issues.length > 1 ? 's' : ''}`, color: 'bg-red-500', issues };
     }
   };
 
