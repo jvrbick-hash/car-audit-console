@@ -443,6 +443,7 @@ export const OrdersTable: React.FC = () => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [columnFilters, setColumnFilters] = useState<Record<string, string[]>>({});
+  const [columnSearches, setColumnSearches] = useState<Record<string, string>>({});
   const [confirmAction, setConfirmAction] = useState<{ action: string; orderId: string } | null>(null);
   const { toast } = useToast();
 
@@ -543,9 +544,22 @@ export const OrdersTable: React.FC = () => {
         }
       }
 
+      // Column-specific searches
+      for (const [columnKey, searchTerm] of Object.entries(columnSearches)) {
+        if (!searchTerm) continue;
+        
+        const value = order[columnKey as keyof Order];
+        if (value === null || value === undefined) continue;
+        
+        // Check if the value contains the search term
+        if (!String(value).toLowerCase().includes(searchTerm.toLowerCase())) {
+          return false;
+        }
+      }
+
       return true;
     });
-  }, [orders, searchTerm, dateRange, columnFilters, visibleColumns]);
+  }, [orders, searchTerm, dateRange, columnFilters, columnSearches, visibleColumns]);
 
   const handleEdit = (orderId: string, field: string, value: string) => {
     setOrders(prev => prev.map(order => 
@@ -578,6 +592,7 @@ export const OrdersTable: React.FC = () => {
     setSearchTerm('');
     setDateRange(undefined);
     setColumnFilters({});
+    setColumnSearches({});
     toast({
       title: "Filtry vymazány",
       description: "Všechny filtry byly odstraněny.",
@@ -626,24 +641,42 @@ export const OrdersTable: React.FC = () => {
     }));
   };
 
-  const hasActiveFilters = searchTerm.length > 0 || dateRange?.from || Object.values(columnFilters).some(v => v.length > 0);
+  const hasActiveFilters = searchTerm.length > 0 || dateRange?.from || Object.values(columnFilters).some(v => v.length > 0) || Object.values(columnSearches).some(v => v.length > 0);
 
   const renderColumnFilter = (column: Column) => {
     // Only allow filters on specific columns
     const allowedFilterColumns = ['poznámka', 'Stav platby', 'Stav objednávky', 'Měna'];
     
-    if (!allowedFilterColumns.includes(column.key)) {
+    if (allowedFilterColumns.includes(column.key)) {
+      const selectedValues = columnFilters[column.key] || [];
+
+      return (
+        <ExcelFilter
+          column={column}
+          orders={orders}
+          selectedValues={selectedValues}
+          onSelectionChange={(values) => updateColumnFilter(column.key, values)}
+        />
+      );
+    }
+
+    // For other columns, show a search input
+    // Skip StatusIndicator column as it doesn't contain searchable text
+    if (column.key === 'StatusIndicator') {
       return null;
     }
 
-    const selectedValues = columnFilters[column.key] || [];
-
     return (
-      <ExcelFilter
-        column={column}
-        orders={orders}
-        selectedValues={selectedValues}
-        onSelectionChange={(values) => updateColumnFilter(column.key, values)}
+      <Input
+        placeholder={`Hledat ${column.label.toLowerCase()}...`}
+        value={columnSearches[column.key] || ''}
+        onChange={(e) => {
+          setColumnSearches(prev => ({
+            ...prev,
+            [column.key]: e.target.value
+          }));
+        }}
+        className="h-8 text-xs"
       />
     );
   };
