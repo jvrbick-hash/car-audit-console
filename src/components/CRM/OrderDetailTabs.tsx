@@ -34,7 +34,8 @@ import {
   AlertCircle,
   XCircle,
   Users,
-  Trash2
+  Trash2,
+  Plus
 } from 'lucide-react';
 
 interface OrderDetailTabsProps {
@@ -485,7 +486,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                   <DialogTrigger asChild>
                     <Button className="w-full sm:w-auto">
-                      <MessageSquare className="h-4 w-4 mr-2" />
+                      <Plus className="h-4 w-4 mr-2" />
                       Přidat poznámku
                     </Button>
                   </DialogTrigger>
