@@ -167,11 +167,11 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
       </Card>
 
       {/* Single Consolidated View */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         {/* Left Column */}
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
           {/* Customer Information */}
-          <Card>
+          <Card className="h-fit">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="h-5 w-5 text-primary" />
@@ -274,7 +274,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
           </Card>
 
           {/* Order Details */}
-          <Card>
+          <Card className="h-fit">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Package className="h-5 w-5 text-primary" />
@@ -394,9 +394,9 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
         </div>
 
         {/* Right Column */}
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
           {/* Product Information */}
-          <Card>
+          <Card className="h-fit">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Car className="h-5 w-5 text-primary" />
@@ -461,7 +461,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
           </Card>
 
           {/* Notes */}
-          <Card>
+          <Card className="h-fit">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MessageSquare className="h-5 w-5 text-primary" />
