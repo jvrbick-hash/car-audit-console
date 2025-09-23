@@ -105,8 +105,8 @@ export const validateColumnWidth = (width: string): string => {
 const baseColumns: Column[] = [
   { key: 'Order_ID', label: 'Order ID', visible: true, editable: false, width: '120px', type: 'text' },
   { key: 'StatusIndicator', label: 'Stav synchronizace', visible: true, editable: false, width: '120px', type: 'status-indicator' },
-  { key: 'Jméno', label: 'Jméno', visible: true, editable: false, width: '100px', type: 'text' },
-  { key: 'Příjmení', label: 'Příjmení', visible: true, editable: false, width: '120px', type: 'text' },
+  { key: 'Jméno', label: 'Jméno', visible: true, editable: true, width: '100px', type: 'text' },
+  { key: 'Příjmení', label: 'Příjmení', visible: true, editable: true, width: '120px', type: 'text' },
   { key: 'Email', label: 'Email', visible: true, editable: true, width: '180px', type: 'text' },
   { key: 'Telefonní číslo', label: 'Telefon', visible: true, editable: true, width: '140px', type: 'text' },
   { key: 'Adresa', label: 'Adresa', visible: true, editable: true, width: '300px', type: 'text' },
