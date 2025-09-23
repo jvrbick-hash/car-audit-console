@@ -474,28 +474,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               />
               
               {/* Query Type Selection */}
-              <div className="space-y-2">
-                <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4" />
-                  Typ dotazu
-                </div>
-                <Select 
-                  value={order.queryType || "general"} 
-                  onValueChange={(value) => handleFieldSave('queryType')(value)}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Vyberte typ dotazu" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background">
-                    <SelectItem value="billing">Fakturace</SelectItem>
-                    <SelectItem value="technical">Technický problém</SelectItem>
-                    <SelectItem value="complaint">Reklamace</SelectItem>
-                    <SelectItem value="general">Obecný dotaz</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Separator />
 
               {/* Internal Note with Add Note functionality */}
               <div className="space-y-3">
