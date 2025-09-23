@@ -676,7 +676,7 @@ export const OrdersTable: React.FC = () => {
             [column.key]: e.target.value
           }));
         }}
-        className="h-8 text-xs"
+        className="h-8 text-xs text-muted-foreground font-normal"
       />
     );
   };
