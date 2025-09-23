@@ -435,7 +435,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 icon={<MapPin className="h-4 w-4" />}
               />
               <EditableField
-                label="Report link"
+                label="Odkaz na report"
                 value={order['Report link'] || ''}
                 isEditable={isFieldEditable('Report link')}
                 onSave={handleFieldSave('Report link')}
@@ -484,20 +484,20 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <MessageSquare className="h-4 w-4" />
-                  Query Type
+                  Typ dotazu
                 </div>
                 <Select 
                   value={order.queryType || "general"} 
                   onValueChange={(value) => handleFieldSave('queryType')(value)}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select query type" />
+                    <SelectValue placeholder="Vyberte typ dotazu" />
                   </SelectTrigger>
                   <SelectContent className="bg-background">
-                    <SelectItem value="billing">Billing</SelectItem>
-                    <SelectItem value="technical">Technical issue</SelectItem>
-                    <SelectItem value="complaint">Complaint</SelectItem>
-                    <SelectItem value="general">General inquiry</SelectItem>
+                    <SelectItem value="billing">Fakturace</SelectItem>
+                    <SelectItem value="technical">Technický problém</SelectItem>
+                    <SelectItem value="complaint">Stížnost</SelectItem>
+                    <SelectItem value="general">Obecný dotaz</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -508,10 +508,10 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               <div className="space-y-3">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <Users className="h-4 w-4" />
-                  Internal Note
+                  Interní poznámka
                 </div>
                 <Textarea
-                  placeholder="Write your internal note here..."
+                  placeholder="Napište svou interní poznámku zde..."
                   value={order.currentInternalNote || ''}
                   onChange={(e) => handleFieldSave('currentInternalNote')(e.target.value)}
                   className="min-h-[120px] resize-none"
@@ -538,7 +538,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                   disabled={!order.currentInternalNote?.trim() || !order.queryType}
                   className="w-full sm:w-auto"
                 >
-                  Add Note
+                  Přidat poznámku
                 </Button>
               </div>
 
@@ -548,12 +548,12 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               <div className="space-y-3">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <Activity className="h-4 w-4" />
-                  Notes History
+                  Historie poznámek
                 </div>
                 {!order.internalNoteHistory || order.internalNoteHistory.length === 0 ? (
                   <div className="text-center text-muted-foreground py-8">
                     <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p>No notes added yet</p>
+                    <p>Zatím nebyly přidány žádné poznámky</p>
                   </div>
                 ) : (
                   <ScrollArea className="h-[300px] pr-4">
@@ -572,14 +572,14 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                 <Clock className="h-3 w-3" />
                                 <span>
-                                  {new Date(note.timestamp).toLocaleString('en-US', {
-                                    month: 'short',
+                                   {new Date(note.timestamp).toLocaleString('cs-CZ', {
                                     day: '2-digit',
+                                    month: '2-digit',
                                     year: 'numeric',
                                     hour: '2-digit',
                                     minute: '2-digit',
-                                    hour12: true
-                                  })}
+                                    hour12: false
+                                   })}
                                 </span>
                               </div>
                               <Button
