@@ -294,13 +294,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                 isEditable={false}
                 icon={<DollarSign className="h-4 w-4" />}
               />
-              <EditableField
-                label="Variabilní symbol"
-                value={order['Variabilní symbol']}
-                isEditable={isFieldEditable('Variabilní symbol')}
-                onSave={handleFieldSave('Variabilní symbol')}
-                icon={<Hash className="h-4 w-4" />}
-              />
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <FileText className="h-4 w-4" />

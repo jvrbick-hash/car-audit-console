@@ -48,7 +48,7 @@ export interface Order {
   'Stav platby': 'Zaplaceno' | 'Nezaplaceno' | 'Vráceno' | 'Částečně vráceno';
   'Stav objednávky': 'New' | 'V procesu' | 'Hotová';
   // Detail fields
-  'Variabilní symbol': string;
+  
   Výrobce: string;
   Model: string;
   'Adresa inzerátu': string;
@@ -117,7 +117,7 @@ const baseColumns: Column[] = [
   // Additional columns that can be added
   { key: 'PSČ', label: 'PSČ', visible: false, editable: false, width: '100px', type: 'text' },
   { key: 'Město', label: 'Město', visible: false, editable: false, width: '120px', type: 'text' },
-  { key: 'Variabilní symbol', label: 'Variabilní symbol', visible: false, editable: false, width: '140px', type: 'text' },
+  
   { key: 'Výrobce', label: 'Výrobce', visible: false, editable: false, width: '100px', type: 'text' },
   { key: 'Model', label: 'Model', visible: false, editable: false, width: '120px', type: 'text' },
   { key: 'DIČ', label: 'DIČ', visible: false, editable: false, width: '120px', type: 'text' },

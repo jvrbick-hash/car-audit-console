@@ -38,7 +38,7 @@ const dummyOrders: Order[] = [
     'Datum objednávky': '2024-01-15T10:30:00',
     'Stav platby': 'Zaplaceno',
     'Stav objednávky': 'New',
-    'Variabilní symbol': '2024010001',
+    
     Výrobce: 'Škoda',
     Model: 'Octavia',
     'Adresa inzerátu': 'Praha 5 - Smíchov',
@@ -120,7 +120,7 @@ const dummyOrders: Order[] = [
     'Datum objednávky': '2024-01-16T14:45:00',
     'Stav platby': 'Částečně vráceno',
     'Stav objednávky': 'V procesu',
-    'Variabilní symbol': '2024010002',
+    
     Výrobce: 'Volkswagen',
     Model: 'Golf',
     'Adresa inzerátu': 'Brno - Královo Pole',
@@ -200,7 +200,7 @@ const dummyOrders: Order[] = [
     'Datum objednávky': '2024-01-17T09:15:00',
     'Stav platby': 'Nezaplaceno',
     'Stav objednávky': 'Hotová',
-    'Variabilní symbol': '2024010003',
+    
     Výrobce: 'BMW',
     Model: '320d',
     'Adresa inzerátu': 'Ostrava - Poruba',
@@ -278,7 +278,7 @@ const dummyOrders: Order[] = [
     'Datum objednávky': '2024-01-18T08:30:00',
     'Stav platby': 'Nezaplaceno',
     'Stav objednávky': 'New',
-    'Variabilní symbol': '2024010004',
+    
     Výrobce: 'Audi',
     Model: 'A4',
     'Adresa inzerátu': 'Praha 2 - Vinohrady',
@@ -325,7 +325,7 @@ const dummyOrders: Order[] = [
     'Datum objednávky': '2024-01-19T16:20:00',
     'Stav platby': 'Zaplaceno',
     'Stav objednávky': 'Hotová',
-    'Variabilní symbol': '2024010005',
+    
     Výrobce: 'Mercedes',
     Model: 'C-Class',
     'Adresa inzerátu': 'Praha 4 - Podolí',
@@ -373,7 +373,7 @@ const dummyOrders: Order[] = [
     'Datum objednávky': '2024-01-20T11:10:00',
     'Stav platby': 'Částečně vráceno',
     'Stav objednávky': 'V procesu',
-    'Variabilní symbol': '2024010006',
+    
     Výrobce: 'Ford',
     Model: 'Focus',
     'Adresa inzerátu': 'Praha 6 - Dejvice',
