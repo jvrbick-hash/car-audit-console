@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,8 @@ import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { toast } from '@/hooks/use-toast';
 import { EditableField } from './EditableField';
 import { OrderItems } from './OrderItems';
 import { RowStatusIndicator } from './RowStatusIndicator';
@@ -43,6 +45,9 @@ interface OrderDetailTabsProps {
 }
 
 export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, onRefundItem = () => {} }: OrderDetailTabsProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newNote, setNewNote] = useState('');
+  const [selectedQueryType, setSelectedQueryType] = useState('general');
   // Get editable fields from column configuration
   const editableFields = defaultColumns
     .filter(col => col.editable)
@@ -510,36 +515,99 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                   <Users className="h-4 w-4" />
                   Interní poznámka
                 </div>
-                <Textarea
-                  placeholder="Napište svou interní poznámku zde..."
-                  value={order.currentInternalNote || ''}
-                  onChange={(e) => handleFieldSave('currentInternalNote')(e.target.value)}
-                  className="min-h-[120px] resize-none"
-                />
-                <Button 
-                  onClick={() => {
-                    if (!order.currentInternalNote?.trim() || !order.queryType) return;
-                    
-                    const newNote = {
-                      id: Date.now().toString(),
-                      userName: 'Support Agent',
-                      timestamp: new Date().toISOString(),
-                      text: order.currentInternalNote.trim(),
-                      queryType: order.queryType
-                    };
-                    
-                    // Update the order object directly (in a real app, this would update the database)
-                    order.internalNoteHistory = [newNote, ...(order.internalNoteHistory || [])];
-                    order.currentInternalNote = '';
-                    
-                    // Force a re-render by updating a field
-                    handleFieldSave('Poznámka interní')(order['Poznámka interní'] || '');
-                  }}
-                  disabled={!order.currentInternalNote?.trim() || !order.queryType}
-                  className="w-full sm:w-auto"
-                >
-                  Přidat poznámku
-                </Button>
+                
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="w-full sm:w-auto">
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Přidat poznámku
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[500px]">
+                    <DialogHeader>
+                      <DialogTitle>Přidat interní poznámku</DialogTitle>
+                      <DialogDescription>
+                        Napište poznámku pro interní potřeby týmu. Tato poznámka nebude viditelná pro zákazníka.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Typ dotazu</label>
+                        <Select value={selectedQueryType} onValueChange={setSelectedQueryType}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Vyberte typ dotazu" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="billing">Fakturace</SelectItem>
+                            <SelectItem value="technical">Technický problém</SelectItem>
+                            <SelectItem value="complaint">Stížnost</SelectItem>
+                            <SelectItem value="general">Obecný dotaz</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Poznámka</label>
+                        <Textarea
+                          placeholder="Napište svou interní poznámku zde..."
+                          value={newNote}
+                          onChange={(e) => setNewNote(e.target.value)}
+                          className="min-h-[120px] resize-none"
+                        />
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setIsDialogOpen(false);
+                            setNewNote('');
+                            setSelectedQueryType('general');
+                          }}
+                        >
+                          Zrušit
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            if (!newNote.trim()) {
+                              toast({
+                                title: "Chyba",
+                                description: "Poznámka nemůže být prázdná",
+                                variant: "destructive"
+                              });
+                              return;
+                            }
+                            
+                            const noteEntry = {
+                              id: Date.now().toString(),
+                              userName: 'Support Agent',
+                              timestamp: new Date().toISOString(),
+                              text: newNote.trim(),
+                              queryType: selectedQueryType
+                            };
+                            
+                            // Update the order object directly (in a real app, this would update the database)
+                            order.internalNoteHistory = [noteEntry, ...(order.internalNoteHistory || [])];
+                            
+                            // Clear form and close dialog
+                            setNewNote('');
+                            setSelectedQueryType('general');
+                            setIsDialogOpen(false);
+                            
+                            // Force a re-render by updating a field
+                            handleFieldSave('Poznámka interní')(order['Poznámka interní'] || '');
+                            
+                            toast({
+                              title: "Úspěch",
+                              description: "Poznámka byla úspěšně přidána"
+                            });
+                          }}
+                          disabled={!newNote.trim()}
+                        >
+                          Uložit poznámku
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
 
               <Separator />
