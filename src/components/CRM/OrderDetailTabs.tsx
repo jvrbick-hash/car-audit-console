@@ -429,7 +429,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               {/* Historie změn */}
               {order.statusHistory && order.statusHistory.length > 0 && (
                 <div className="md:col-span-2 mt-4">
-                  <div className="border-t pt-4">
+                  <div className="border-t pt-4 flex flex-col h-full">
                     <div className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-3">
                       <Activity className="h-4 w-4" />
                       Historie změn
