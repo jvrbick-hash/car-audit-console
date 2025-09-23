@@ -167,9 +167,9 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
       </Card>
 
       {/* Single Consolidated View */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch min-h-0">
-        {/* Left Column */}
-        <div className="flex flex-col gap-6 h-full">
+      <div className="space-y-6">
+        {/* Upper Row - Customer Info & Product Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
           {/* Customer Information */}
           <Card className="flex-1">
             <CardHeader>
@@ -273,6 +273,74 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             </CardContent>
           </Card>
 
+          {/* Product Information */}
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Car className="h-5 w-5 text-primary" />
+                Informace o produktu
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+              <EditableField
+                label="Výrobce"
+                value={order.Výrobce}
+                isEditable={isFieldEditable('Výrobce')}
+                onSave={handleFieldSave('Výrobce')}
+                icon={<Building className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Model"
+                value={order.Model}
+                isEditable={isFieldEditable('Model')}
+                onSave={handleFieldSave('Model')}
+                icon={<Car className="h-4 w-4" />}
+              />
+              <EditableField
+                label="VIN"
+                value={order.VIN}
+                isEditable={isFieldEditable('VIN')}
+                onSave={handleFieldSave('VIN')}
+                icon={<Hash className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Poloha inzerátu"
+                value={order['Poloha inzerátu']}
+                isEditable={isFieldEditable('Poloha inzerátu')}
+                onSave={handleFieldSave('Poloha inzerátu')}
+                icon={<MapPin className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Odkaz na report"
+                value={order['Report link'] || ''}
+                isEditable={isFieldEditable('Report link')}
+                onSave={handleFieldSave('Report link')}
+                icon={<FileText className="h-4 w-4" />}
+              />
+              <EditableField
+                label="Odkaz inzerátu"
+                value={order['Odkaz inzerátu']}
+                isEditable={isFieldEditable('Odkaz inzerátu')}
+                onSave={handleFieldSave('Odkaz inzerátu')}
+                icon={<LinkIcon className="h-4 w-4" />}
+              />
+              
+              {/* Order Items within Product Information */}
+              <div className="md:col-span-2 mt-4">
+                <div className="border-t pt-4">
+                  <OrderItems 
+                    items={order.items}
+                    onUpdateItemStatus={onUpdateItemStatus}
+                    onRefundItem={onRefundItem}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Lower Row - Order Details & Notes */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
           {/* Order Details */}
           <Card className="flex-1">
             <CardHeader>
@@ -392,73 +460,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             </CardContent>
           </Card>
         </div>
-
-        {/* Right Column */}
-        <div className="flex flex-col gap-6 h-full">
-          {/* Product Information */}
-          <Card className="flex-1">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Car className="h-5 w-5 text-primary" />
-                Informace o produktu
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-              <EditableField
-                label="Výrobce"
-                value={order.Výrobce}
-                isEditable={isFieldEditable('Výrobce')}
-                onSave={handleFieldSave('Výrobce')}
-                icon={<Building className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Model"
-                value={order.Model}
-                isEditable={isFieldEditable('Model')}
-                onSave={handleFieldSave('Model')}
-                icon={<Car className="h-4 w-4" />}
-              />
-              <EditableField
-                label="VIN"
-                value={order.VIN}
-                isEditable={isFieldEditable('VIN')}
-                onSave={handleFieldSave('VIN')}
-                icon={<Hash className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Poloha inzerátu"
-                value={order['Poloha inzerátu']}
-                isEditable={isFieldEditable('Poloha inzerátu')}
-                onSave={handleFieldSave('Poloha inzerátu')}
-                icon={<MapPin className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Odkaz na report"
-                value={order['Report link'] || ''}
-                isEditable={isFieldEditable('Report link')}
-                onSave={handleFieldSave('Report link')}
-                icon={<FileText className="h-4 w-4" />}
-              />
-              <EditableField
-                label="Odkaz inzerátu"
-                value={order['Odkaz inzerátu']}
-                isEditable={isFieldEditable('Odkaz inzerátu')}
-                onSave={handleFieldSave('Odkaz inzerátu')}
-                icon={<LinkIcon className="h-4 w-4" />}
-              />
-              
-              {/* Order Items within Product Information */}
-              <div className="md:col-span-2 mt-4">
-                <div className="border-t pt-4">
-                  <OrderItems 
-                    items={order.items}
-                    onUpdateItemStatus={onUpdateItemStatus}
-                    onRefundItem={onRefundItem}
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Notes */}
           <Card className="flex-1">
@@ -672,7 +673,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               </div>
             </CardContent>
           </Card>
-
         </div>
       </div>
 
