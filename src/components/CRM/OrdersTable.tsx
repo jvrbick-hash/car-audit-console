@@ -21,6 +21,7 @@ import { SearchAndFilters } from './SearchAndFilters';
 import { ExcelFilter } from './ExcelFilter';
 import { OrderDetailTabs } from './OrderDetailTabs';
 import { RowStatusIndicator } from './RowStatusIndicator';
+import { ColumnSelector } from './ColumnSelector';
 import { Order, Column, defaultColumns, validateColumnWidth, ItemStatus } from '@/types/orders';
 
 const dummyOrders: Order[] = [
@@ -433,6 +434,7 @@ const getStatusBadgeVariant = (status: string) => {
 
 export const OrdersTable: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>(dummyOrders);
+  // Always start with default columns (no persistence of column selection)
   const [columns, setColumns] = useState<Column[]>(defaultColumns);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [editingField, setEditingField] = useState<{ orderId: string; field: string } | null>(null);
@@ -596,6 +598,14 @@ export const OrdersTable: React.FC = () => {
     toast({
       title: "Filtry vymazány",
       description: "Všechny filtry byly odstraněny.",
+    });
+  };
+
+  const resetToDefaultColumns = () => {
+    setColumns(defaultColumns);
+    toast({
+      title: "Sloupce obnoveny",
+      description: "Zobrazení sloupců bylo obnoveno na výchozí nastavení.",
     });
   };
 
@@ -834,6 +844,11 @@ export const OrdersTable: React.FC = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
+            <ColumnSelector
+              columns={columns}
+              onColumnsChange={setColumns}
+              onResetToDefault={resetToDefaultColumns}
+            />
             {hasActiveFilters && (
               <Button variant="outline" size="sm" onClick={clearAllFilters}>
                 <FilterX className="w-4 h-4 mr-2" />
