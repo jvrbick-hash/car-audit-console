@@ -434,7 +434,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                       <Activity className="h-4 w-4" />
                       Historie změn
                     </div>
-                    <div className="space-y-2 max-h-32 overflow-y-auto bg-muted/30 rounded-md p-2">
+                    <div className="space-y-2 flex-1 max-h-96 overflow-y-auto bg-muted/30 rounded-md p-2">
                       {order.statusHistory.map((entry, index) => (
                         <div key={index} className="flex items-start gap-2 text-xs">
                           <div className="w-2 h-2 bg-primary/60 rounded-full mt-1.5 flex-shrink-0" />
