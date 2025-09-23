@@ -457,6 +457,9 @@ export const OrdersTable: React.FC = () => {
 
   const clearDateRange = () => {
     setDateRange(undefined);
+    setSearchTerm('');
+    setColumnFilters({});
+    setColumnSearches({});
     setIsCalendarOpen(false);
   };
 
@@ -831,7 +834,7 @@ export const OrdersTable: React.FC = () => {
   return (
     <TooltipProvider>
       <div className="space-y-4">
-        {/* Header */}
+         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-primary">Přehled objednávek</h2>
@@ -855,46 +858,18 @@ export const OrdersTable: React.FC = () => {
                 Vymazat filtry
               </Button>
             )}
-            {/* Date Range Selector */}
-            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !dateRange?.from && "text-muted-foreground"
-                  )}
-                >
-                  <Calendar className="mr-2 h-4 w-4" />
-                  {formatDateRange()}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="end">
-                <CalendarComponent
-                  initialFocus
-                  mode="range"
-                  defaultMonth={dateRange?.from}
-                  selected={dateRange}
-                  onSelect={setDateRange}
-                  numberOfMonths={2}
-                  className={cn("p-3 pointer-events-auto")}
-                />
-              </PopoverContent>
-            </Popover>
-            
-            {dateRange?.from && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearDateRange}
-                className="h-9 w-9 p-0"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
           </div>
         </div>
 
+        {/* Search and Filters */}
+        <SearchAndFilters
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          dateRange={dateRange}
+          onDateRangeChange={setDateRange}
+          filteredCount={filteredOrders.length}
+          totalCount={orders.length}
+        />
 
         {/* Table */}
         <Card>
