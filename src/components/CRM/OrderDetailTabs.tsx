@@ -49,6 +49,52 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newNote, setNewNote] = useState('');
   const [selectedQueryType, setSelectedQueryType] = useState('general');
+
+  // Simulate note states and types with different priorities and colors
+  const noteTypes = {
+    urgent: { label: 'Urgentní', color: 'bg-red-100 text-red-800 border-red-200' },
+    important: { label: 'Důležité', color: 'bg-orange-100 text-orange-800 border-orange-200' },
+    general: { label: 'Obecné', color: 'bg-blue-100 text-blue-800 border-blue-200' },
+    resolved: { label: 'Vyřešeno', color: 'bg-green-100 text-green-800 border-green-200' },
+    billing: { label: 'Fakturace', color: 'bg-purple-100 text-purple-800 border-purple-200' },
+    technical: { label: 'Technické', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
+    complaint: { label: 'Reklamace', color: 'bg-red-100 text-red-800 border-red-200' },
+    follow_up: { label: 'Následné řešení', color: 'bg-indigo-100 text-indigo-800 border-indigo-200' }
+  };
+
+  // Simulate some example notes if none exist
+  if (!order.internalNoteHistory || order.internalNoteHistory.length === 0) {
+    order.internalNoteHistory = [
+      {
+        id: '1',
+        userName: 'Jana Nováková',
+        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+        text: 'Zákazník kontaktoval podporu ohledně změny dodací adresy. Adresa byla úspěšně aktualizována v systému.',
+        queryType: 'resolved'
+      },
+      {
+        id: '2',
+        userName: 'Petr Svoboda',
+        timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+        text: 'URGENTNÍ: Zákazník hlásí, že nebyl doručen balíček. Nutné prověřit u dopravce a kontaktovat zákazníka do 24 hodin.',
+        queryType: 'urgent'
+      },
+      {
+        id: '3',
+        userName: 'Martin Procházka',
+        timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
+        text: 'Zákazník žádá o rozložení platby na více splátek. Zasláno k posouzení finančnímu oddělení.',
+        queryType: 'billing'
+      },
+      {
+        id: '4',
+        userName: 'Anna Svobodová',
+        timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
+        text: 'Vyřešen technický problém s konfigurací produktu. Zákazník byl kontaktován a problém byl vysvětlen.',
+        queryType: 'technical'
+      }
+    ];
+  }
   // Get editable fields from column configuration
   const editableFields = defaultColumns
     .filter(col => col.editable)
@@ -632,12 +678,29 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                               </Button>
                             </div>
                           </div>
-                          <div className="mb-2">
-                            <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-primary/10 text-primary">
-                              {note.queryType}
-                            </span>
+                          <div className="mb-3">
+                            <Badge 
+                              variant="outline" 
+                              className={`${noteTypes[note.queryType as keyof typeof noteTypes]?.color || noteTypes.general.color} border font-medium`}
+                            >
+                              {noteTypes[note.queryType as keyof typeof noteTypes]?.label || 'Obecné'}
+                            </Badge>
                           </div>
-                          <p className="text-sm leading-relaxed">{note.text}</p>
+                          <div className="space-y-2">
+                            <p className="text-sm leading-relaxed">{note.text}</p>
+                            {note.queryType === 'urgent' && (
+                              <div className="flex items-center gap-2 text-xs text-red-600 bg-red-50 p-2 rounded border border-red-200">
+                                <AlertCircle className="h-3 w-3" />
+                                <span className="font-medium">Vyžaduje okamžitou pozornost</span>
+                              </div>
+                            )}
+                            {note.queryType === 'resolved' && (
+                              <div className="flex items-center gap-2 text-xs text-green-600 bg-green-50 p-2 rounded border border-green-200">
+                                <CheckCircle2 className="h-3 w-3" />
+                                <span className="font-medium">Úspěšně vyřešeno</span>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>
