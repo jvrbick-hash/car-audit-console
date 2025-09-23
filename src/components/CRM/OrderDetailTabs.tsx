@@ -167,11 +167,11 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
       </Card>
 
       {/* Single Consolidated View */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 auto-rows-start">
         {/* Left Column */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 min-h-0">
           {/* Customer Information */}
-          <Card className="h-fit">
+          <Card className="flex-shrink-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="h-5 w-5 text-primary" />
@@ -180,7 +180,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Personal Information */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                 <EditableField
                   label="Jméno"
                   value={order.Jméno}
@@ -231,7 +231,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                     <Building className="h-4 w-4" />
                     Firemní údaje
                   </h4>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                     <EditableField
                       label="IČ"
                       value={order.IČ || ''}
@@ -274,14 +274,14 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
           </Card>
 
           {/* Order Details */}
-          <Card className="h-fit">
+          <Card className="flex-shrink-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Package className="h-5 w-5 text-primary" />
                 Detaily objednávky
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
               <EditableField
                 label="Datum objednávky"
                 value={new Date(order['Datum objednávky']).toLocaleString('cs-CZ')}
@@ -394,16 +394,16 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
         </div>
 
         {/* Right Column */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 min-h-0">
           {/* Product Information */}
-          <Card className="h-fit">
+          <Card className="flex-shrink-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Car className="h-5 w-5 text-primary" />
                 Informace o produktu
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
               <EditableField
                 label="Výrobce"
                 value={order.Výrobce}
@@ -461,7 +461,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
           </Card>
 
           {/* Notes */}
-          <Card className="h-fit">
+          <Card className="flex-shrink-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MessageSquare className="h-5 w-5 text-primary" />
