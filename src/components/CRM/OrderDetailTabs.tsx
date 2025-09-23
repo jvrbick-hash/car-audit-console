@@ -501,7 +501,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                   <SelectContent className="bg-background">
                     <SelectItem value="billing">Fakturace</SelectItem>
                     <SelectItem value="technical">Technický problém</SelectItem>
-                    <SelectItem value="complaint">Stížnost</SelectItem>
+                    <SelectItem value="complaint">Reklamace</SelectItem>
                     <SelectItem value="general">Obecný dotaz</SelectItem>
                   </SelectContent>
                 </Select>
@@ -540,7 +540,7 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
                           <SelectContent>
                             <SelectItem value="billing">Fakturace</SelectItem>
                             <SelectItem value="technical">Technický problém</SelectItem>
-                            <SelectItem value="complaint">Stížnost</SelectItem>
+                            <SelectItem value="complaint">Reklamace</SelectItem>
                             <SelectItem value="general">Obecný dotaz</SelectItem>
                           </SelectContent>
                         </Select>
