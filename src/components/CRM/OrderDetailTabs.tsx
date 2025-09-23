@@ -459,7 +459,6 @@ export function OrderDetailTabs({ order, onEdit, onUpdateItemStatus = () => {}, 
               )}
             </CardContent>
           </Card>
-        </div>
 
           {/* Notes */}
           <Card className="flex-1">
